@@ -1,0 +1,8 @@
+# Keep the repository's bytes stable regardless of the contributor's git configuration.
+# A stray CRLF rewrite would change published artifacts and test fixtures, which is exactly the
+# failure the GitHub Pages adapter has to defend against at deploy time.
+* text=auto eol=lf
+
+*.png binary
+*.glb binary
+*.zip binary

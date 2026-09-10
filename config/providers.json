@@ -2,7 +2,7 @@
   "registryVersion": 1,
   "capabilitySchema": 1,
   "updatedAt": "2026-09-10",
-  "notes": "Builtin provider registry for teacher-publish. Shipped and signed with the app. adapter/endpoint/protocol/allowedHosts/capabilities are authoritative; a remote status overlay may only change enabled, priority, health, lastValidated and notes. Capability values were transcribed from docs/provider-protocols.md; 'null' means the service does not document a limit and no limit is enforced client side.",
+  "notes": "Builtin provider registry. adapter/endpoint/protocol/allowedHosts/capabilities are authoritative; a LOCAL status overlay may only change enabled, priority, health, lastValidated and notes, and anything else it tries to change is refused and reported. Capability values were transcribed from docs/provider-protocols.md; 'null' means the service does not document a limit and no limit is enforced client side; 'verification.status' records how each provider was measured (live-tested, expected, or unverified). The overlay is read from disk and is NOT signed, so write access to it is a local trust decision.",
   "providers": [
     {
       "id": "ship-page",
