@@ -1,0 +1,39 @@
+{
+  "name": "verified-publish",
+  "version": "0.1.0",
+  "description": "Verified static publishing router for humans and agents: capability-matched provider selection, failover with a circuit breaker, a pre-publish safety scan, post-publish byte-for-byte SHA-256 verification, and a stable JSON + exit-code contract.",
+  "type": "module",
+  "bin": {
+    "verified-publish": "./bin/verified-publish.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "config",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=22.2.0"
+  },
+  "scripts": {
+    "test": "node --test",
+    "test:imports": "node tools/check-imports.mjs",
+    "smoke": "node tools/smoke.mjs",
+    "probe": "node tools/probe-contracts.mjs"
+  },
+  "keywords": [
+    "deploy",
+    "publish",
+    "static-site",
+    "hosting",
+    "verification",
+    "sha256",
+    "failover",
+    "agent",
+    "cli"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
