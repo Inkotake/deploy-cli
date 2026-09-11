@@ -1,0 +1,32 @@
+name: ci
+
+# The package has no dependencies, so there is no install step to cache or to break: every job runs
+# the suite straight from the checkout on a stock Node.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: ['22.x', '24.x']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Prove the package still has no dependencies
+        run: node tools/check-imports.mjs
+      - name: Tests
+        run: npm test
+      - name: Command contract smoke
+        run: node tools/smoke.mjs
+      - name: Show the resolved tool version
+        run: node bin/verified-publish.mjs --version
