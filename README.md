@@ -2,15 +2,19 @@
 
 **Deploy a built static folder anywhere. Verify what actually went live. Fail over when the host doesn't.**
 
-`vpublish` is a static-publishing router for humans and agents. Point it at a `dist/` and it
-inspects the artifact, chooses a host that can actually serve it, uploads it, fetches the files back
-and compares them byte for byte, and only then reports a URL.
+English · [中文](./README.zh-CN.md)
+
+`vpublish` is a static-publishing router for humans and agents. Point it at a `dist/` and it inspects
+the artifact, chooses a host that can actually serve it, uploads it, fetches the files back and
+compares them byte for byte — and only then reports a URL.
 
 ```text
 dist/  →  inspect  →  choose a compatible host  →  upload  →  fetch it back  →  compare SHA-256  →  URL
 ```
 
 An HTTP 2xx from an upload is a *candidate* success. Success is only reported after verification.
+
+*Example output:*
 
 ```console
 $ vpublish ./dist
@@ -32,7 +36,24 @@ true
 "https://xxxx.shipped.page/"
 ```
 
+## Contents
+
+[Install](#install) · [Why it is different](#what-it-does-that-a-plain-uploader-does-not) ·
+[Commands](#commands) · [Modes](#modes) · [Exit codes](#exit-codes) · [Flags](#flags-worth-knowing) ·
+[What "verified" means](#what-verified-honestly-means) · [Providers](#providers) · [Safety](#safety) ·
+[State and environment](#state-and-environment) · [JSON contract](#json-contract) ·
+[Development](#development) · [Status](#status) · [Provenance](#provenance-and-licence)
+
 ## Install
+
+**From a clone (works today):**
+
+```console
+$ git clone https://github.com/Inkotake/deploy-cli
+$ node deploy-cli/bin/vpublish.mjs ./dist
+```
+
+**Once it is on npm** (see [Status](#status)):
 
 ```console
 $ npx vpublish ./dist
@@ -48,7 +69,7 @@ bundle.
 
 | | |
 |---|---|
-| **Capability matching** | A provider whose extension allowlist rejects `.glb` is *incompatible*, not merely lower priority. Limits (file count, per-file size, total size, model/`wasm` support) are enforced before anything is uploaded. |
+| **Capability matching** | A provider whose extension allowlist rejects `.glb` is *incompatible*, not merely lower priority. Limits (file count, per-file size, total size, directory depth, path length, model/`wasm` support) are enforced before anything is uploaded. |
 | **Failover with a circuit breaker** | Compatible hosts are tried in order. A host that fails opens a breaker (DNS 24 h, unreachable 20 min, 5xx 10 min, rate limit 1 h, capability 24 h, integrity 6 h) so the next run does not hammer it. |
 | **Pre-publish safety scan** | Credentials, private keys and sensitive directories are hard-blocked. Nothing is uploaded while a block is present. |
 | **Post-publish byte verification** | Every deployed resource is fetched with GET and compared by SHA-256 against the local manifest. A byte difference, a 404, a wrong content type, an HTML fallback served for a `.js` file or a host error page is a failure. |
@@ -119,8 +140,8 @@ Verification compares bytes, and it says exactly how far it got:
   `.glb`/`.gltf`/`.bin`/`.wasm` and the three largest remaining files are compared — unless you pass
   `--verify-all`. The result always carries `filesExpected` (all files) next to `filesRequired` (what
   this run compared), and the human note says the comparison was partial.
-- HTML is compared byte for byte unless the host is known to rewrite it, in which case
-  `htmlExact` is `false` and the paths that were only presence-checked are listed.
+- HTML is compared byte for byte unless the host is known to rewrite it, in which case `htmlExact` is
+  `false` and the paths that were only presence-checked are listed.
 - The root document is requested **once more with browser-like headers**, because an edge network can
   inject its own markup for browsers while serving the uploaded bytes to a plain GET. Measured live:
   ship.page adds a Cloudflare Insights beacon for a browser-like `Accept` header (+367 bytes on a
@@ -163,12 +184,12 @@ as unavailable rather than downloaded.
   **only** when the file can carry records (`.csv`, `.xlsx`, `.json`, `.pdf`, extensionless, …); a
   component named `grade-utils.js` is a warning, not a refusal.
 - Ownership credentials are written to `claims.json` in the private state directory (mode `0600`
-  where the filesystem supports it) and reported without their value. `vpublish claim show`
-  reveals one when you ask for it. Never forward a claim value or claim URL: holding it means owning
-  the deployment.
+  where the filesystem supports it) and reported without their value. `vpublish claim show` reveals
+  one when you ask for it. Never forward a claim value or claim URL: holding it means owning the
+  deployment.
 - GitHub Pages is treated as shared state: a branch this tool does not own is **refused** rather than
-  overwritten, a `CNAME` is carried over byte for byte, and our own pushes use
-  `--force-with-lease` instead of `--force`.
+  overwritten, a `CNAME` is carried over byte for byte, and our own pushes use `--force-with-lease`
+  instead of `--force`.
 - Provider URLs are taken from the response and checked against the registry's host allowlist: a URL
   is never derived from a naming convention.
 
@@ -176,17 +197,16 @@ as unavailable rather than downloaded.
 
 | Variable | Effect |
 |---|---|
-| `VERIFIED_PUBLISH_HOME` | State directory (health cache, claims). Defaults to `~/.vpublish`. |
-| `VERIFIED_PUBLISH_REGISTRY` | Use a different provider registry file. |
-| `VERIFIED_PUBLISH_STATUS_FILE` | Local availability overlay (may only change `enabled`, `priority`, `health`, `lastValidated`, `notes`). |
-| `VERIFIED_PUBLISH_POLICY`, `VERIFIED_PUBLISH_REGION` | Defaults for `--policy` and `--region`. |
-| `VERIFIED_PUBLISH_DEPLOY_HOME`, `VERIFIED_PUBLISH_DEPLOY_BIN` | Where to look for `netlify`/`wrangler`/`vercel` before falling back to `PATH`. |
+| `VPUBLISH_HOME` | State directory (health cache, claims). Defaults to `~/.vpublish`. |
+| `VPUBLISH_REGISTRY` | Use a different provider registry file. |
+| `VPUBLISH_STATUS_FILE` | Local availability overlay (may only change `enabled`, `priority`, `health`, `lastValidated`, `notes`). |
+| `VPUBLISH_POLICY`, `VPUBLISH_REGION` | Defaults for `--policy` and `--region`. |
+| `VPUBLISH_DEPLOY_HOME`, `VPUBLISH_DEPLOY_BIN` | Where to look for `netlify`/`wrangler`/`vercel` before falling back to `PATH`. |
 | `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY` | Standard proxy variables, honoured by every request. |
 
 Older spellings are read as fallbacks, so a deployment that exports them keeps working:
-`VERIFIED_PUBLISH_*` (this tool's previous name) and the desktop product's original
-`TEACHER_DSH_HOME` / `TEACHER_DEPLOY_HOME` / `TEACHER_PUBLISH_REGISTRY` /
-`TEACHER_PUBLISH_STATUS_FILE`.
+`VERIFIED_PUBLISH_*` (this tool's previous name) and the desktop product's original `TEACHER_DSH_HOME`
+/ `TEACHER_DEPLOY_HOME` / `TEACHER_PUBLISH_REGISTRY` / `TEACHER_PUBLISH_STATUS_FILE`.
 
 ## JSON contract
 
@@ -203,43 +223,56 @@ Every `--json` payload starts with:
 ## Development
 
 ```console
-$ npm test                 # unit + integration tests (node:test, no network)
-$ node tools/smoke.mjs      # command surface, --json discipline and exit codes
-$ node tools/check-imports.mjs   # proves the package still has no dependencies
-$ node tools/probe-contracts.mjs # maintainers only: re-measure the live anonymous providers
+$ npm test                        # unit + integration tests (node:test, no network)
+$ node tools/smoke.mjs            # command surface, --json discipline and exit codes
+$ node tools/check-imports.mjs    # proves the package still has no dependencies
+$ node tools/probe-contracts.mjs  # maintainers only: re-measure the live anonymous providers
 ```
 
 The test suite covers the provider adapters, verification, planning, the registry schema, the policy
 split, claim handling, the upload snapshot, the proxy path and the CLI contract. Nothing in `npm test`
 touches the network: fake providers run on `127.0.0.1`.
 
+## Notes that save time
+
+- **A broken system proxy breaks `git`, not this tool.** On a machine whose `http.proxy` cannot reach
+  GitHub, pushes fail with `schannel: failed to receive handshake`; push with
+  `git -c http.proxy= -c https.proxy= push`. Also do not set `GCM_INTERACTIVE=Never`: it prevents Git
+  Credential Manager from using a stored credential in a non-interactive shell.
+- **`Invoke-WebRequest -OutFile` is not a byte oracle.** Comparing a downloaded file against a local
+  one with it produced a 644-byte file where two other HTTP clients agreed on 277 bytes. Use
+  `vpublish verify`, or a Node/curl request with the same headers.
+- **Behind a proxy**, set `HTTPS_PROXY` and `NO_PROXY`, or pass `--proxy <url>`. Requests are made
+  without compression by default, so verification compares origin bytes.
+- **Publishing to npm** needs a 2FA-capable credential; see [`docs/releasing.md`](./docs/releasing.md).
+
 ## Status
 
 Honest list of what is **not** verified yet:
 
 - **Not on npm yet.** The source is public on GitHub and installable from a clone, but the registry
-  refuses a non-interactive publish without a 2FA-capable credential. `docs/releasing.md` has both
-  ways to finish it (a one-time password, or a granular token with 2FA bypass) and the Trusted
-  Publishing route for CI.
-
+  refuses a non-interactive publish without a 2FA-capable credential (`403 … Two-factor authentication
+  or granular access token with bypass 2fa enabled is required`). `docs/releasing.md` documents both
+  ways to finish it, plus the Trusted Publishing route for CI.
 - **Persistent success paths** (Netlify, Cloudflare Pages, Vercel, GitHub Pages) have not been run
   against live authenticated accounts. Only their failure paths were exercised.
 - The anonymous providers were measured on **2026-09-10** and re-probed live on **2026-09-11**: all
   six responded, endpoints and lifetimes matched the registry, and a real deployment to ship.page was
-  verified 4/4 (see `docs/evidence/live-probe-2026-09-11.md`). Hosts change — re-run
-  `tools/probe-contracts.mjs` before trusting an old registry entry.
+  verified file-for-file (see [`docs/evidence/live-probe-2026-09-11.md`](./docs/evidence/live-probe-2026-09-11.md)).
+  Hosts change — re-run `tools/probe-contracts.mjs` before trusting an old registry entry.
 - **No browser rendering** is performed by design.
 - Tunnel relays are a convenience, not a supported publishing path; the SSH-based ones are marked
   experimental.
 
 ## Provenance and licence
 
-Extracted from the Teacher DSH desktop distribution (MIT). See `docs/provenance.md` for what came
-from where, and `docs/provider-protocols.md` for the measured provider contract this tool implements.
+Extracted from the Teacher DSH desktop distribution (MIT). See [`docs/provenance.md`](./docs/provenance.md)
+for what came from where, and [`docs/provider-protocols.md`](./docs/provider-protocols.md) for the
+measured provider contract this tool implements.
 
 The package and the command are both `vpublish`; the Git repository is
 [`Inkotake/deploy-cli`](https://github.com/Inkotake/deploy-cli), because `deploy-cli` is already taken
 on npm. Repository name and package name are independent by design, and the command name lives in one
 place (`src/identity.mjs`).
 
-MIT — see `LICENSE`.
+MIT — see [`LICENSE`](./LICENSE).

@@ -11,7 +11,9 @@
     "src",
     "config",
     "docs",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "README.md",
+    "README.zh-CN.md"
   ],
   "engines": {
     "node": ">=22.2.0"
