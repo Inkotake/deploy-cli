@@ -217,6 +217,11 @@ touches the network: fake providers run on `127.0.0.1`.
 
 Honest list of what is **not** verified yet:
 
+- **Not on npm yet.** The source is public on GitHub and installable from a clone, but the registry
+  refuses a non-interactive publish without a 2FA-capable credential. `docs/releasing.md` has both
+  ways to finish it (a one-time password, or a granular token with 2FA bypass) and the Trusted
+  Publishing route for CI.
+
 - **Persistent success paths** (Netlify, Cloudflare Pages, Vercel, GitHub Pages) have not been run
   against live authenticated accounts. Only their failure paths were exercised.
 - The anonymous providers were measured on **2026-09-10** and re-probed live on **2026-09-11**: all

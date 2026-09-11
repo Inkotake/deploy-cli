@@ -9,6 +9,12 @@ All notable changes to this project are documented here. The format follows
 First release of the standalone tool, extracted from the Teacher DSH desktop distribution. Published
 as `vpublish`; see the naming history in `docs/provenance.md`.
 
+**Distribution status: source only.** This version is on GitHub
+([`Inkotake/deploy-cli`](https://github.com/Inkotake/deploy-cli)) and installable from a clone, but it
+is **not on npm yet**: the registry refuses a non-interactive publish without a 2FA-capable
+credential (`403 … Two-factor authentication or granular access token with bypass 2fa enabled is
+required`). `docs/releasing.md` records both ways to finish that step.
+
 ### Added
 
 - `deploy`, `inspect`, `plan`, `verify`, `detect`, `providers`, `claim`, `doctor` and `tunnel`
