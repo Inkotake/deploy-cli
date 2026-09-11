@@ -10,7 +10,8 @@
     "bin",
     "src",
     "config",
-    "docs"
+    "docs",
+    "CHANGELOG.md"
   ],
   "engines": {
     "node": ">=22.2.0"

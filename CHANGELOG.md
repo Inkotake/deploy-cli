@@ -4,9 +4,10 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.0] — unreleased
+## [0.1.0] — 2026-09-11
 
-First release of the standalone tool, extracted from the Teacher DSH desktop distribution.
+First release of the standalone tool, extracted from the Teacher DSH desktop distribution. Published
+as `vpublish`; see the naming history in `docs/provenance.md`.
 
 ### Added
 
