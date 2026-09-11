@@ -100,7 +100,7 @@ test('every JSON command emits exactly one document with the contract header', (
 
 test('usage errors exit 2 and never print JSON on stdout', () => {
   const dir = writeArtifact('usage', SITE);
-  for (const args of [['frobnicate'], ['inspect', dir, '--mode', 'nope'], ['inspect', dir, '--policy', 'nope'], ['plan', dir, '--region', 'mars']]) {
+  for (const args of [['frobnicate'], ['inspect', dir, '--mode', 'nope'], ['inspect', dir, '--policy', 'teacher'], ['plan', dir, '--region', 'mars']]) {
     const result = runCli(args);
     assert.equal(result.status, 2, `${args.join(' ')} should be a usage error, got ${result.status}`);
     assert.equal(result.stdout.trim(), '', 'a usage error must not write to stdout');
@@ -119,8 +119,11 @@ test('the safety scan is observable from the outside through the exit code', () 
   assert.ok(payload.blocked.some((entry) => entry.path === '.env'));
   assert.ok(!JSON.stringify(payload).includes('SECRET_TOKEN'), 'a blocked file\'s contents must never be echoed');
 
-  // The teacher policy is the only way `grades.csv` blocks: without it the same artifact is clean.
-  assert.equal(runCli(['inspect', blocked, '--policy', 'teacher', '--json']).status, 4);
+  // The core stays generic: a name that looks like classroom data is the *downstream* product's
+  // decision, not this tool's, so the same file must not block here.
+  const teaching = writeArtifact('teaching', { ...SITE, 'grades.csv': 'name,grade\n', 'roster.csv': 'name\n' });
+  assert.equal(runCli(['inspect', teaching, '--json']).status, 0, 'the core must not judge project-specific data');
+  assert.equal(runCli(['deploy', teaching, '--dry-run', '--json']).status, 0, 'and it must not block a deploy either');
 });
 
 test('missing artifacts, unusable registries and empty claim stores have their own codes', () => {
@@ -174,7 +177,8 @@ test('doctor reports the runtime contract, the registry schema and the provider 
   const payload = jsonOf(result, 'doctor');
   assert.equal(payload.registry.capabilitySchema, 1);
   assert.equal(payload.providers.length, 11);
-  assert.equal(payload.policy.active, 'generic');
+  assert.equal(payload.safety.ruleCount > 0, true);
+  assert.equal(payload.safety.sensitiveDirectories > 0, true);
   assert.equal(payload.region, 'auto');
   assert.ok(payload.artifact.dir.endsWith('dist'));
   assert.ok(Array.isArray(payload.envContract) && payload.envContract.length > 0);

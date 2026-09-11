@@ -8,7 +8,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { error, formatBytes, listDirs, listFiles, log, mimeForPath, sha256Hex, toPosix, warn } from './common.mjs';
-import { DEFAULT_POLICY, classifyBlock, classifyDirectory, loadPolicy } from './policies/index.mjs';
+import { classifyBlock, classifyDirectory } from './safety.mjs';
 
 /** Directory names that conventionally hold a built static artifact, most specific first. */
 export const BUILD_DIR_NAMES = ['dist', 'build', 'public', 'out'];
@@ -225,8 +225,7 @@ export function scanReferences(manifest) {
 
 /* ------------------------------------------------------------------ scan ---- */
 
-export function inspectArtifact(dir, options = {}) {
-  const policy = loadPolicy(options.policy || DEFAULT_POLICY);
+export function inspectArtifact(dir) {
   const root = path.resolve(dir);
   if (!fs.existsSync(root) || !fs.statSync(root).isDirectory()) {
     return { ok: false, error: `Not a directory: ${root}` };
@@ -239,7 +238,7 @@ export function inspectArtifact(dir, options = {}) {
   const blocked = [];
   const warnings = [];
   for (const file of manifest.files) {
-    const verdict = classifyBlock(file.path, policy);
+    const verdict = classifyBlock(file.path);
     if (!verdict) continue;
     if (verdict.severity === 'blocked') {
       blocked.push({ path: file.path, bytes: file.bytes, rules: verdict.rules, reasons: verdict.reasons });
@@ -250,7 +249,7 @@ export function inspectArtifact(dir, options = {}) {
 
   const directories = listDirs(root);
   for (const dirName of directories) {
-    const rule = classifyDirectory(dirName, policy);
+    const rule = classifyDirectory(dirName);
     if (rule) {
       blocked.push({ path: dirName + '/', bytes: 0, rules: [rule], reasons: ['sensitive directory present in the artifact'] });
     }
@@ -261,7 +260,6 @@ export function inspectArtifact(dir, options = {}) {
 
   return {
     ok: true,
-    policy: policy.name,
     manifest,
     safety: {
       blocked,
@@ -286,7 +284,6 @@ export function summarizeInspect(result) {
   const manifest = result.manifest;
   return {
     dir: manifest.dir,
-    policy: result.policy || DEFAULT_POLICY,
     fileCount: manifest.fileCount,
     totalBytes: manifest.totalBytes,
     largestFile: manifest.largest,
@@ -304,7 +301,6 @@ export function summarizeInspect(result) {
 export function printInspect(summary, options = {}) {
   const write = options.write || log;
   write('Artifact: ' + summary.dir);
-  write(`  policy: ${summary.policy}`);
   write(`  files:  ${summary.fileCount} (${formatBytes(summary.totalBytes)})`);
   if (summary.largestFile) write(`  largest: ${summary.largestFile.path} (${formatBytes(summary.largestFile.bytes)})`);
   write('  extensions: ' + (summary.extensions.join(' ') || '(none)'));

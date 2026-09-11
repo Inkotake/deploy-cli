@@ -42,7 +42,7 @@ true
 [Commands](#commands) · [Modes](#modes) · [Exit codes](#exit-codes) · [Flags](#flags-worth-knowing) ·
 [What "verified" means](#what-verified-honestly-means) · [Providers](#providers) · [Safety](#safety) ·
 [State and environment](#state-and-environment) · [JSON contract](#json-contract) ·
-[Development](#development) · [Status](#status) · [Provenance](#provenance-and-licence)
+[Development](#development) · [Status](#status) · [Independence and origin](#independence-origin-and-licence)
 
 ## Install
 
@@ -120,7 +120,6 @@ bundle.
 | Flag | Meaning |
 |---|---|
 | `--json` | Exactly one JSON document on stdout; diagnostics on stderr. |
-| `--policy <generic\|teacher>` | `generic` (default) blocks secrets. `teacher` additionally blocks student records, grades, rosters and family contact data — but only for files that can actually carry records. |
 | `--region <auto\|cn-mainland\|global>` | `cn-mainland` puts region-reachable hosts ahead of higher-scoring ones; `auto` only breaks ties; `global` ignores the region priority. |
 | `--verify-all` | Compare every file even above the 20 MiB fast-verification threshold. |
 | `--dry-run` | Print the order and the payload; contact nothing. Exits 0 without claiming a deployment. |
@@ -180,9 +179,11 @@ as unavailable rather than downloaded.
 ## Safety
 
 - **Nothing is uploaded while the safety scan has a hard block**, in any mode.
-- The `teacher` policy blocks student records, grades, rosters, attendance and family contact data
-  **only** when the file can carry records (`.csv`, `.xlsx`, `.json`, `.pdf`, extensionless, …); a
-  component named `grade-utils.js` is a warning, not a refusal.
+- The scan is **fixed and generic**: credentials, private keys and sensitive directories. It does not
+  judge project-specific data — `grades.csv`, `roster.csv` or `report-card.docx` pass, because an
+  upstream tool that guesses what a given user's data means is wrong for everyone else. A product that
+  must refuse those enforces that itself: `inspect --json` lists every path, size and hash, so it can
+  decide before it ever calls `deploy`. See [`docs/consuming.md`](./docs/consuming.md).
 - Ownership credentials are written to `claims.json` in the private state directory (mode `0600`
   where the filesystem supports it) and reported without their value. `vpublish claim show` reveals
   one when you ask for it. Never forward a claim value or claim URL: holding it means owning the
@@ -264,11 +265,19 @@ Honest list of what is **not** verified yet:
 - Tunnel relays are a convenience, not a supported publishing path; the SSH-based ones are marked
   experimental.
 
-## Provenance and licence
+## Independence, origin and licence
 
-Extracted from the Teacher DSH desktop distribution (MIT). See [`docs/provenance.md`](./docs/provenance.md)
-for what came from where, and [`docs/provider-protocols.md`](./docs/provider-protocols.md) for the
-measured provider contract this tool implements.
+`vpublish` is an **independent project**, not a component of another product. Its intended role is the
+opposite: it is the **upstream** that the Teacher DSH education edition consumes and pins.
+
+The code began life inside that education edition, which is why it carries an opt-in `teacher` safety
+policy and why its provider protocols were measured for that use. Both are ordinary parts of an
+independent tool now: the default policy contains no teaching rules, and nothing here imports,
+requires or knows about a downstream product.
+
+- [`docs/provenance.md`](./docs/provenance.md) — where the code came from, and the licence
+- [`docs/consuming.md`](./docs/consuming.md) — what a downstream product may rely on, and what it must not
+- [`docs/provider-protocols.md`](./docs/provider-protocols.md) — the measured provider contract
 
 The package and the command are both `vpublish`; the Git repository is
 [`Inkotake/deploy-cli`](https://github.com/Inkotake/deploy-cli), because `deploy-cli` is already taken

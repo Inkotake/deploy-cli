@@ -40,7 +40,7 @@ true
 [安装](#安装) · [它比普通上传工具多做什么](#它比普通上传工具多做什么) · [命令](#命令) · [模式](#模式) ·
 [退出码](#退出码) · [重点参数](#重点参数) · [「已验证」的准确含义](#已验证的准确含义) ·
 [托管商](#托管商) · [安全](#安全) · [状态与环境变量](#状态与环境变量) · [JSON 契约](#json-契约) ·
-[开发](#开发) · [省时间的几个坑](#省时间的几个坑) · [尚未验证](#尚未验证) · [来源与许可](#来源与许可)
+[开发](#开发) · [省时间的几个坑](#省时间的几个坑) · [尚未验证](#尚未验证) · [独立性、来源与许可](#独立性来源与许可)
 
 ## 安装
 
@@ -117,7 +117,6 @@ $ npm install --global vpublish
 | 参数 | 含义 |
 |---|---|
 | `--json` | stdout 只输出一个 JSON 文档，诊断走 stderr。 |
-| `--policy <generic\|teacher>` | `generic`（默认）拦截机密文件；`teacher` 额外拦截学生档案、成绩、名单、家庭联系方式——**但仅限真正能承载记录的文件**。 |
 | `--region <auto\|cn-mainland\|global>` | `cn-mainland` 让区域内可达的托管商排在分数更高者之前；`auto` 只用它打破平局；`global` 完全忽略区域优先级。 |
 | `--verify-all` | 超过 20 MiB 快速校验阈值时也逐文件比对。 |
 | `--dry-run` | 打印顺序与载荷，不联系任何托管商；退出码 0，但不会声称完成部署。 |
@@ -171,8 +170,10 @@ CLI 缺失时该托管商被报告为不可用，而不是被下载下来。
 ## 安全
 
 - 任何模式下，**只要安全扫描还有硬阻断项，就什么都不上传**。
-- `teacher` policy 只在文件**真能承载记录**时才硬阻断学生档案、成绩、名单、考勤与家庭联系方式
-  （`.csv`、`.xlsx`、`.json`、`.pdf`、无扩展名等）；一个叫 `grade-utils.js` 的组件是**警告**，不是拒绝。
+- 安全扫描是**固定且通用**的：凭据、私钥、敏感目录。它**不判断项目特定的数据**——`grades.csv`、`roster.csv`、
+  `report-card.docx` 都会放行，因为一个上游工具去猜"这份数据对某个人意味着什么"，对其他人一定是错的。
+  需要拒绝这类文件的产品自己判断：`inspect --json` 会列出每个路径、大小与哈希，所以它可以在调用 `deploy`
+  之前就做决定。见 [`docs/consuming.md`](./docs/consuming.md)。
 - 所有权凭据写在私有状态目录的 `claims.json`（文件系统支持时权限 `0600`），报告时不带其值。
   需要时用 `vpublish claim show --reveal` 取。**永远不要转发 claim 值或 claim URL：谁持有它，谁就拥有这个部署。**
 - GitHub Pages 被当作共享状态处理：不属于本工具的分支会被**拒绝**而不是覆盖；`CNAME` 逐字节保留；
@@ -244,11 +245,18 @@ $ node tools/probe-contracts.mjs  # 仅维护者：重新实测线上匿名托�
 - **不做浏览器渲染**（设计如此）。
 - 隧道中继只是便利功能，不是受支持的发布路径；基于 SSH 的那几个标记为实验性。
 
-## 来源与许可
+## 独立性、来源与许可
 
-从 Teacher DSH 桌面发行版（MIT）抽取而来。哪些部分来自哪里见
-[`docs/provenance.md`](./docs/provenance.md)；本工具实现的、经过实测的托管商契约见
-[`docs/provider-protocols.md`](./docs/provider-protocols.md)。
+`vpublish` 是一个**独立项目**，不是任何产品的组件。它的定位正好相反：它是 **上游**，由 Teacher DSH 教育版
+依赖并锁定版本。
+
+代码最初诞生在那个教育版内部——这也是它带有一个可选的 `teacher` 安全策略、并且它的托管商协议是按那个用途
+实测的原因。现在这两者在独立工具里都只是普通部件：默认 policy 不含任何教学规则，本仓库也**不 import、
+不依赖、不知道**任何下游产品。
+
+- [`docs/provenance.md`](./docs/provenance.md) —— 代码从哪来，以及许可
+- [`docs/consuming.md`](./docs/consuming.md) —— 下游产品**可以**依赖什么、**不可以**依赖什么
+- [`docs/provider-protocols.md`](./docs/provider-protocols.md) —— 经过实测的托管商契约
 
 包名与命令名都是 `vpublish`；Git 仓库是 [`Inkotake/deploy-cli`](https://github.com/Inkotake/deploy-cli)，
 因为 `deploy-cli` 在 npm 上已被占用。仓库名与包名本来就可以独立，而命令名只存在于一个地方

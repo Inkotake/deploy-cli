@@ -25,8 +25,8 @@ import {
   warn
 } from './common.mjs';
 import * as identity from './identity.mjs';
-import { DEFAULT_POLICY, POLICY_NAMES, isPolicyName, listPolicies, loadPolicy } from './policies/index.mjs';
 import { claimsPath, findClaim, formatClaim, readClaims } from './claims.mjs';
+import { RULES as SAFETY_RULES, SENSITIVE_DIRECTORIES } from './safety.mjs';
 import {
   buildManifest,
   discoverArtifacts,
@@ -45,10 +45,10 @@ import { adapterAvailability } from './providers/index.mjs';
 /* -------------------------------------------------------------------- args ---- */
 
 const BOOLEAN_FLAGS = new Set(['json', 'help', 'version', 'auto', 'dry-run', 'no-verify', 'verify-all', 'verbose', 'cn', 'yes', 'allow-inexact', 'show-claim-secret', 'reveal', 'keep-snapshot', 'force-push']);
-const VALUE_FLAGS = new Set(['mode', 'provider', 'port', 'timeout', 'policy', 'region', 'tool', 'branch', 'proxy']);
+const VALUE_FLAGS = new Set(['mode', 'provider', 'port', 'timeout', 'region', 'tool', 'branch', 'proxy']);
 
 export function parseArgs(argv) {
-  const options = { positional: [], mode: DEFAULT_MODE, provider: null, port: null, timeout: null, policy: null, region: null, branch: null };
+  const options = { positional: [], mode: DEFAULT_MODE, provider: null, port: null, timeout: null, region: null, branch: null };
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
     if (token === '--') {
@@ -86,9 +86,6 @@ export function parseArgs(argv) {
   if (options.cn === true && !options.region) options.region = 'cn-mainland';
   if (options.region !== null && options.region !== undefined && !REGIONS.includes(options.region)) {
     throw new UsageError(`--region must be one of ${REGIONS.join(', ')} (got ${options.region})`);
-  }
-  if (options.policy !== null && options.policy !== undefined && !isPolicyName(options.policy)) {
-    throw new UsageError(`--policy must be one of ${POLICY_NAMES.join(', ')} (got ${options.policy})`);
   }
   if (options.proxy) {
     try {
@@ -128,7 +125,7 @@ export const USAGE = `vpublish - verified static publishing for humans and agent
 Usage:
   vpublish [dir]                      same as: deploy [dir]
   vpublish detect [dir]
-  vpublish inspect [dir] [--policy <generic|teacher>] [--json]
+  vpublish inspect [dir] [--json]
   vpublish plan [dir] --mode <quick-share|persistent|tunnel>
                                  [--region <auto|cn-mainland|global>] [--json]
   vpublish deploy [dir] --mode <mode> [--json] [--auto] [--provider <id>] [--dry-run]
@@ -150,7 +147,6 @@ Options:
   --auto          do not prompt for confirmation
   --provider      restrict a deploy to one provider id
   --dry-run       show the order without contacting any provider
-  --policy        safety policy: generic (default) or teacher (adds student-data rules)
   --region        provider ordering: auto (default), cn-mainland, or global
   --verify-all    compare every file even above the 20 MiB fast-verification threshold
   --no-verify     skip remote verification (a deployment is then never reported as verified)
@@ -183,11 +179,6 @@ Honesty notes:
   * No browser rendering is performed, so this tool never claims a page runs correctly.
 `;
 
-/** Resolve the safety policy from the flag, the environment, then the default. */
-function resolvePolicy(options, env = process.env) {
-  return options.policy || identity.pickEnv(env, identity.ENV.policy) || DEFAULT_POLICY;
-}
-
 /** Resolve the provider ordering region from the flag, the environment, then the default. */
 function resolveRegion(options, env = process.env) {
   return options.region || identity.pickEnv(env, identity.ENV.region) || DEFAULT_REGION;
@@ -218,8 +209,8 @@ function requireArtifact(positional, options) {
   return { requested, artifact };
 }
 
-function runInspection(dir, options = {}) {
-  const result = inspectArtifact(dir, { policy: resolvePolicy(options) });
+function runInspection(dir) {
+  const result = inspectArtifact(dir);
   if (!result.ok) throw new Failure(result.error, 3);
   return result;
 }
@@ -284,7 +275,6 @@ export function providersReport(options = {}) {
     healthFile: health.file,
     health: includeHealth ? summaryHealth(health.state) : null,
     providers,
-    policies: listPolicies(),
     modes: MODES
   };
 }
@@ -313,7 +303,6 @@ function detectReport(requested, options) {
     ok: Boolean(artifact),
     requested,
     searched,
-    policy: resolvePolicy(options),
     region: resolveRegion(options, options.env),
     artifact: artifact ? { dir: artifact.dir, relative: artifact.relative } : null,
     candidates: all.map((candidate) => ({ dir: candidate.dir, relative: candidate.relative })),
@@ -615,7 +604,7 @@ export async function main(argv, streams = {}) {
         log('Static artifact: ' + (report.artifact ? report.artifact.dir : 'NOT FOUND (build the artifact first)'));
         if (report.candidates.length > 1) log('Other candidates: ' + report.candidates.map((candidate) => candidate.relative).join(', '));
         log('Registry: ' + (report.registryFile || 'NOT FOUND'));
-        log('Policy: ' + report.policy + '   Region: ' + report.region);
+        log('Region: ' + report.region);
         log('Enabled providers: ' + (report.providers.join(', ') || '(none)'));
         log('Project config: ' + (Object.entries(report.project.config).filter(([, value]) => value.length).map(([key, value]) => `${key}(${value.join('/')})`).join(', ') || 'none'));
         log('Git remote: ' + (report.project.gitRemote || 'none'));
@@ -626,7 +615,7 @@ export async function main(argv, streams = {}) {
 
     case 'inspect': {
       const { artifact } = requireArtifact(options.positional, options);
-      const result = runInspection(artifact.dir, options);
+      const result = runInspection(artifact.dir);
       const summary = summarizeInspect(result);
       if (options.json) emitResult('inspect', summary);
       else printInspect(summary);
@@ -635,7 +624,7 @@ export async function main(argv, streams = {}) {
 
     case 'plan': {
       const { artifact } = requireArtifact(options.positional, options);
-      const result = runInspection(artifact.dir, options);
+      const result = runInspection(artifact.dir);
       const registry = loadRegistry({ env });
       if (!registry.ok) throw new Failure(`provider registry unusable: ${registry.error}`, 5, registry.problems);
       const health = loadHealth(env);
@@ -654,7 +643,6 @@ export async function main(argv, streams = {}) {
       const payload = {
         mode: plan.mode,
         region: plan.region,
-        policy: result.policy,
         dir: artifact.dir,
         artifact: {
           fileCount: result.manifest.fileCount,
@@ -689,7 +677,7 @@ export async function main(argv, streams = {}) {
 
     case 'deploy': {
       const { artifact } = requireArtifact(options.positional, options);
-      const result = runInspection(artifact.dir, options);
+      const result = runInspection(artifact.dir);
       const summary = summarizeInspect(result);
       const registry = loadRegistry({ env });
       if (!registry.ok) throw new Failure(`provider registry unusable: ${registry.error}`, 5, registry.problems);
@@ -721,11 +709,11 @@ export async function main(argv, streams = {}) {
         keepSnapshot: options.keepSnapshot === true,
         forcePush: options.forcePush === true,
         branch: options.branch || null,
-        context: { ...context, root: path.dirname(artifact.dir), policy: result.policy, region: plan.region },
+        context: { ...context, root: path.dirname(artifact.dir), region: plan.region },
         env
       });
 
-      const payload = { policy: result.policy, region: plan.region, ...summarizeDeploy(outcome) };
+      const payload = { region: plan.region, ...summarizeDeploy(outcome) };
       if (options.json) {
         emitResult('deploy', payload);
         for (const attempt of outcome.attempts) {
@@ -848,7 +836,6 @@ export async function main(argv, streams = {}) {
       const { artifact } = resolveArtifact(requested, { maxDepth: 3 });
       const registry = loadRegistry({ env });
       const health = loadHealth(env);
-      const policy = loadPolicy(resolvePolicy(options, env));
       const tunnel = detectTunnelTools();
       const payload = {
         ok: registry.ok,
@@ -861,7 +848,7 @@ export async function main(argv, streams = {}) {
           capabilitySchema: identity.CAPABILITY_SCHEMA
         },
         stateHome: resolveStateHome(env),
-        policy: { active: policy.name, ruleCount: policy.rules.length, available: listPolicies() },
+        safety: { ruleCount: SAFETY_RULES.length, sensitiveDirectories: SENSITIVE_DIRECTORIES.length },
         region: resolveRegion(options, env),
         proxy: {
           explicit: options.proxy || null,
@@ -902,7 +889,7 @@ export async function main(argv, streams = {}) {
       else {
         log(`${payload.runtime.tool} on Node ${payload.runtime.node} (${payload.runtime.platform}/${payload.runtime.arch})`);
         log(`  state:    ${payload.stateHome}`);
-        log(`  policy:   ${payload.policy.active} (${payload.policy.ruleCount} rules)`);
+        log(`  safety:   ${payload.safety.ruleCount} rules, ${payload.safety.sensitiveDirectories} sensitive directories`);
         log(`  region:   ${payload.region}`);
         log(`  proxy:    ${payload.proxy.explicit || payload.proxy.httpsProxy || '(none configured)'}`);
         if (!registry.ok) log(`  registry: UNUSABLE — ${registry.error}`);
@@ -937,10 +924,6 @@ export async function run(argv = process.argv.slice(2)) {
     if (cause instanceof UsageError) {
       error(cause.message);
       error(`run ${identity.COMMAND} help for usage`);
-      return 2;
-    }
-    if (cause && cause.code === 'EUNKNOWNPOLICY') {
-      error(cause.message);
       return 2;
     }
     if (cause instanceof Failure) {

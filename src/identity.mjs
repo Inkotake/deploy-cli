@@ -65,7 +65,7 @@ export const DEFAULT_STATE_DIR = `.${NAME}`;
 
 /**
  * Environment variables, newest first. The older spellings are still read so a deployment that
- * exported them — including the desktop product this was extracted from — keeps working unchanged;
+ * exported them — including the education edition that consumes this package — keeps working unchanged;
  * the first name that is set wins.
  */
 export const ENV = {
@@ -74,7 +74,6 @@ export const ENV = {
   deployHome: ['VPUBLISH_DEPLOY_HOME', 'VERIFIED_PUBLISH_DEPLOY_HOME', 'TEACHER_DEPLOY_HOME'],
   registry: ['VPUBLISH_REGISTRY', 'VERIFIED_PUBLISH_REGISTRY', 'TEACHER_PUBLISH_REGISTRY'],
   statusFile: ['VPUBLISH_STATUS_FILE', 'VERIFIED_PUBLISH_STATUS_FILE', 'TEACHER_PUBLISH_STATUS_FILE'],
-  policy: ['VPUBLISH_POLICY', 'VERIFIED_PUBLISH_POLICY'],
   region: ['VPUBLISH_REGION', 'VERIFIED_PUBLISH_REGION'],
   proxy: ['VPUBLISH_PROXY', 'VERIFIED_PUBLISH_PROXY']
 };

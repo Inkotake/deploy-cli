@@ -34,8 +34,8 @@ required`). `docs/releasing.md` records both ways to finish that step.
   bytes to a plain GET. Measured live: ship.page adds a Cloudflare Insights beacon for a browser-like
   `Accept` header (+367 bytes on a 277-byte page). The answer is reported, never hidden, and is not
   treated as a failure.
-- Safety policies: `generic` (credentials and private material) and `teacher` (adds student records,
-  grades, rosters and family contact data, but only for files that can carry records).
+- A fixed, non-configurable pre-publish safety scan: credentials, private keys and sensitive
+  directories are hard-blocked, and nothing is uploaded while a block is present.
 - Ownership credentials are stored in the private state directory (`0600` where supported) and are
   **not** printed by default; `claim list` / `claim show [--reveal]` replace the old behaviour.
 - Immutable upload snapshots for providers driven through an external CLI or `git`, so a rebuild
@@ -64,6 +64,14 @@ required`). `docs/releasing.md` records both ways to finish that step.
 - The registry requires the new `capabilitySchema` key; a file without it is refused.
 - Provider CLI discovery no longer depends on a bundled runtime: `PATH` is used when no bundle is
   present, and the deploy directory is configurable.
+
+### Removed
+
+- The `teacher` safety policy, the `--policy` flag and `VPUBLISH_POLICY`. Sector-specific data rules
+  belong to the product that has the context to judge them, not to an upstream tool: a rule that is
+  wrong for the general case teaches people to bypass the scan. The core keeps one fixed rule set
+  (credentials, private keys, sensitive directories), and a consumer applies its own rules to the
+  per-path manifest from `inspect --json` before it calls `deploy` — see `docs/consuming.md`.
 
 ### Fixed
 

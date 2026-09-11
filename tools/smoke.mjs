@@ -45,7 +45,7 @@ const cases = [
   { name: 'version', args: ['--version'], expectExit: 0, json: false },
   { name: 'detect', args: ['detect', artifact, '--json'], expectExit: 0, json: true, command: 'detect' },
   { name: 'inspect', args: ['inspect', artifact, '--json'], expectExit: 0, json: true, command: 'inspect' },
-  { name: 'inspect teacher policy', args: ['inspect', artifact, '--policy', 'teacher', '--json'], expectExit: 0, json: true, command: 'inspect' },
+  { name: 'removed --policy flag', args: ['inspect', artifact, '--policy', 'teacher'], expectExit: 2, json: false, expectEmptyStdout: true },
   { name: 'inspect blocked', args: ['inspect', blockedArtifact, '--json'], expectExit: 4, json: true, command: 'inspect' },
   { name: 'plan quick-share', args: ['plan', artifact, '--mode', 'quick-share', '--json'], expectExit: 0, json: true, command: 'plan' },
   { name: 'plan persistent', args: ['plan', artifact, '--mode', 'persistent', '--json'], expectExit: [0, 6], json: true, command: 'plan' },
@@ -59,7 +59,7 @@ const cases = [
   { name: 'tunnel detect', args: ['tunnel', 'detect', '--json'], expectExit: [0, 8], json: true, command: 'tunnel' },
   { name: 'missing artifact', args: ['inspect', emptyDir], expectExit: 3, json: false, expectEmptyStdout: true },
   { name: 'bad mode', args: ['plan', artifact, '--mode', 'nope'], expectExit: 2, json: false, expectEmptyStdout: true },
-  { name: 'bad policy', args: ['inspect', artifact, '--policy', 'nope'], expectExit: 2, json: false, expectEmptyStdout: true },
+  { name: 'bad region', args: ['plan', artifact, '--region', 'mars'], expectExit: 2, json: false, expectEmptyStdout: true },
   { name: 'unknown command', args: ['frobnicate'], expectExit: 2, json: false, expectEmptyStdout: true }
 ];
 
