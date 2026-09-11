@@ -1,7 +1,7 @@
 # Static provider protocols
 
 Verified reference for the anonymous / persistent static-hosting providers that
-`verified-publish` implements. This file is the contract the adapters in
+`vpublish` implements. This file is the contract the adapters in
 `src/providers/` must satisfy.
 
 Everything below was verified against live documentation and, where noted, against published

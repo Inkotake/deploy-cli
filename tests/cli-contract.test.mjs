@@ -15,7 +15,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-const BIN = fileURLToPath(new URL('../bin/verified-publish.mjs', import.meta.url));
+const BIN = fileURLToPath(new URL('../bin/vpublish.mjs', import.meta.url));
 const SHIPPED_REGISTRY = fileURLToPath(new URL('../config/providers.json', import.meta.url));
 const tempDirs = [];
 
@@ -78,7 +78,7 @@ test('help and --version describe the tool without touching anything', () => {
   }
   const version = runCli(['--version']);
   assert.equal(version.status, 0);
-  assert.match(version.stdout.trim(), /^verified-publish \d+\.\d+\.\d+$/);
+  assert.match(version.stdout.trim(), /^vpublish \d+\.\d+\.\d+$/);
 });
 
 test('every JSON command emits exactly one document with the contract header', () => {
@@ -178,4 +178,20 @@ test('doctor reports the runtime contract, the registry schema and the provider 
   assert.equal(payload.region, 'auto');
   assert.ok(payload.artifact.dir.endsWith('dist'));
   assert.ok(Array.isArray(payload.envContract) && payload.envContract.length > 0);
+});
+
+test('the older environment variable spellings still work', () => {
+  // A rename must not break a deployment that exports the previous names: they are read as
+  // fallbacks, so a caller that only sets an old variable still gets a working, isolated state dir.
+  const legacyState = tempDir('legacy-state');
+  const result = runCli(['providers', '--json'], { env: { VERIFIED_PUBLISH_HOME: legacyState } });
+  assert.equal(result.status, 0, result.stderr);
+  const payload = jsonOf(result, 'providers');
+  assert.equal(payload.ok, true);
+  assert.equal(payload.providers.length, 11);
+
+  // And the desktop product's original spelling keeps working too.
+  const desktopState = tempDir('desktop-state');
+  const desktop = runCli(['providers', '--json'], { env: { TEACHER_DSH_HOME: desktopState } });
+  assert.equal(desktop.status, 0, desktop.stderr);
 });

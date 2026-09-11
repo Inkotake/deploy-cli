@@ -1,8 +1,8 @@
-# verified-publish
+# vpublish
 
 **Deploy a built static folder anywhere. Verify what actually went live. Fail over when the host doesn't.**
 
-`verified-publish` is a static-publishing router for humans and agents. Point it at a `dist/` and it
+`vpublish` is a static-publishing router for humans and agents. Point it at a `dist/` and it
 inspects the artifact, chooses a host that can actually serve it, uploads it, fetches the files back
 and compares them byte for byte, and only then reports a URL.
 
@@ -13,7 +13,7 @@ dist/  →  inspect  →  choose a compatible host  →  upload  →  fetch it b
 An HTTP 2xx from an upload is a *candidate* success. Success is only reported after verification.
 
 ```console
-$ verified-publish ./dist
+$ vpublish ./dist
 Inspected 62 files (4.8 MiB), no blocked files
 Publishing plan (quick-share, region auto)
   1. ship-page  score=10
@@ -27,7 +27,7 @@ Deployment verified.
 Machine-readable form, same run:
 
 ```console
-$ verified-publish ./dist --json | jq '.verification.passed, .url'
+$ vpublish ./dist --json | jq '.verification.passed, .url'
 true
 "https://xxxx.shipped.page/"
 ```
@@ -35,9 +35,9 @@ true
 ## Install
 
 ```console
-$ npx verified-publish ./dist
+$ npx vpublish ./dist
 # or
-$ npm install --global verified-publish
+$ npm install --global vpublish
 ```
 
 Node **22.2+** is the only requirement. The package has **zero dependencies** — no install step, no
@@ -60,7 +60,7 @@ bundle.
 
 | Command | Purpose |
 |---|---|
-| `verified-publish [dir]` | Shorthand for `deploy [dir]`. |
+| `vpublish [dir]` | Shorthand for `deploy [dir]`. |
 | `detect [dir]` | Find the artifact, report the registry, project markers, git remote and tunnel tools. |
 | `inspect [dir]` | Build the byte manifest, run the safety scan, list client-side routes and broken references. |
 | `plan [dir] --mode <mode>` | Order the candidate providers for one mode and explain every decision. Contacts nothing. |
@@ -150,7 +150,7 @@ claim was last measured.
 
 `expected` means the adapter implements the provider's documented CLI contract and only its failure
 path has been exercised. Do not read it as measured. The registry is the source of truth:
-`verified-publish providers --json` shows capabilities, `verification.status` and breaker state.
+`vpublish providers --json` shows capabilities, `verification.status` and breaker state.
 
 Persistent providers are driven by the CLI you already have (`netlify`, `wrangler`, `vercel`) or by
 `git` for GitHub Pages. Nothing is installed for you; if the CLI is missing, the provider is reported
@@ -163,7 +163,7 @@ as unavailable rather than downloaded.
   **only** when the file can carry records (`.csv`, `.xlsx`, `.json`, `.pdf`, extensionless, …); a
   component named `grade-utils.js` is a warning, not a refusal.
 - Ownership credentials are written to `claims.json` in the private state directory (mode `0600`
-  where the filesystem supports it) and reported without their value. `verified-publish claim show`
+  where the filesystem supports it) and reported without their value. `vpublish claim show`
   reveals one when you ask for it. Never forward a claim value or claim URL: holding it means owning
   the deployment.
 - GitHub Pages is treated as shared state: a branch this tool does not own is **refused** rather than
@@ -176,15 +176,17 @@ as unavailable rather than downloaded.
 
 | Variable | Effect |
 |---|---|
-| `VERIFIED_PUBLISH_HOME` | State directory (health cache, claims). Defaults to `~/.verified-publish`. |
+| `VERIFIED_PUBLISH_HOME` | State directory (health cache, claims). Defaults to `~/.vpublish`. |
 | `VERIFIED_PUBLISH_REGISTRY` | Use a different provider registry file. |
 | `VERIFIED_PUBLISH_STATUS_FILE` | Local availability overlay (may only change `enabled`, `priority`, `health`, `lastValidated`, `notes`). |
 | `VERIFIED_PUBLISH_POLICY`, `VERIFIED_PUBLISH_REGION` | Defaults for `--policy` and `--region`. |
 | `VERIFIED_PUBLISH_DEPLOY_HOME`, `VERIFIED_PUBLISH_DEPLOY_BIN` | Where to look for `netlify`/`wrangler`/`vercel` before falling back to `PATH`. |
 | `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY` | Standard proxy variables, honoured by every request. |
 
-Legacy names from the project this was extracted from (`TEACHER_DSH_HOME`, `TEACHER_DEPLOY_HOME`,
-`TEACHER_PUBLISH_REGISTRY`, `TEACHER_PUBLISH_STATUS_FILE`) are still read as fallbacks.
+Older spellings are read as fallbacks, so a deployment that exports them keeps working:
+`VERIFIED_PUBLISH_*` (this tool's previous name) and the desktop product's original
+`TEACHER_DSH_HOME` / `TEACHER_DEPLOY_HOME` / `TEACHER_PUBLISH_REGISTRY` /
+`TEACHER_PUBLISH_STATUS_FILE`.
 
 ## JSON contract
 
@@ -229,5 +231,10 @@ Honest list of what is **not** verified yet:
 
 Extracted from the Teacher DSH desktop distribution (MIT). See `docs/provenance.md` for what came
 from where, and `docs/provider-protocols.md` for the measured provider contract this tool implements.
+
+The package and the command are both `vpublish`; the Git repository is
+[`Inkotake/deploy-cli`](https://github.com/Inkotake/deploy-cli), because `deploy-cli` is already taken
+on npm. Repository name and package name are independent by design, and the command name lives in one
+place (`src/identity.mjs`).
 
 MIT — see `LICENSE`.

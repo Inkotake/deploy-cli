@@ -11,7 +11,7 @@ First release of the standalone tool, extracted from the Teacher DSH desktop dis
 ### Added
 
 - `deploy`, `inspect`, `plan`, `verify`, `detect`, `providers`, `claim`, `doctor` and `tunnel`
-  commands, plus `verified-publish <dir>` as shorthand for `deploy <dir>`.
+  commands, plus `vpublish <dir>` as shorthand for `deploy <dir>`.
 - Capability-aware provider planning: extension allowlists and blocklists, file-count, per-file and
   total-size limits, model/`wasm` support and HTML-rewrite behaviour are enforced **before** upload.
 - Documented layout limits are enforced too: `capabilities.maxDirectoryDepth` and `maxPathLength`
@@ -46,8 +46,11 @@ First release of the standalone tool, extracted from the Teacher DSH desktop dis
 
 ### Changed
 
-- Renamed from `teacher-publish` (`@teacher-dsh/publish-cli`) to `verified-publish`; the old
-  environment variable names are still read as fallbacks.
+- Renamed twice on the way here: `teacher-publish` (in the desktop product) → `verified-publish`
+  (the working name during extraction, under which the first live probes ran) → **`vpublish`**
+  (shorter, and free on npm while `deploy-cli` was taken). Environment variables from both earlier
+  names are still read as fallbacks, and a `gh-pages` branch carrying the old `X-Verified-Publish`
+  trailer is still recognised as ours.
 - Registry capabilities moved from flat `ttlSecondsDefault` / `ttlSecondsSource` and a
   `verification.htmlPolicy` string to a structured `capabilities` object with `ttl`, `denyExtensions`,
   `claimable`, `htmlExact` and optional `idempotent` / `updateInPlace`.

@@ -3,6 +3,13 @@
 This repository is a standalone extraction of the static-publishing CLI that shipped inside the
 **Teacher DSH** desktop distribution, where it was `teacher-publish` (`@teacher-dsh/publish-cli`).
 
+Naming history, so old references can be traced: `teacher-publish` (in the desktop product) →
+`verified-publish` (the working name during extraction, and the name the first live probes ran under)
+→ **`vpublish`** (the published name: shorter to type, and free on npm while `deploy-cli` — the
+repository name — was already taken). Environment variables from both earlier names are still read as
+fallbacks, and a `gh-pages` branch published under the old commit trailer `X-Verified-Publish` is
+still recognised as ours rather than as a foreign branch.
+
 ## What came from where
 
 | Part | Origin |

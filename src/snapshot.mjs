@@ -17,7 +17,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { listFiles, sha256Hex, toPosix } from './common.mjs';
 
-const TOOL_NAME = 'verified-publish';
+const TOOL_NAME = 'vpublish';
 const STRATEGIES = new Set(['auto', 'hardlink', 'copy']);
 
 /** Join a snapshot root and a POSIX-relative path with the platform separator. */

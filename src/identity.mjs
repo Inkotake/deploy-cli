@@ -27,11 +27,11 @@ function readPackage() {
 const pkg = readPackage();
 
 /** Package name, as published. */
-export const NAME = typeof pkg.name === 'string' && pkg.name ? pkg.name : 'verified-publish';
+export const NAME = typeof pkg.name === 'string' && pkg.name ? pkg.name : 'vpublish';
 /** Package version; also the value reported by `--version`. */
 export const VERSION = typeof pkg.version === 'string' && pkg.version ? pkg.version : '0.0.0';
 /** Executable name generated from `package.json#bin`. */
-export const COMMAND = 'verified-publish';
+export const COMMAND = 'vpublish';
 
 /** Version of the `--json` stdout contract. Bump only for a breaking payload change. */
 export const SCHEMA_VERSION = 1;
@@ -58,20 +58,25 @@ const userAgentUrl = repositoryUrl ? repositoryUrl.replace(/^git\+/, '').replace
 export const USER_AGENT = userAgentUrl ? `${NAME}/${VERSION} (+${userAgentUrl})` : `${NAME}/${VERSION}`;
 
 /** Multipart boundary prefix. Purely cosmetic, but it shows up in packet captures and logs. */
-export const BOUNDARY_PREFIX = '----verifiedpublish';
+export const BOUNDARY_PREFIX = '----vpublish';
 
 /** State directory used when no environment variable overrides it. */
 export const DEFAULT_STATE_DIR = `.${NAME}`;
 
+/**
+ * Environment variables, newest first. The older spellings are still read so a deployment that
+ * exported them — including the desktop product this was extracted from — keeps working unchanged;
+ * the first name that is set wins.
+ */
 export const ENV = {
-  home: ['VERIFIED_PUBLISH_HOME', 'TEACHER_DSH_HOME', 'TEACHER_HOME'],
-  deployBin: ['VERIFIED_PUBLISH_DEPLOY_BIN', 'TEACHER_DEPLOY_BIN'],
-  deployHome: ['VERIFIED_PUBLISH_DEPLOY_HOME', 'TEACHER_DEPLOY_HOME'],
-  registry: ['VERIFIED_PUBLISH_REGISTRY', 'TEACHER_PUBLISH_REGISTRY'],
-  statusFile: ['VERIFIED_PUBLISH_STATUS_FILE', 'TEACHER_PUBLISH_STATUS_FILE'],
-  policy: ['VERIFIED_PUBLISH_POLICY'],
-  region: ['VERIFIED_PUBLISH_REGION'],
-  proxy: ['VERIFIED_PUBLISH_PROXY']
+  home: ['VPUBLISH_HOME', 'VERIFIED_PUBLISH_HOME', 'TEACHER_DSH_HOME', 'TEACHER_HOME'],
+  deployBin: ['VPUBLISH_DEPLOY_BIN', 'VERIFIED_PUBLISH_DEPLOY_BIN', 'TEACHER_DEPLOY_BIN'],
+  deployHome: ['VPUBLISH_DEPLOY_HOME', 'VERIFIED_PUBLISH_DEPLOY_HOME', 'TEACHER_DEPLOY_HOME'],
+  registry: ['VPUBLISH_REGISTRY', 'VERIFIED_PUBLISH_REGISTRY', 'TEACHER_PUBLISH_REGISTRY'],
+  statusFile: ['VPUBLISH_STATUS_FILE', 'VERIFIED_PUBLISH_STATUS_FILE', 'TEACHER_PUBLISH_STATUS_FILE'],
+  policy: ['VPUBLISH_POLICY', 'VERIFIED_PUBLISH_POLICY'],
+  region: ['VPUBLISH_REGION', 'VERIFIED_PUBLISH_REGION'],
+  proxy: ['VPUBLISH_PROXY', 'VERIFIED_PUBLISH_PROXY']
 };
 
 export const FILES = {
@@ -85,6 +90,9 @@ export const MARKERS = {
   ghPagesStagingPrefix: `.${NAME}-gh-pages`,
   netlifyMessage: COMMAND,
   commitSubject: `${COMMAND} static artifact`,
+  /** Commit trailer written into a published branch, and the older spelling still honoured. */
+  trailer: 'X-Vpublish',
+  legacyTrailers: ['X-Verified-Publish'],
   /** Recorded in the registry/deploy JSON so a caller can tell which tool produced a result. */
   producedBy: `${NAME}/${VERSION}`
 };

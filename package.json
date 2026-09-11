@@ -1,10 +1,10 @@
 {
-  "name": "verified-publish",
+  "name": "vpublish",
   "version": "0.1.0",
   "description": "Verified static publishing router for humans and agents: capability-matched provider selection, failover with a circuit breaker, a pre-publish safety scan, post-publish byte-for-byte SHA-256 verification, and a stable JSON + exit-code contract.",
   "type": "module",
   "bin": {
-    "verified-publish": "./bin/verified-publish.mjs"
+    "vpublish": "./bin/vpublish.mjs"
   },
   "files": [
     "bin",

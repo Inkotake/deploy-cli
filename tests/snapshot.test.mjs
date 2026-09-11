@@ -119,7 +119,7 @@ test('happy path mirrors the tree exactly, including the empty directory', async
   // The default rootDir is the tool's temp directory, and its cleanup still removes the tree.
   const fallback = await createSnapshot(source);
   try {
-    assert.ok(path.resolve(fallback.dir).startsWith(path.join(os.tmpdir(), 'verified-publish', 'snapshots') + path.sep));
+    assert.ok(path.resolve(fallback.dir).startsWith(path.join(os.tmpdir(), 'vpublish', 'snapshots') + path.sep));
   } finally {
     fallback.cleanup();
   }

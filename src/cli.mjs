@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * verified-publish - verified static publishing for humans and agents.
+ * vpublish - verified static publishing for humans and agents.
  *
  * Commands: detect, inspect, plan, deploy, verify, providers, claim, doctor, tunnel.
  *
@@ -123,22 +123,22 @@ export class UsageError extends Error {
 
 /* ------------------------------------------------------------------- usage ---- */
 
-export const USAGE = `verified-publish - verified static publishing for humans and agents
+export const USAGE = `vpublish - verified static publishing for humans and agents
 
 Usage:
-  verified-publish [dir]                      same as: deploy [dir]
-  verified-publish detect [dir]
-  verified-publish inspect [dir] [--policy <generic|teacher>] [--json]
-  verified-publish plan [dir] --mode <quick-share|persistent|tunnel>
+  vpublish [dir]                      same as: deploy [dir]
+  vpublish detect [dir]
+  vpublish inspect [dir] [--policy <generic|teacher>] [--json]
+  vpublish plan [dir] --mode <quick-share|persistent|tunnel>
                                  [--region <auto|cn-mainland|global>] [--json]
-  verified-publish deploy [dir] --mode <mode> [--json] [--auto] [--provider <id>] [--dry-run]
-  verified-publish verify <url> [dir] [--json] [--verify-all]
-  verified-publish providers [--json]
-  verified-publish claim [list | show [url|provider|latest]] [--reveal] [--json]
-  verified-publish doctor [dir] [--json]
-  verified-publish tunnel detect [--json]
-  verified-publish tunnel start --port <n> [--tool <id>] [--auto] [--json]
-  verified-publish --version
+  vpublish deploy [dir] --mode <mode> [--json] [--auto] [--provider <id>] [--dry-run]
+  vpublish verify <url> [dir] [--json] [--verify-all]
+  vpublish providers [--json]
+  vpublish claim [list | show [url|provider|latest]] [--reveal] [--json]
+  vpublish doctor [dir] [--json]
+  vpublish tunnel detect [--json]
+  vpublish tunnel start --port <n> [--tool <id>] [--auto] [--json]
+  vpublish --version
 
 Modes:
   quick-share (default)  anonymous temporary host; failover allowed between compatible hosts
@@ -570,7 +570,7 @@ async function startTunnel(tool, options) {
 export const COMMANDS = ['detect', 'inspect', 'plan', 'deploy', 'verify', 'providers', 'claim', 'doctor', 'tunnel', 'help', 'version'];
 
 /**
- * `verified-publish ./dist` is the shortest honest sentence for what most people want, so a first
+ * `vpublish ./dist` is the shortest honest sentence for what most people want, so a first
  * argument that is clearly a path becomes `deploy <path>`. A word that is neither a command nor a
  * path stays an unknown command (exit 2): guessing there would risk deploying something unintended.
  */
@@ -926,7 +926,7 @@ export async function main(argv, streams = {}) {
 
 /**
  * Run the CLI for an argv slice. Returns the process exit code.
- * `bin/verified-publish.mjs` is the only entry point; this module never self-executes so it stays
+ * `bin/vpublish.mjs` is the only entry point; this module never self-executes so it stays
  * importable for tests.
  */
 export async function run(argv = process.argv.slice(2)) {

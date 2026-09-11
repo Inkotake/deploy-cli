@@ -47,7 +47,7 @@ function tempDir(label) {
 }
 
 /** Fixture git calls carry their own identity: the machine's global config must not matter. */
-const IDENTITY_ARGS = ['-c', 'user.name=verified-publish test', '-c', 'user.email=test@example.com', '-c', 'commit.gpgsign=false'];
+const IDENTITY_ARGS = ['-c', 'user.name=vpublish test', '-c', 'user.email=test@example.com', '-c', 'commit.gpgsign=false'];
 
 function git(args, cwd) {
   const result = spawnSync('git', [...IDENTITY_ARGS, ...args], { cwd, encoding: 'utf8', windowsHide: true, env: CLEAN_GIT_ENV });
@@ -204,7 +204,7 @@ test('our own branch is updated and the new commit carries our markers', async (
   const subject = gitOk(['log', '-1', '--format=%s', 'refs/heads/gh-pages'], fx.origin);
   assert.equal(subject, identity.MARKERS.commitSubject);
   const body = gitOk(['log', '-1', '--format=%B', 'refs/heads/gh-pages'], fx.origin);
-  assert.match(body, new RegExp(`X-Verified-Publish: ${identity.NAME}`));
+  assert.match(body, new RegExp(`${identity.MARKERS.trailer}: ${identity.NAME}`));
   assert.equal(
     fx.branchFiles('gh-pages').get('index.html').toString('utf8'),
     '<!doctype html><title>artifact v2</title>\n',

@@ -1,5 +1,10 @@
 # Live probe — 2026-09-11
 
+> Historical record: these runs were made while the tool was still named `verified-publish`, so the
+> user agent the providers saw, the state directory and the container name in any captured output say
+> `verified-publish`. The tool is now `vpublish`; nothing below has been rewritten, because the
+> evidence is only worth anything if it is the record of what actually happened.
+
 Everything below was measured from this machine, on the real services, with Node 24's global `fetch`
 and the tool's own HTTP path. No proxy. These results are the evidence behind the registry's
 `verification` fields and the README's status section.

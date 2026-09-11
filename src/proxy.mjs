@@ -1,5 +1,5 @@
 /**
- * HTTP(S) forward-proxy support for verified-publish.
+ * HTTP(S) forward-proxy support for vpublish.
  *
  * WHY: the CLI reaches artifact hosts and deploy APIs from machines behind corporate or regional
  * forward proxies, and Node's http/https/fetch ignore the conventional proxy environment variables

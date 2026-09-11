@@ -17,8 +17,8 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const bin = path.join(root, 'bin', 'verified-publish.mjs');
-const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'verified-publish-smoke-'));
+const bin = path.join(root, 'bin', 'vpublish.mjs');
+const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'vpublish-smoke-'));
 const stateHome = path.join(tempRoot, 'state');
 
 function makeArtifact() {

@@ -29,4 +29,4 @@ jobs:
       - name: Command contract smoke
         run: node tools/smoke.mjs
       - name: Show the resolved tool version
-        run: node bin/verified-publish.mjs --version
+        run: node bin/vpublish.mjs --version

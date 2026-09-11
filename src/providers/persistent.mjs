@@ -191,7 +191,7 @@ async function deployGithubPages(manifest, context) {
     const tree = (await inStaging('write-tree', ['-c', 'core.autocrlf=false', 'write-tree'])).stdout.trim();
     const commitArgs = ['commit-tree', tree];
     if (parent) commitArgs.push('-p', parent);
-    commitArgs.push('-m', identity.MARKERS.commitSubject, '-m', `X-Verified-Publish: ${identity.NAME}`, '-m', identity.MARKERS.producedBy);
+    commitArgs.push('-m', identity.MARKERS.commitSubject, '-m', `${identity.MARKERS.trailer}: ${identity.NAME}`, '-m', identity.MARKERS.producedBy);
     // Push the commit that was actually created. The worktree HEAD stays detached at the previous
     // revision, so `HEAD:<branch>` would push the old tree instead.
     const created = (await inStaging('commit-tree', commitArgs, { env: commitEnv() })).stdout.trim();
@@ -236,7 +236,10 @@ export function leaseArgs(exists, foreign, remoteSha, branch) {
 function isOurs(message) {
   const lines = String(message || '').split(/\r?\n/);
   if (lines[0] && lines[0].trim().startsWith(identity.MARKERS.commitSubject)) return true;
-  return new RegExp(`^X-Verified-Publish:\\s*${identity.NAME}\\s*$`, 'im').test(String(message || ''));
+  // The current trailer wins, but the earlier spelling stays recognised: refusing a branch this
+  // tool published before the rename would be a false accusation of foreign ownership.
+  const trailers = [identity.MARKERS.trailer, ...identity.MARKERS.legacyTrailers];
+  return trailers.some((trailer) => new RegExp(`^${trailer}:\\s*\\S+\\s*$`, 'im').test(String(message || '')));
 }
 
 /** Author identity is supplied explicitly so a headless (or unconfigured) git can still commit. */
