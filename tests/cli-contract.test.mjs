@@ -137,7 +137,7 @@ test('missing artifacts, unusable registries and empty claim stores have their o
 
 test('a registry with no eligible provider exits 6', () => {
   const dir = writeArtifact('noeligible', SITE);
-  const shipped = JSON.parse(fs.readFileSync(SHIPPED_REGISTRY, 'utf8'));
+  const shipped = JSON.parse(fs.readFileSync(SHIPPED_REGISTRY, 'utf8').replace(/^\uFEFF/, ''));
   const only = structuredClone(shipped.providers.find((provider) => provider.id === 'ship-page'));
   only.enabled = false;
   only.disabledReason = 'disabled by the test fixture';

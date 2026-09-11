@@ -17,7 +17,13 @@ import { fileURLToPath } from 'node:url';
 import { applyOverlay, loadRegistry, providerById } from '../src/registry.mjs';
 import { DEFAULT_REGION, planProviders, summarizePlan } from '../src/planner.mjs';
 
-const SHIPPED = JSON.parse(fs.readFileSync(fileURLToPath(new URL('../config/providers.json', import.meta.url)), 'utf8'));
+/** Read JSON that a Windows editor may have saved with a UTF-8 BOM (that has bitten us once). */
+function readJson(file) {
+  return JSON.parse(fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, ''));
+}
+
+const SHIPPED_REGISTRY_PATH = fileURLToPath(new URL('../config/providers.json', import.meta.url));
+const SHIPPED = readJson(SHIPPED_REGISTRY_PATH);
 const tempDirs = [];
 
 after(() => {

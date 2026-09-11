@@ -115,7 +115,7 @@ async function startProvider(originUrl) {
 
 /** A two-provider registry: a dead endpoint first, then the live local fake. */
 function makeRegistryFixture(label, livePort) {
-  const shipped = JSON.parse(fs.readFileSync(new URL('../config/providers.json', import.meta.url), 'utf8'));
+  const shipped = JSON.parse(fs.readFileSync(new URL('../config/providers.json', import.meta.url), 'utf8').replace(/^\uFEFF/, ''));
   const template = shipped.providers.find((provider) => provider.id === 'ship-page');
   const variant = (id, endpoint, priority) => ({
     ...structuredClone(template),
