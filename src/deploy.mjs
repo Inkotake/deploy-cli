@@ -334,6 +334,7 @@ export async function deployArtifact(options) {
             htmlNotCompared: verification.htmlNotCompared,
             hashComplete: verification.hashComplete,
             rootStatus: verification.rootStatus,
+            browserRepresentation: verification.browserRepresentation,
             note: verification.note
           }
         : { passed: false, method: 'skipped', filesExpected: manifest.fileCount, filesVerified: 0, bytesVerified: 0, browserVerified: false, note: 'verification was disabled with --no-verify; this is not a verified deployment' },

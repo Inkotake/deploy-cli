@@ -121,6 +121,11 @@ Verification compares bytes, and it says exactly how far it got:
   this run compared), and the human note says the comparison was partial.
 - HTML is compared byte for byte unless the host is known to rewrite it, in which case
   `htmlExact` is `false` and the paths that were only presence-checked are listed.
+- The root document is requested **once more with browser-like headers**, because an edge network can
+  inject its own markup for browsers while serving the uploaded bytes to a plain GET. Measured live:
+  ship.page adds a Cloudflare Insights beacon for a browser-like `Accept` header (+367 bytes on a
+  277-byte page). That answer is reported as `browserRepresentation` and in the human note. It does
+  not fail the run — the artifact is served and a third party wrapped it — but it is never hidden.
 - **No browser rendering is performed.** WebGL, module-execution and CORS failures are outside what
   this tool can prove, and it never claims otherwise (`browserVerified` is always `false`).
 - A deployment whose verification cannot run is treated as **failed**, never as a success.
@@ -212,7 +217,9 @@ Honest list of what is **not** verified yet:
 
 - **Persistent success paths** (Netlify, Cloudflare Pages, Vercel, GitHub Pages) have not been run
   against live authenticated accounts. Only their failure paths were exercised.
-- The anonymous providers were last measured on **2026-09-10**; hosts change. Re-run
+- The anonymous providers were measured on **2026-09-10** and re-probed live on **2026-09-11**: all
+  six responded, endpoints and lifetimes matched the registry, and a real deployment to ship.page was
+  verified 4/4 (see `docs/evidence/live-probe-2026-09-11.md`). Hosts change — re-run
   `tools/probe-contracts.mjs` before trusting an old registry entry.
 - **No browser rendering** is performed by design.
 - Tunnel relays are a convenience, not a supported publishing path; the SSH-based ones are marked

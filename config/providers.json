@@ -1,647 +1,669 @@
-{
-  "registryVersion": 1,
-  "capabilitySchema": 1,
-  "updatedAt": "2026-09-10",
-  "notes": "Builtin provider registry. adapter/endpoint/protocol/allowedHosts/capabilities are authoritative; a LOCAL status overlay may only change enabled, priority, health, lastValidated and notes, and anything else it tries to change is refused and reported. Capability values were transcribed from docs/provider-protocols.md; 'null' means the service does not document a limit and no limit is enforced client side; 'verification.status' records how each provider was measured (live-tested, expected, or unverified). The overlay is read from disk and is NOT signed, so write access to it is a local trust decision.",
-  "providers": [
-    {
-      "id": "ship-page",
-      "label": "ship.page",
-      "adapter": "ship-page",
-      "endpoint": "https://ship.page/deploy",
-      "protocol": "alpha2-json-file-map",
-      "protocolNotes": "Documented reference is a JSON file map, but the live service accepts application/zip. The zip form is used because it preserves bytes exactly, which remote SHA-256 verification requires. UNVERIFIED in docs; live-tested.",
-      "transport": "zip-post",
-      "allowedHosts": [
-        "ship.page",
-        "*.shipped.page",
-        "*.shipped.run"
-      ],
-      "modes": [
-        "quick-share"
-      ],
-      "priority": 100,
-      "cnPriority": 100,
-      "enabled": true,
-      "persistent": false,
-      "availability": "live",
-      "capabilities": {
-        "anonymous": true,
-        "maxFiles": 100,
-        "maxFileBytes": null,
-        "maxTotalBytes": 26214400,
-        "maxTotalBytesSource": "25 MiB zip",
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "any",
-        "supportsModelFiles": true,
-        "claimable": true,
-        "htmlExact": true,
-        "ttl": {
-          "defaultSeconds": 2592000,
-          "optionsSeconds": null,
-          "source": "30 days anonymous lifetime"
-        },
-        "singlePageOnly": false
-      },
-      "claim": {
-        "kind": "claim_token",
-        "field": "claim_token",
-        "pattern": "^spc_[a-z0-9]{24}$",
-        "warning": "The claim token is shown exactly once and grants ownership. Never forward it."
-      },
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "live-tested",
-        "resourcesByteExact": true,
-        "verifiedAt": "2026-09-10",
-        "note": "live-tested: a 63-file artifact was served byte-identical for every file, HTML included."
-      }
-    },
-    {
-      "id": "shipstatic",
-      "label": "ShipStatic",
-      "adapter": "shipstatic",
-      "endpoint": "https://api.shipstatic.com/deployments",
-      "protocol": "multipart-files-checksums",
-      "protocolNotes": "Live-verified: multipart/form-data with files[] (one part per file, filename carries the relative path) plus checksums (JSON array of MD5, same order) returns 201 {deployment,url,files,size,status,expires,claim}. Optional Idempotency-Key replays the original 201 for 24 h with Idempotency-Replay: true. Zero-byte file parts are dropped by the service parser and then rejected by the checksum count check.",
-      "transport": "multipart",
-      "allowedHosts": [
-        "api.shipstatic.com",
-        "*.shipstatic.com"
-      ],
-      "modes": [
-        "quick-share"
-      ],
-      "priority": 90,
-      "cnPriority": 90,
-      "enabled": true,
-      "persistent": false,
-      "availability": "live",
-      "capabilities": {
-        "anonymous": true,
-        "maxFiles": 500,
-        "maxFileBytes": 20971520,
-        "maxTotalBytes": 52428800,
-        "maxTotalBytesSource": "50 MiB",
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "blocklist",
-        "supportsModelFiles": true,
-        "claimable": true,
-        "htmlExact": false,
-        "idempotent": true,
-        "ttl": {
-          "defaultSeconds": 259200,
-          "optionsSeconds": null,
-          "source": "3 days anonymous lifetime"
-        },
-        "singlePageOnly": false
-      },
-      "claim": {
-        "kind": "claim_url",
-        "field": "claim",
-        "pattern": null,
-        "warning": "Anyone holding the claim URL can take ownership of the deployment. Never forward it."
-      },
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "live-tested",
-        "resourcesByteExact": true,
-        "verifiedAt": "2026-09-10",
-        "note": "live-tested: JS/CSS/font resources are served byte-identical. ShipStatic rewrites served HTML by appending a ?_ship=<id> cache-busting query to asset URLs, so HTML bytes differ and are not hash-verified. Its multipart parser also silently drops zero-byte file parts, so an artifact containing one is rejected as a capability failure before upload."
-      }
-    },
-    {
-      "id": "aft-page",
-      "label": "aft.page",
-      "adapter": "aft-page",
-      "endpoint": "https://api.aft.page/v1/deploy",
-      "protocol": "multipart-indexed-files",
-      "protocolNotes": "Live-verified: POST /api/v1/deploy with multipart parts file0, file0_path, file1, file1_path, ... returns {ok,slug,deployId,url,files,bytes,editToken,claimUrl,owned,notice}. The served HTML is NOT the uploaded HTML: aft.page injects a wrapper/summary page, so byte-exact verification fails.",
-      "transport": "multipart",
-      "allowedHosts": [
-        "api.aft.page",
-        "*.aft.page"
-      ],
-      "modes": [
-        "quick-share"
-      ],
-      "priority": 80,
-      "cnPriority": 80,
-      "enabled": true,
-      "persistent": false,
-      "availability": "live",
-      "capabilities": {
-        "anonymous": true,
-        "maxFiles": 500,
-        "maxFileBytes": 26214400,
-        "maxTotalBytes": 104857600,
-        "maxTotalBytesSource": "100 MiB",
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "any",
-        "supportsModelFiles": true,
-        "claimable": true,
-        "htmlExact": false,
-        "ttl": {
-          "defaultSeconds": 2592000,
-          "optionsSeconds": null,
-          "source": "30 days idle; unclaimed sites are deleted after 30 days idle, so expiry is not a fixed deadline"
-        },
-        "singlePageOnly": false
-      },
-      "claim": {
-        "kind": "token+url",
-        "field": "editToken",
-        "urlField": "claimUrl",
-        "pattern": null,
-        "warning": "The edit token and claim URL grant ownership. Never forward them."
-      },
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "live-tested",
-        "resourcesByteExact": null,
-        "verifiedAt": "2026-09-10",
-        "note": "live-tested: aft.page does not serve the uploaded HTML at all - it injects a wrapper/summary page (a 416-byte index.html was served as 9873 bytes, 9461 without the import-map banner). Excluded from the default plan because its served output can never satisfy the verification contract."
-      }
-    },
-    {
-      "id": "here-now",
-      "label": "here.now",
-      "adapter": "here-now",
-      "endpoint": "https://here.now/api/v1/publish",
-      "protocol": "presigned-multistep",
-      "protocolNotes": "Live-verified 3-step flow: 1) POST /api/v1/publish with {files:[{path,size,contentType}]} and read upload.uploads[], upload.versionId, upload.finalizeUrl, siteUrl, publishStatus.expiresAt, claimToken, claimUrl. 2) PUT each file to the presigned *.r2.cloudflarestorage.com URL using exactly the returned headers. 3) POST upload.finalizeUrl with {versionId}; a null versionId is rejected with 400 invalid_type, so finalize is never called without one. Finalize is idempotent by versionId; concurrent finalize returns 409 finalize_in_flight with Retry-After.",
-      "transport": "multistep",
-      "allowedHosts": [
-        "here.now",
-        "*.here.now",
-        "*.r2.cloudflarestorage.com"
-      ],
-      "modes": [
-        "quick-share"
-      ],
-      "priority": 70,
-      "cnPriority": 70,
-      "enabled": true,
-      "persistent": false,
-      "availability": "live",
-      "capabilities": {
-        "anonymous": true,
-        "maxFiles": 1000,
-        "maxFileBytes": 262144000,
-        "maxTotalBytes": null,
-        "maxTotalBytesSource": null,
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "any",
-        "supportsModelFiles": true,
-        "claimable": true,
-        "htmlExact": false,
-        "ttl": {
-          "defaultSeconds": 86400,
-          "optionsSeconds": null,
-          "source": "24 hours anonymous lifetime"
-        },
-        "singlePageOnly": false
-      },
-      "claim": {
-        "kind": "token+url",
-        "field": "claimToken",
-        "urlField": "claimUrl",
-        "pattern": null,
-        "warning": "The claim token is returned exactly once and grants ownership. Never forward it. The claimUrl must be copied byte for byte."
-      },
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "live-tested",
-        "resourcesByteExact": true,
-        "verifiedAt": "2026-09-10",
-        "note": "live-tested: the create/finalize flow works (upload.versionId, upload.finalizeUrl, siteUrl) and JS/CSS/font resources are served byte-identical. here.now injects Open Graph meta tags into the served index.html (416 bytes became 798), so HTML bytes are not hash-verified."
-      }
-    },
-    {
-      "id": "show",
-      "label": "Show",
-      "adapter": "show",
-      "endpoint": "https://show.127.dev/upload",
-      "protocol": "multipart-targz",
-      "protocolNotes": "multipart/form-data with field 'file' (a tar.gz archive), 'name' and optional 'mode=spa'.",
-      "transport": "multipart",
-      "allowedHosts": [
-        "show.127.dev",
-        "*.127.dev"
-      ],
-      "modes": [
-        "quick-share"
-      ],
-      "priority": 60,
-      "cnPriority": 60,
-      "enabled": true,
-      "persistent": false,
-      "availability": "live",
-      "capabilities": {
-        "anonymous": true,
-        "maxFiles": 100,
-        "maxFileBytes": null,
-        "maxTotalBytes": 10485760,
-        "maxTotalBytesSource": "10 MiB compressed and extracted",
-        "supportedExtensions": [
-          ".html",
-          ".css",
-          ".js",
-          ".mjs",
-          ".json",
-          ".map",
-          ".txt",
-          ".xml",
-          ".svg",
-          ".png",
-          ".jpg",
-          ".jpeg",
-          ".gif",
-          ".webp",
-          ".avif",
-          ".ico",
-          ".woff",
-          ".woff2",
-          ".ttf",
-          ".otf",
-          ".webmanifest"
-        ],
-        "denyExtensions": [],
-        "extensionPolicy": "allowlist-exact",
-        "supportsModelFiles": false,
-        "supportsModelFilesSource": "hard extension allowlist rejects .glb, .gltf and .wasm",
-        "claimable": false,
-        "htmlExact": true,
-        "ttl": {
-          "defaultSeconds": 172800,
-          "optionsSeconds": null,
-          "source": "48 hours"
-        },
-        "singlePageOnly": false
-      },
-      "claim": null,
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "live-tested",
-        "resourcesByteExact": null,
-        "verifiedAt": "2026-09-10",
-        "note": "The tar.gz archive upload was accepted live and returns a deployment URL on a *.127.dev subdomain (for example https://<id>-<name>.127.dev), which is why *.127.dev is in allowedHosts. Byte fidelity is decided by verification at runtime."
-      }
-    },
-    {
-      "id": "dropley",
-      "label": "Dropley",
-      "adapter": "dropley",
-      "endpoint": "https://dropley.app/api/artifacts",
-      "protocol": "multipart-manifest",
-      "protocolNotes": "multipart/form-data with one 'file' part per file, in manifest order, plus a 'manifest' field that is a JSON string. manifestVersion must be 1, entry must be index.html and present in files, every file entry must carry contentType, and the number of file parts must equal manifest.files.length exactly.",
-      "transport": "multipart",
-      "allowedHosts": [
-        "dropley.app",
-        "*.dropley.app"
-      ],
-      "modes": [
-        "quick-share"
-      ],
-      "priority": 50,
-      "cnPriority": 50,
-      "enabled": true,
-      "persistent": false,
-      "availability": "live",
-      "capabilities": {
-        "anonymous": true,
-        "maxFiles": 1000,
-        "maxFileBytes": null,
-        "maxTotalBytes": 52428800,
-        "maxTotalBytesSource": "50 MiB",
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "unpublished-server-allowlist",
-        "supportsModelFiles": false,
-        "supportsModelFilesSource": "server enforces an unpublished extension allowlist; model files are treated as unsupported until proven otherwise (UNVERIFIED)",
-        "claimable": true,
-        "htmlExact": true,
-        "ttl": {
-          "defaultSeconds": 604800,
-          "optionsSeconds": [
-            86400,
-            259200,
-            604800
-          ],
-          "source": "1/3/7 days; 7 days requested"
-        },
-        "singlePageOnly": false
-      },
-      "claim": {
-        "kind": "artifact_token",
-        "field": "artifactToken",
-        "pattern": null,
-        "warning": "The artifact token grants ownership of the artifact. Never forward it."
-      },
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "unverified",
-        "resourcesByteExact": null,
-        "verifiedAt": "2026-09-10",
-        "note": "UNVERIFIED, and the server allowlist is stricter than documented: live tests rejected .ttf, .woff, .woff2 and extensionless files, so a typical Vite artifact cannot be served. Verification decides at runtime."
-      }
-    },
-    {
-      "id": "wh-drop",
-      "label": "wh-drop",
-      "adapter": "wh-drop",
-      "endpoint": null,
-      "protocol": null,
-      "protocolNotes": "No host, documentation or API could be located for wh-drop: 21 candidate domains do not resolve. It must never be attempted.",
-      "transport": null,
-      "allowedHosts": [
-        "invalid.invalid"
-      ],
-      "modes": [
-        "quick-share"
-      ],
-      "priority": 0,
-      "cnPriority": 0,
-      "enabled": false,
-      "disabledReason": "no-public-service-found",
-      "persistent": false,
-      "availability": "unknown",
-      "capabilities": {
-        "anonymous": true,
-        "maxFiles": 0,
-        "maxFileBytes": null,
-        "maxTotalBytes": null,
-        "maxTotalBytesSource": null,
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "unknown",
-        "supportsModelFiles": false,
-        "claimable": false,
-        "htmlExact": false,
-        "ttl": null,
-        "singlePageOnly": false
-      },
-      "claim": null,
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "no-service",
-        "resourcesByteExact": null,
-        "verifiedAt": null,
-        "note": null
-      }
-    },
-    {
-      "id": "netlify",
-      "label": "Netlify",
-      "adapter": "persistent",
-      "cli": "netlify",
-      "endpoint": null,
-      "protocol": "netlify-cli",
-      "protocolNotes": "Bundled netlify-cli: `netlify deploy --dir <dir> --prod --json`.",
-      "transport": "cli",
-      "allowedHosts": [
-        "*.netlify.app",
-        "*.netlify.com"
-      ],
-      "modes": [
-        "persistent"
-      ],
-      "priority": 100,
-      "cnPriority": 40,
-      "enabled": true,
-      "persistent": true,
-      "availability": "cli",
-      "capabilities": {
-        "anonymous": false,
-        "maxFiles": null,
-        "maxFileBytes": null,
-        "maxTotalBytes": null,
-        "maxTotalBytesSource": null,
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "any",
-        "supportsModelFiles": true,
-        "claimable": false,
-        "htmlExact": true,
-        "updateInPlace": true,
-        "ttl": null,
-        "singlePageOnly": false
-      },
-      "configMarkers": [
-        "netlify.toml",
-        ".netlify",
-        ".netlify/state.json"
-      ],
-      "persistentRank": 100,
-      "claim": null,
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "expected",
-        "resourcesByteExact": true,
-        "verifiedAt": null,
-        "note": "CDN file hosting; byte fidelity expected."
-      }
-    },
-    {
-      "id": "cloudflare-pages",
-      "label": "Cloudflare Pages",
-      "adapter": "persistent",
-      "cli": "wrangler",
-      "endpoint": null,
-      "protocol": "wrangler-cli",
-      "protocolNotes": "Bundled wrangler: `wrangler pages deploy <dir> --project-name <name>`.",
-      "transport": "cli",
-      "allowedHosts": [
-        "*.pages.dev",
-        "*.cloudflarepages.com"
-      ],
-      "modes": [
-        "persistent"
-      ],
-      "priority": 95,
-      "cnPriority": 60,
-      "enabled": true,
-      "persistent": true,
-      "availability": "cli",
-      "capabilities": {
-        "anonymous": false,
-        "maxFiles": 20000,
-        "maxFileBytes": 26214400,
-        "maxTotalBytes": null,
-        "maxTotalBytesSource": null,
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "any",
-        "supportsModelFiles": true,
-        "claimable": false,
-        "htmlExact": true,
-        "updateInPlace": true,
-        "ttl": null,
-        "singlePageOnly": false
-      },
-      "configMarkers": [
-        "wrangler.toml",
-        "wrangler.json",
-        "wrangler.jsonc",
-        ".wrangler"
-      ],
-      "persistentRank": 95,
-      "claim": null,
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "expected",
-        "resourcesByteExact": true,
-        "verifiedAt": null,
-        "note": "CDN file hosting; byte fidelity expected."
-      }
-    },
-    {
-      "id": "vercel",
-      "label": "Vercel",
-      "adapter": "persistent",
-      "cli": "vercel",
-      "endpoint": null,
-      "protocol": "vercel-cli",
-      "protocolNotes": "Bundled vercel CLI: `vercel deploy <dir> --prod --yes`.",
-      "transport": "cli",
-      "allowedHosts": [
-        "*.vercel.app"
-      ],
-      "modes": [
-        "persistent"
-      ],
-      "priority": 90,
-      "cnPriority": 40,
-      "enabled": true,
-      "persistent": true,
-      "availability": "cli",
-      "capabilities": {
-        "anonymous": false,
-        "maxFiles": null,
-        "maxFileBytes": null,
-        "maxTotalBytes": null,
-        "maxTotalBytesSource": null,
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "any",
-        "supportsModelFiles": true,
-        "claimable": false,
-        "htmlExact": true,
-        "updateInPlace": true,
-        "ttl": null,
-        "singlePageOnly": false
-      },
-      "configMarkers": [
-        "vercel.json",
-        ".vercel"
-      ],
-      "persistentRank": 90,
-      "claim": null,
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "expected",
-        "resourcesByteExact": true,
-        "verifiedAt": null,
-        "note": "CDN file hosting; byte fidelity expected. Vercel may redirect the root URL, which the client follows."
-      }
-    },
-    {
-      "id": "github-pages",
-      "label": "GitHub Pages",
-      "adapter": "persistent",
-      "cli": "git",
-      "endpoint": null,
-      "protocol": "git-pages-branch",
-      "protocolNotes": "Pushes the artifact to a gh-pages branch of the existing origin remote with git.",
-      "transport": "cli",
-      "allowedHosts": [
-        "*.github.io"
-      ],
-      "modes": [
-        "persistent"
-      ],
-      "priority": 80,
-      "cnPriority": 30,
-      "enabled": true,
-      "persistent": true,
-      "availability": "cli",
-      "capabilities": {
-        "anonymous": false,
-        "maxFiles": null,
-        "maxFileBytes": 104857600,
-        "maxTotalBytes": 1073741824,
-        "maxTotalBytesSource": null,
-        "supportedExtensions": null,
-        "denyExtensions": [],
-        "extensionPolicy": "any",
-        "supportsModelFiles": true,
-        "claimable": false,
-        "htmlExact": true,
-        "updateInPlace": true,
-        "ttl": null,
-        "singlePageOnly": false
-      },
-      "configMarkers": [
-        ".github/workflows",
-        "git-remote"
-      ],
-      "persistentRank": 80,
-      "claim": null,
-      "health": {
-        "state": "unknown",
-        "checkedAt": null,
-        "failures": 0
-      },
-      "verification": {
-        "status": "expected",
-        "resourcesByteExact": true,
-        "verifiedAt": null,
-        "note": "Byte fidelity expected, but the branch build is asynchronous, so immediate verification can legitimately fail."
-      }
-    }
-  ]
+﻿{
+    "registryVersion":  1,
+    "capabilitySchema":  1,
+    "updatedAt":  "2026-09-10",
+    "notes":  "Builtin provider registry. adapter/endpoint/protocol/allowedHosts/capabilities are authoritative; a LOCAL status overlay may only change enabled, priority, health, lastValidated and notes, and anything else it tries to change is refused and reported. Capability values were transcribed from docs/provider-protocols.md; \u0027null\u0027 means the service does not document a limit and no limit is enforced client side; \u0027verification.status\u0027 records how each provider was measured (live-tested, expected, or unverified). The overlay is read from disk and is NOT signed, so write access to it is a local trust decision. Re-probed live on 2026-09-11: see docs/evidence/live-probe-2026-09-11.md.",
+    "providers":  [
+                      {
+                          "id":  "ship-page",
+                          "label":  "ship.page",
+                          "adapter":  "ship-page",
+                          "endpoint":  "https://ship.page/deploy",
+                          "protocol":  "alpha2-json-file-map",
+                          "protocolNotes":  "Documented reference is a JSON file map, but the live service accepts application/zip. The zip form is used because it preserves bytes exactly, which remote SHA-256 verification requires. UNVERIFIED in docs; live-tested.",
+                          "transport":  "zip-post",
+                          "allowedHosts":  [
+                                               "ship.page",
+                                               "*.shipped.page",
+                                               "*.shipped.run"
+                                           ],
+                          "modes":  [
+                                        "quick-share"
+                                    ],
+                          "priority":  100,
+                          "cnPriority":  100,
+                          "enabled":  true,
+                          "persistent":  false,
+                          "availability":  "live",
+                          "capabilities":  {
+                                               "anonymous":  true,
+                                               "maxFiles":  100,
+                                               "maxFileBytes":  null,
+                                               "maxTotalBytes":  26214400,
+                                               "maxTotalBytesSource":  "25 MiB zip",
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "any",
+                                               "supportsModelFiles":  true,
+                                               "claimable":  true,
+                                               "htmlExact":  true,
+                                               "ttl":  {
+                                                           "defaultSeconds":  2592000,
+                                                           "optionsSeconds":  null,
+                                                           "source":  "30 days anonymous lifetime"
+                                                       },
+                                               "singlePageOnly":  false
+                                           },
+                          "claim":  {
+                                        "kind":  "claim_token",
+                                        "field":  "claim_token",
+                                        "pattern":  "^spc_[a-z0-9]{24}$",
+                                        "warning":  "The claim token is shown exactly once and grants ownership. Never forward it."
+                                    },
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "live-tested",
+                                               "resourcesByteExact":  true,
+                                               "verifiedAt":  "2026-09-10",
+                                               "note":  "live-tested: a 63-file artifact was served byte-identical for every file, HTML included. Re-measured 2026-09-11: a plain GET still receives byte-identical HTML, but a browser-like Accept header receives the upload plus a Cloudflare Insights beacon (+367 bytes on a 277-byte page), which verification now reports as browserRepresentation instead of hiding."
+                                           }
+                      },
+                      {
+                          "id":  "shipstatic",
+                          "label":  "ShipStatic",
+                          "adapter":  "shipstatic",
+                          "endpoint":  "https://api.shipstatic.com/deployments",
+                          "protocol":  "multipart-files-checksums",
+                          "protocolNotes":  "Live-verified: multipart/form-data with files[] (one part per file, filename carries the relative path) plus checksums (JSON array of MD5, same order) returns 201 {deployment,url,files,size,status,expires,claim}. Optional Idempotency-Key replays the original 201 for 24 h with Idempotency-Replay: true. Zero-byte file parts are dropped by the service parser and then rejected by the checksum count check.",
+                          "transport":  "multipart",
+                          "allowedHosts":  [
+                                               "api.shipstatic.com",
+                                               "*.shipstatic.com"
+                                           ],
+                          "modes":  [
+                                        "quick-share"
+                                    ],
+                          "priority":  90,
+                          "cnPriority":  90,
+                          "enabled":  true,
+                          "persistent":  false,
+                          "availability":  "live",
+                          "capabilities":  {
+                                               "anonymous":  true,
+                                               "maxFiles":  500,
+                                               "maxFileBytes":  20971520,
+                                               "maxTotalBytes":  52428800,
+                                               "maxTotalBytesSource":  "50 MiB",
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "blocklist",
+                                               "supportsModelFiles":  true,
+                                               "claimable":  true,
+                                               "htmlExact":  false,
+                                               "idempotent":  true,
+                                               "ttl":  {
+                                                           "defaultSeconds":  259200,
+                                                           "optionsSeconds":  null,
+                                                           "source":  "3 days anonymous lifetime"
+                                                       },
+                                               "singlePageOnly":  false
+                                           },
+                          "claim":  {
+                                        "kind":  "claim_url",
+                                        "field":  "claim",
+                                        "pattern":  null,
+                                        "warning":  "Anyone holding the claim URL can take ownership of the deployment. Never forward it."
+                                    },
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "live-tested",
+                                               "resourcesByteExact":  true,
+                                               "verifiedAt":  "2026-09-10",
+                                               "note":  "live-tested: JS/CSS/font resources are served byte-identical. ShipStatic rewrites served HTML by appending a ?_ship=\u003cid\u003e cache-busting query to asset URLs, so HTML bytes differ and are not hash-verified. Its multipart parser also silently drops zero-byte file parts, so an artifact containing one is rejected as a capability failure before upload."
+                                           }
+                      },
+                      {
+                          "id":  "aft-page",
+                          "label":  "aft.page",
+                          "adapter":  "aft-page",
+                          "endpoint":  "https://api.aft.page/v1/deploy",
+                          "protocol":  "multipart-indexed-files",
+                          "protocolNotes":  "Live-verified: POST /api/v1/deploy with multipart parts file0, file0_path, file1, file1_path, ... returns {ok,slug,deployId,url,files,bytes,editToken,claimUrl,owned,notice}. The served HTML is NOT the uploaded HTML: aft.page injects a wrapper/summary page, so byte-exact verification fails.",
+                          "transport":  "multipart",
+                          "allowedHosts":  [
+                                               "api.aft.page",
+                                               "*.aft.page"
+                                           ],
+                          "modes":  [
+                                        "quick-share"
+                                    ],
+                          "priority":  80,
+                          "cnPriority":  80,
+                          "enabled":  true,
+                          "persistent":  false,
+                          "availability":  "live",
+                          "capabilities":  {
+                                               "anonymous":  true,
+                                               "maxFiles":  500,
+                                               "maxFileBytes":  26214400,
+                                               "maxTotalBytes":  104857600,
+                                               "maxTotalBytesSource":  "100 MiB",
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "any",
+                                               "supportsModelFiles":  true,
+                                               "claimable":  true,
+                                               "htmlExact":  false,
+                                               "ttl":  {
+                                                           "defaultSeconds":  2592000,
+                                                           "optionsSeconds":  null,
+                                                           "source":  "30 days idle; unclaimed sites are deleted after 30 days idle, so expiry is not a fixed deadline"
+                                                       },
+                                               "singlePageOnly":  false
+                                           },
+                          "claim":  {
+                                        "kind":  "token+url",
+                                        "field":  "editToken",
+                                        "urlField":  "claimUrl",
+                                        "pattern":  null,
+                                        "warning":  "The edit token and claim URL grant ownership. Never forward them."
+                                    },
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "live-tested",
+                                               "resourcesByteExact":  null,
+                                               "verifiedAt":  "2026-09-10",
+                                               "note":  "live-tested: aft.page does not serve the uploaded HTML at all - it injects a wrapper/summary page (a 416-byte index.html was served as 9873 bytes, 9461 without the import-map banner). Excluded from the default plan because its served output can never satisfy the verification contract."
+                                           }
+                      },
+                      {
+                          "id":  "here-now",
+                          "label":  "here.now",
+                          "adapter":  "here-now",
+                          "endpoint":  "https://here.now/api/v1/publish",
+                          "protocol":  "presigned-multistep",
+                          "protocolNotes":  "Live-verified 3-step flow: 1) POST /api/v1/publish with {files:[{path,size,contentType}]} and read upload.uploads[], upload.versionId, upload.finalizeUrl, siteUrl, publishStatus.expiresAt, claimToken, claimUrl. 2) PUT each file to the presigned *.r2.cloudflarestorage.com URL using exactly the returned headers. 3) POST upload.finalizeUrl with {versionId}; a null versionId is rejected with 400 invalid_type, so finalize is never called without one. Finalize is idempotent by versionId; concurrent finalize returns 409 finalize_in_flight with Retry-After.",
+                          "transport":  "multistep",
+                          "allowedHosts":  [
+                                               "here.now",
+                                               "*.here.now",
+                                               "*.r2.cloudflarestorage.com"
+                                           ],
+                          "modes":  [
+                                        "quick-share"
+                                    ],
+                          "priority":  70,
+                          "cnPriority":  70,
+                          "enabled":  true,
+                          "persistent":  false,
+                          "availability":  "live",
+                          "capabilities":  {
+                                               "anonymous":  true,
+                                               "maxFiles":  1000,
+                                               "maxFileBytes":  262144000,
+                                               "maxTotalBytes":  null,
+                                               "maxTotalBytesSource":  null,
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "any",
+                                               "supportsModelFiles":  true,
+                                               "claimable":  true,
+                                               "htmlExact":  false,
+                                               "ttl":  {
+                                                           "defaultSeconds":  86400,
+                                                           "optionsSeconds":  null,
+                                                           "source":  "24 hours anonymous lifetime"
+                                                       },
+                                               "singlePageOnly":  false
+                                           },
+                          "claim":  {
+                                        "kind":  "token+url",
+                                        "field":  "claimToken",
+                                        "urlField":  "claimUrl",
+                                        "pattern":  null,
+                                        "warning":  "The claim token is returned exactly once and grants ownership. Never forward it. The claimUrl must be copied byte for byte."
+                                    },
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "live-tested",
+                                               "resourcesByteExact":  true,
+                                               "verifiedAt":  "2026-09-10",
+                                               "note":  "live-tested: the create/finalize flow works (upload.versionId, upload.finalizeUrl, siteUrl) and JS/CSS/font resources are served byte-identical. An earlier 416-byte index.html was served as 798 bytes with injected Open Graph meta tags, so HTML bytes are not hash-verified; a 2026-09-11 re-probe served a minimal 86-byte page verbatim, so the rewriting is conditional — the presence-only policy stays conservative."
+                                           }
+                      },
+                      {
+                          "id":  "show",
+                          "label":  "Show",
+                          "adapter":  "show",
+                          "endpoint":  "https://show.127.dev/upload",
+                          "protocol":  "multipart-targz",
+                          "protocolNotes":  "multipart/form-data with field \u0027file\u0027 (a tar.gz archive), \u0027name\u0027 and optional \u0027mode=spa\u0027.",
+                          "transport":  "multipart",
+                          "allowedHosts":  [
+                                               "show.127.dev",
+                                               "*.127.dev"
+                                           ],
+                          "modes":  [
+                                        "quick-share"
+                                    ],
+                          "priority":  60,
+                          "cnPriority":  60,
+                          "enabled":  true,
+                          "persistent":  false,
+                          "availability":  "live",
+                          "capabilities":  {
+                                               "anonymous":  true,
+                                               "maxFiles":  100,
+                                               "maxFileBytes":  null,
+                                               "maxTotalBytes":  10485760,
+                                               "maxTotalBytesSource":  "10 MiB compressed and extracted",
+                                               "supportedExtensions":  [
+                                                                           ".html",
+                                                                           ".css",
+                                                                           ".js",
+                                                                           ".mjs",
+                                                                           ".json",
+                                                                           ".map",
+                                                                           ".txt",
+                                                                           ".xml",
+                                                                           ".svg",
+                                                                           ".png",
+                                                                           ".jpg",
+                                                                           ".jpeg",
+                                                                           ".gif",
+                                                                           ".webp",
+                                                                           ".avif",
+                                                                           ".ico",
+                                                                           ".woff",
+                                                                           ".woff2",
+                                                                           ".ttf",
+                                                                           ".otf",
+                                                                           ".webmanifest"
+                                                                       ],
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "allowlist-exact",
+                                               "supportsModelFiles":  false,
+                                               "supportsModelFilesSource":  "hard extension allowlist rejects .glb, .gltf and .wasm",
+                                               "claimable":  false,
+                                               "htmlExact":  true,
+                                               "ttl":  {
+                                                           "defaultSeconds":  172800,
+                                                           "optionsSeconds":  null,
+                                                           "source":  "48 hours"
+                                                       },
+                                               "singlePageOnly":  false
+                                           },
+                          "claim":  null,
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "live-tested",
+                                               "resourcesByteExact":  null,
+                                               "verifiedAt":  "2026-09-10",
+                                               "note":  "The tar.gz archive upload was accepted live and returns a deployment URL on a *.127.dev subdomain (for example https://\u003cid\u003e-\u003cname\u003e.127.dev), which is why *.127.dev is in allowedHosts. Byte fidelity is decided by verification at runtime."
+                                           }
+                      },
+                      {
+                          "id":  "dropley",
+                          "label":  "Dropley",
+                          "adapter":  "dropley",
+                          "endpoint":  "https://dropley.app/api/artifacts",
+                          "protocol":  "multipart-manifest",
+                          "protocolNotes":  "multipart/form-data with one \u0027file\u0027 part per file, in manifest order, plus a \u0027manifest\u0027 field that is a JSON string. manifestVersion must be 1, entry must be index.html and present in files, every file entry must carry contentType, and the number of file parts must equal manifest.files.length exactly.",
+                          "transport":  "multipart",
+                          "allowedHosts":  [
+                                               "dropley.app",
+                                               "*.dropley.app"
+                                           ],
+                          "modes":  [
+                                        "quick-share"
+                                    ],
+                          "priority":  50,
+                          "cnPriority":  50,
+                          "enabled":  true,
+                          "persistent":  false,
+                          "availability":  "live",
+                          "capabilities":  {
+                                               "anonymous":  true,
+                                               "maxFiles":  1000,
+                                               "maxFileBytes":  null,
+                                               "maxTotalBytes":  52428800,
+                                               "maxTotalBytesSource":  "50 MiB",
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "unpublished-server-allowlist",
+                                               "supportsModelFiles":  false,
+                                               "supportsModelFilesSource":  "server enforces an unpublished extension allowlist; model files are treated as unsupported until proven otherwise (UNVERIFIED)",
+                                               "claimable":  true,
+                                               "htmlExact":  true,
+                                               "ttl":  {
+                                                           "defaultSeconds":  604800,
+                                                           "optionsSeconds":  [
+                                                                                  86400,
+                                                                                  259200,
+                                                                                  604800
+                                                                              ],
+                                                           "source":  "1/3/7 days; 7 days requested"
+                                                       },
+                                               "singlePageOnly":  false
+                                           },
+                          "claim":  {
+                                        "kind":  "artifact_token",
+                                        "field":  "artifactToken",
+                                        "pattern":  null,
+                                        "warning":  "The artifact token grants ownership of the artifact. Never forward it."
+                                    },
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "unverified",
+                                               "resourcesByteExact":  null,
+                                               "verifiedAt":  "2026-09-10",
+                                               "note":  "UNVERIFIED, and the server allowlist is stricter than documented: live tests rejected .ttf, .woff, .woff2 and extensionless files, so a typical Vite artifact cannot be served. Verification decides at runtime."
+                                           }
+                      },
+                      {
+                          "id":  "wh-drop",
+                          "label":  "wh-drop",
+                          "adapter":  "wh-drop",
+                          "endpoint":  null,
+                          "protocol":  null,
+                          "protocolNotes":  "No host, documentation or API could be located for wh-drop: 21 candidate domains do not resolve. It must never be attempted.",
+                          "transport":  null,
+                          "allowedHosts":  [
+                                               "invalid.invalid"
+                                           ],
+                          "modes":  [
+                                        "quick-share"
+                                    ],
+                          "priority":  0,
+                          "cnPriority":  0,
+                          "enabled":  false,
+                          "disabledReason":  "no-public-service-found",
+                          "persistent":  false,
+                          "availability":  "unknown",
+                          "capabilities":  {
+                                               "anonymous":  true,
+                                               "maxFiles":  0,
+                                               "maxFileBytes":  null,
+                                               "maxTotalBytes":  null,
+                                               "maxTotalBytesSource":  null,
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "unknown",
+                                               "supportsModelFiles":  false,
+                                               "claimable":  false,
+                                               "htmlExact":  false,
+                                               "ttl":  null,
+                                               "singlePageOnly":  false
+                                           },
+                          "claim":  null,
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "no-service",
+                                               "resourcesByteExact":  null,
+                                               "verifiedAt":  null,
+                                               "note":  null
+                                           }
+                      },
+                      {
+                          "id":  "netlify",
+                          "label":  "Netlify",
+                          "adapter":  "persistent",
+                          "cli":  "netlify",
+                          "endpoint":  null,
+                          "protocol":  "netlify-cli",
+                          "protocolNotes":  "Bundled netlify-cli: `netlify deploy --dir \u003cdir\u003e --prod --json`.",
+                          "transport":  "cli",
+                          "allowedHosts":  [
+                                               "*.netlify.app",
+                                               "*.netlify.com"
+                                           ],
+                          "modes":  [
+                                        "persistent"
+                                    ],
+                          "priority":  100,
+                          "cnPriority":  40,
+                          "enabled":  true,
+                          "persistent":  true,
+                          "availability":  "cli",
+                          "capabilities":  {
+                                               "anonymous":  false,
+                                               "maxFiles":  null,
+                                               "maxFileBytes":  null,
+                                               "maxTotalBytes":  null,
+                                               "maxTotalBytesSource":  null,
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "any",
+                                               "supportsModelFiles":  true,
+                                               "claimable":  false,
+                                               "htmlExact":  true,
+                                               "updateInPlace":  true,
+                                               "ttl":  null,
+                                               "singlePageOnly":  false
+                                           },
+                          "configMarkers":  [
+                                                "netlify.toml",
+                                                ".netlify",
+                                                ".netlify/state.json"
+                                            ],
+                          "persistentRank":  100,
+                          "claim":  null,
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "expected",
+                                               "resourcesByteExact":  true,
+                                               "verifiedAt":  null,
+                                               "note":  "CDN file hosting; byte fidelity expected."
+                                           }
+                      },
+                      {
+                          "id":  "cloudflare-pages",
+                          "label":  "Cloudflare Pages",
+                          "adapter":  "persistent",
+                          "cli":  "wrangler",
+                          "endpoint":  null,
+                          "protocol":  "wrangler-cli",
+                          "protocolNotes":  "Bundled wrangler: `wrangler pages deploy \u003cdir\u003e --project-name \u003cname\u003e`.",
+                          "transport":  "cli",
+                          "allowedHosts":  [
+                                               "*.pages.dev",
+                                               "*.cloudflarepages.com"
+                                           ],
+                          "modes":  [
+                                        "persistent"
+                                    ],
+                          "priority":  95,
+                          "cnPriority":  60,
+                          "enabled":  true,
+                          "persistent":  true,
+                          "availability":  "cli",
+                          "capabilities":  {
+                                               "anonymous":  false,
+                                               "maxFiles":  20000,
+                                               "maxFileBytes":  26214400,
+                                               "maxTotalBytes":  null,
+                                               "maxTotalBytesSource":  null,
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "any",
+                                               "supportsModelFiles":  true,
+                                               "claimable":  false,
+                                               "htmlExact":  true,
+                                               "updateInPlace":  true,
+                                               "ttl":  null,
+                                               "singlePageOnly":  false
+                                           },
+                          "configMarkers":  [
+                                                "wrangler.toml",
+                                                "wrangler.json",
+                                                "wrangler.jsonc",
+                                                ".wrangler"
+                                            ],
+                          "persistentRank":  95,
+                          "claim":  null,
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "expected",
+                                               "resourcesByteExact":  true,
+                                               "verifiedAt":  null,
+                                               "note":  "CDN file hosting; byte fidelity expected."
+                                           }
+                      },
+                      {
+                          "id":  "vercel",
+                          "label":  "Vercel",
+                          "adapter":  "persistent",
+                          "cli":  "vercel",
+                          "endpoint":  null,
+                          "protocol":  "vercel-cli",
+                          "protocolNotes":  "Bundled vercel CLI: `vercel deploy \u003cdir\u003e --prod --yes`.",
+                          "transport":  "cli",
+                          "allowedHosts":  [
+                                               "*.vercel.app"
+                                           ],
+                          "modes":  [
+                                        "persistent"
+                                    ],
+                          "priority":  90,
+                          "cnPriority":  40,
+                          "enabled":  true,
+                          "persistent":  true,
+                          "availability":  "cli",
+                          "capabilities":  {
+                                               "anonymous":  false,
+                                               "maxFiles":  null,
+                                               "maxFileBytes":  null,
+                                               "maxTotalBytes":  null,
+                                               "maxTotalBytesSource":  null,
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "any",
+                                               "supportsModelFiles":  true,
+                                               "claimable":  false,
+                                               "htmlExact":  true,
+                                               "updateInPlace":  true,
+                                               "ttl":  null,
+                                               "singlePageOnly":  false
+                                           },
+                          "configMarkers":  [
+                                                "vercel.json",
+                                                ".vercel"
+                                            ],
+                          "persistentRank":  90,
+                          "claim":  null,
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "expected",
+                                               "resourcesByteExact":  true,
+                                               "verifiedAt":  null,
+                                               "note":  "CDN file hosting; byte fidelity expected. Vercel may redirect the root URL, which the client follows."
+                                           }
+                      },
+                      {
+                          "id":  "github-pages",
+                          "label":  "GitHub Pages",
+                          "adapter":  "persistent",
+                          "cli":  "git",
+                          "endpoint":  null,
+                          "protocol":  "git-pages-branch",
+                          "protocolNotes":  "Pushes the artifact to a gh-pages branch of the existing origin remote with git.",
+                          "transport":  "cli",
+                          "allowedHosts":  [
+                                               "*.github.io"
+                                           ],
+                          "modes":  [
+                                        "persistent"
+                                    ],
+                          "priority":  80,
+                          "cnPriority":  30,
+                          "enabled":  true,
+                          "persistent":  true,
+                          "availability":  "cli",
+                          "capabilities":  {
+                                               "anonymous":  false,
+                                               "maxFiles":  null,
+                                               "maxFileBytes":  104857600,
+                                               "maxTotalBytes":  1073741824,
+                                               "maxTotalBytesSource":  null,
+                                               "supportedExtensions":  null,
+                                               "denyExtensions":  [
+
+                                                                  ],
+                                               "extensionPolicy":  "any",
+                                               "supportsModelFiles":  true,
+                                               "claimable":  false,
+                                               "htmlExact":  true,
+                                               "updateInPlace":  true,
+                                               "ttl":  null,
+                                               "singlePageOnly":  false
+                                           },
+                          "configMarkers":  [
+                                                ".github/workflows",
+                                                "git-remote"
+                                            ],
+                          "persistentRank":  80,
+                          "claim":  null,
+                          "health":  {
+                                         "state":  "unknown",
+                                         "checkedAt":  null,
+                                         "failures":  0
+                                     },
+                          "verification":  {
+                                               "status":  "expected",
+                                               "resourcesByteExact":  true,
+                                               "verifiedAt":  null,
+                                               "note":  "Byte fidelity expected, but the branch build is asynchronous, so immediate verification can legitimately fail."
+                                           }
+                      }
+                  ]
 }

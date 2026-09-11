@@ -54,8 +54,9 @@ function makeManifest(label, extraFiles = 0) {
 }
 
 /** Serve the manifest's bytes back, with per-path overrides for body, content-type and status. */
-async function startOrigin(manifest) {
+async function startOrigin(manifest, behavior = {}) {
   const overrides = new Map();
+  const injected = behavior.injectForBrowser ? Buffer.from('<script src="https://edge.example/beacon.js"></script>\n') : null;
   const server = http.createServer((request, response) => {
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
     const rel = pathname === '/site/' || pathname === '/site' ? 'index.html' : pathname.replace(/^\/site\//, '');
@@ -66,7 +67,12 @@ async function startOrigin(manifest) {
       response.end('not found');
       return;
     }
-    const body = override.body !== undefined ? override.body : entry.bytes;
+    let body = override.body !== undefined ? override.body : entry.bytes;
+    // An edge network that injects a beacon only for browser-like clients: exactly the behaviour
+    // measured live on ship.page.
+    if (injected && rel === 'index.html' && /text\/html/.test(String(request.headers.accept || ''))) {
+      body = Buffer.concat([Buffer.from(body), injected]);
+    }
     response.writeHead(override.status || 200, { 'content-type': override.contentType || (entry && entry.record.mime) || 'application/octet-stream' });
     response.end(body);
   });
@@ -206,6 +212,43 @@ test('above the threshold only the required subset is compared, unless full veri
   assert.equal(full.strategy, 'all-files');
   assert.equal(full.filesRequired, manifest.fileCount);
   assert.equal(full.hashComplete, true);
+});
+
+test('markup injected for browser-like clients is reported without failing the deployment', async () => {
+  // Measured live on ship.page: a plain GET receives the uploaded HTML, a browser-like GET receives
+  // the upload plus a Cloudflare Insights beacon. "Verified" must not hide that difference.
+  const manifest = makeManifest('browser-representation');
+  const origin = await startOrigin(manifest, { injectForBrowser: true });
+  const result = await verifyDeployment({ publicUrl: origin.baseUrl, manifest, options: {} });
+
+  assert.equal(result.passed, true, 'the artifact itself is served correctly, so the run still passes');
+  assert.equal(result.browserRepresentation.checked, true);
+  assert.equal(result.browserRepresentation.identical, false);
+  assert.ok(result.browserRepresentation.addedBytes > 0);
+  assert.match(result.browserRepresentation.note, /rewrites HTML for browsers/);
+  assert.match(result.note, /browser-like request receives/, 'the human note must carry the discrepancy');
+  assert.equal(result.browserVerified, false, 'this is still not a rendering check');
+});
+
+test('an untouched browser representation is confirmed and does not clutter the note', async () => {
+  const manifest = makeManifest('browser-representation-clean');
+  const origin = await startOrigin(manifest);
+  const result = await verifyDeployment({ publicUrl: origin.baseUrl, manifest, options: {} });
+
+  assert.equal(result.browserRepresentation.checked, true);
+  assert.equal(result.browserRepresentation.identical, true);
+  assert.equal(result.browserRepresentation.addedBytes, 0);
+  assert.match(result.browserRepresentation.note, /exactly the uploaded HTML/);
+  assert.doesNotMatch(result.note, /browser-like request receives/);
+});
+
+test('the browser probe can be switched off for callers that do not want the extra request', async () => {
+  const manifest = makeManifest('browser-representation-off');
+  const origin = await startOrigin(manifest, { injectForBrowser: true });
+  const result = await verifyDeployment({ publicUrl: origin.baseUrl, manifest, options: { browserCheck: false } });
+
+  assert.equal(result.browserRepresentation.checked, false);
+  assert.match(result.browserRepresentation.reason, /disabled/);
 });
 
 test('target selection always keeps the structurally important files', () => {

@@ -26,7 +26,7 @@
 
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { baseContentType, httpRequest } from './common.mjs';
+import { baseContentType, decompressBody, httpRequest } from './common.mjs';
 
 export const FULL_VERIFY_LIMIT_BYTES = 20 * 1024 * 1024;
 export const BINARY_EXTENSIONS = ['.glb', '.gltf', '.bin', '.wasm'];
@@ -105,10 +105,58 @@ export async function fetchResource(url, options = {}) {
   return httpRequest({
     url,
     method: 'GET',
-    headers: { accept: '*/*', 'cache-control': 'no-cache' },
+    headers: { accept: '*/*', 'cache-control': 'no-cache', ...(options.headers || {}) },
     timeoutMs: options.timeoutMs ?? SMALL_TIMEOUT_MS,
     maxBytes: options.maxBytes ?? 512 * 1024 * 1024
   });
+}
+
+/** Headers a real browser sends, used only by the browser-representation probe. */
+const BROWSER_HEADERS = {
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding': 'gzip, deflate, br',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'
+};
+
+/**
+ * Does a browser receive the HTML that was uploaded?
+ *
+ * WHY THIS EXISTS: an edge network in front of a host can inject its own markup (a real-time
+ * analytics beacon, a banner) into HTML responses to *browser-like* requests while serving the
+ * uploaded bytes to a plain GET. Measured live on 2026-09-11: ship.page adds a Cloudflare Insights
+ * `<script>` for a browser-like `Accept` header, so a deployment can be byte-exact for the request
+ * this tool makes and still differ for the reader. That is exactly the kind of difference a
+ * "verified" claim must not hide, so the root document is requested once more the way a browser
+ * would and the answer is reported.
+ *
+ * It is deliberately NOT a failure: the artifact is served; a third party wrapped it. The caller
+ * decides whether that is acceptable.
+ */
+export async function probeBrowserRepresentation({ publicUrl, manifest, options = {} }) {
+  const record = manifest.byRelative.get('index.html');
+  if (!record) return { checked: false, reason: 'the artifact has no root index.html to compare' };
+  let response;
+  try {
+    response = await fetchResource(publicUrl, { headers: BROWSER_HEADERS, timeoutMs: options.timeoutMs ?? LARGE_TIMEOUT_MS });
+  } catch (cause) {
+    return { checked: false, reason: `the browser-like request failed: ${cause.message}` };
+  }
+  const contentEncoding = String(response.headers['content-encoding'] || 'none');
+  const { body, decoded } = decompressBody(response.body || Buffer.alloc(0), contentEncoding);
+  const hash = hashOf(body);
+  return {
+    checked: true,
+    identical: hash === record.record.sha256,
+    status: response.status,
+    bytes: body.length,
+    expectedBytes: record.record.bytes,
+    contentEncoding,
+    decoded,
+    addedBytes: body.length - record.record.bytes,
+    note: hash === record.record.sha256
+      ? 'a browser-like request receives exactly the uploaded HTML'
+      : `a browser-like request receives ${body.length} bytes where ${record.record.bytes} were uploaded (${body.length - record.record.bytes > 0 ? '+' : ''}${body.length - record.record.bytes}); the host or an edge network in front of it rewrites HTML for browsers`
+  };
 }
 
 /**
@@ -142,6 +190,7 @@ export async function verifyDeployment({ publicUrl, manifest, options = {} }) {
       bytesVerified: 0,
       rootStatus: rootResponse.status,
       rootContentType,
+      browserRepresentation: { checked: false, reason: 'the root URL did not answer with HTML' },
       startedAt: started
     });
   }
@@ -231,6 +280,9 @@ export async function verifyDeployment({ publicUrl, manifest, options = {} }) {
   }
 
   const passed = mismatches.length === 0 && failures.length === 0;
+  const browserRepresentation = options.browserCheck === false
+    ? { checked: false, reason: 'the browser-representation probe was disabled' }
+    : await probeBrowserRepresentation({ publicUrl, manifest, options });
 
   return finish({
     passed,
@@ -248,6 +300,7 @@ export async function verifyDeployment({ publicUrl, manifest, options = {} }) {
     bytesVerified,
     rootStatus: rootResponse.status,
     rootContentType,
+    browserRepresentation,
     startedAt: started
   });
 }
@@ -285,6 +338,8 @@ function finish(result) {
     problems: result.problems || [],
     durationMs: Date.now() - (result.startedAt || Date.now()),
     browserVerified: false,
+    // What a browser would receive, which is not always what the tool's own GET receives.
+    browserRepresentation: result.browserRepresentation || { checked: false },
     note: verificationNote(result, { verified, required, presenceChecked, htmlNotCompared })
   };
 }
@@ -303,6 +358,10 @@ function verificationNote(result, counts) {
   }
   if (counts.htmlNotCompared.length) {
     parts.push(`${counts.presenceChecked} HTML resource(s) were presence-checked only (htmlPolicy=${result.htmlPolicy})`);
+  }
+  const browser = result.browserRepresentation;
+  if (browser && browser.checked === true && browser.identical === false) {
+    parts.push(browser.note);
   }
   parts.push('no browser rendering was performed');
   return `${parts.join('; ')}.`;

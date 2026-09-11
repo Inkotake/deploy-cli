@@ -18,6 +18,11 @@ First release of the standalone tool, extracted from the Teacher DSH desktop dis
   silently downgrade `persistent` to an anonymous host.
 - Post-publish verification: every deployed resource is re-fetched and compared by SHA-256, with an
   explicit `filesExpected` / `filesRequired` split and `--verify-all` for large artifacts.
+- `verification.browserRepresentation`: the root document is requested once more with browser-like
+  headers, because an edge network can inject its own markup for browsers while serving the uploaded
+  bytes to a plain GET. Measured live: ship.page adds a Cloudflare Insights beacon for a browser-like
+  `Accept` header (+367 bytes on a 277-byte page). The answer is reported, never hidden, and is not
+  treated as a failure.
 - Safety policies: `generic` (credentials and private material) and `teacher` (adds student records,
   grades, rosters and family contact data, but only for files that can carry records).
 - Ownership credentials are stored in the private state directory (`0600` where supported) and are
@@ -62,5 +67,15 @@ First release of the standalone tool, extracted from the Teacher DSH desktop dis
 ### Not yet verified
 
 - Persistent success paths (Netlify, Cloudflare Pages, Vercel, GitHub Pages) have not been exercised
-  against live authenticated accounts; only their failure paths were.
+  against live authenticated accounts; only their failure paths were. On the machine used for the
+  2026-09-11 probe all three CLIs were present but logged out.
 - No browser rendering is performed, by design.
+
+### Verified live (2026-09-11)
+
+- All six anonymous providers answered; endpoints, URL shapes, lifetimes and claim fields matched the
+  registry. Details and raw shapes: `docs/evidence/live-probe-2026-09-11.md`.
+- A real deployment to ship.page was verified 4/4 files by SHA-256, re-verified from a separate
+  process, and independently byte-compared by two HTTP clients.
+- The same probe found that ship.page serves different HTML to browser-like clients; that is now
+  reported by `verification.browserRepresentation` instead of being invisible.

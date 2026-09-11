@@ -434,6 +434,25 @@ export function baseContentType(response) {
   return String(raw).split(';')[0].trim().toLowerCase();
 }
 
+/**
+ * Decode a response body when the origin compressed it.
+ *
+ * The tool's own requests do not advertise compression, so this matters in two places: a host that
+ * compresses regardless of what was asked for, and the browser-representation probe, which asks for
+ * compression on purpose to see what a browser would actually receive.
+ */
+export function decompressBody(buffer, contentEncoding) {
+  const encoding = String(contentEncoding || '').toLowerCase();
+  try {
+    if (encoding === 'gzip' || encoding === 'x-gzip') return { body: zlib.gunzipSync(buffer), decoded: true, encoding };
+    if (encoding === 'br') return { body: zlib.brotliDecompressSync(buffer), decoded: true, encoding };
+    if (encoding === 'deflate') return { body: zlib.inflateSync(buffer), decoded: true, encoding };
+  } catch {
+    return { body: buffer, decoded: false, encoding };
+  }
+  return { body: buffer, decoded: false, encoding };
+}
+
 export function retryAfterMs(response) {
   const raw = response.headers['retry-after'];
   if (!raw) return null;
