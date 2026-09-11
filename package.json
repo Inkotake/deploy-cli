@@ -35,5 +35,13 @@
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Inkotake/deploy-cli.git"
+  },
+  "homepage": "https://github.com/Inkotake/deploy-cli#readme",
+  "bugs": {
+    "url": "https://github.com/Inkotake/deploy-cli/issues"
   }
 }

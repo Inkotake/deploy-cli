@@ -45,11 +45,17 @@ const repositoryUrl = typeof pkg.repository === 'string'
   : pkg.repository && typeof pkg.repository.url === 'string' ? pkg.repository.url : null;
 
 /**
+ * The user agent must be a plain, clickable URL: package manifests spell repositories as
+ * `git+https://…​.git`, which is correct for npm and noise in a request header.
+ */
+const userAgentUrl = repositoryUrl ? repositoryUrl.replace(/^git\+/, '').replace(/\.git$/, '') : null;
+
+/**
  * User agent sent with every provider request. It is the only place a hosting service sees who is
  * calling, so it must not claim a project that does not exist: when `package.json` has no
  * repository URL yet, the plain `name/version` token is sent instead of a placeholder link.
  */
-export const USER_AGENT = repositoryUrl ? `${NAME}/${VERSION} (+${repositoryUrl})` : `${NAME}/${VERSION}`;
+export const USER_AGENT = userAgentUrl ? `${NAME}/${VERSION} (+${userAgentUrl})` : `${NAME}/${VERSION}`;
 
 /** Multipart boundary prefix. Purely cosmetic, but it shows up in packet captures and logs. */
 export const BOUNDARY_PREFIX = '----verifiedpublish';
