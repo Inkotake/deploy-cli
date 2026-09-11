@@ -38,8 +38,8 @@ The dependency points **from** the education edition **to** this repository:
 - a downstream product must not rely on internal paths here (`src/...`, internal function names) —
   only on the documented command surface, the `--json` contract and the policy/registry data files;
 - product-specific naming stays downstream. The education edition is expected to ship its own alias
-  (for example a `teacher-publish` shim that forwards to `vpublish --policy teacher`) rather than
-  asking this repository to carry a product name.
+  (for example a `teacher-publish` shim that applies the product's own data rules and then forwards to
+  `vpublish`) rather than asking this repository to carry a product name or a product's rules.
 
 [`consuming.md`](./consuming.md) writes that contract down as a checklist.
 

@@ -201,7 +201,7 @@ as unavailable rather than downloaded.
 | `VPUBLISH_HOME` | State directory (health cache, claims). Defaults to `~/.vpublish`. |
 | `VPUBLISH_REGISTRY` | Use a different provider registry file. |
 | `VPUBLISH_STATUS_FILE` | Local availability overlay (may only change `enabled`, `priority`, `health`, `lastValidated`, `notes`). |
-| `VPUBLISH_POLICY`, `VPUBLISH_REGION` | Defaults for `--policy` and `--region`. |
+| `VPUBLISH_REGION` | Default for `--region`. |
 | `VPUBLISH_DEPLOY_HOME`, `VPUBLISH_DEPLOY_BIN` | Where to look for `netlify`/`wrangler`/`vercel` before falling back to `PATH`. |
 | `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY` | Standard proxy variables, honoured by every request. |
 

@@ -31,7 +31,8 @@ up.
    offline installer. Do not float a range: the JSON contract and the registry schema are versioned,
    and a silent minor bump could change a payload.
 2. **Rename through an alias, not through this repository.** A product should ship its own shim
-   (`teacher-publish` → `vpublish --policy teacher`) generated into a private, per-user command
+   (`teacher-publish` → `vpublish`, called only after the product has applied its own data rules)
+   generated into a private, per-user command
    directory that is prepended to the process `PATH` only. This package will not carry a
    product-specific command name.
 3. **Enforce your own data rules before calling `deploy`.** This package deliberately does not know

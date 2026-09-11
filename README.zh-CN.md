@@ -187,7 +187,7 @@ CLI 缺失时该托管商被报告为不可用，而不是被下载下来。
 | `VPUBLISH_HOME` | 状态目录（健康缓存、凭据）。默认 `~/.vpublish`。 |
 | `VPUBLISH_REGISTRY` | 使用另一份托管商注册表文件。 |
 | `VPUBLISH_STATUS_FILE` | 本地可用性 overlay（只允许改 `enabled`、`priority`、`health`、`lastValidated`、`notes`）。 |
-| `VPUBLISH_POLICY`、`VPUBLISH_REGION` | `--policy` / `--region` 的默认值。 |
+| `VPUBLISH_REGION` | `--region` 的默认值。 |
 | `VPUBLISH_DEPLOY_HOME`、`VPUBLISH_DEPLOY_BIN` | 在回退到 `PATH` 之前，去哪里找 `netlify`/`wrangler`/`vercel`。 |
 | `HTTPS_PROXY`、`HTTP_PROXY`、`NO_PROXY` | 标准代理变量，每个请求都遵守。 |
 
