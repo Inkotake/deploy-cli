@@ -138,7 +138,11 @@ export function buildManifest(dir) {
       binaries: hasExtension(BINARY_EXTENSIONS),
       hasIndexHtml: files.some((file) => file.path === 'index.html'),
       emptyFiles: files.some((file) => file.bytes === 0),
-      singlePageOnly: files.every((file) => !file.path.includes('/'))
+      singlePageOnly: files.every((file) => !file.path.includes('/')),
+      // Layout facts some hosts document as hard limits (Dropley: 5 levels, 255-character paths).
+      // The registry can only be enforced if the artifact reports them, so they are measured here.
+      maxDirectoryDepth: files.reduce((max, file) => Math.max(max, file.path.split('/').length - 1), 0),
+      longestPathLength: files.reduce((max, file) => Math.max(max, file.path.length), 0)
     }
   };
 }

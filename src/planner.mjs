@@ -186,6 +186,28 @@ export function checkCompatibility(provider, manifest) {
     }
   }
 
+  // Layout limits are real rejections, not preferences: Dropley documents 5 directory levels and
+  // 255-character paths, and a deeper artifact is refused by the service rather than uploaded badly.
+  const features = manifest.features || {};
+  if (typeof caps.maxDirectoryDepth === 'number' && typeof features.maxDirectoryDepth === 'number'
+      && features.maxDirectoryDepth > caps.maxDirectoryDepth) {
+    hardFailures.push({
+      kind: 'file-layout',
+      reason: `accepts at most ${caps.maxDirectoryDepth} directory levels, the artifact nests ${features.maxDirectoryDepth}`,
+      limit: caps.maxDirectoryDepth,
+      actual: features.maxDirectoryDepth
+    });
+  }
+  if (typeof caps.maxPathLength === 'number' && typeof features.longestPathLength === 'number'
+      && features.longestPathLength > caps.maxPathLength) {
+    hardFailures.push({
+      kind: 'file-layout',
+      reason: `accepts at most ${caps.maxPathLength} characters per path, the longest is ${features.longestPathLength}`,
+      limit: caps.maxPathLength,
+      actual: features.longestPathLength
+    });
+  }
+
   return { compatible: hardFailures.length === 0, hardFailures, limits };
 }
 

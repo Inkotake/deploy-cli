@@ -321,6 +321,25 @@ test('persistent mode requires evidence and never falls back to an anonymous hos
   assert.deepEqual(withAuth.eligible.map((entry) => entry.id), ['durable']);
 });
 
+test('documented layout limits are enforced, not merely recorded', () => {
+  // Dropley documents "Maximum directory depth 5 levels" and "Maximum path length 255 characters".
+  const caps = { ...provider().capabilities, maxDirectoryDepth: 5, maxPathLength: 40 };
+  const deep = plan([provider({ capabilities: caps })], { features: { maxDirectoryDepth: 6, longestPathLength: 20 } });
+  assert.deepEqual(deep.eligible, []);
+  assert.equal(deep.ineligible[0].failures[0].kind, 'file-layout');
+  assert.match(deep.ineligible[0].reason, /at most 5 directory levels/);
+
+  const longPath = plan([provider({ capabilities: caps })], { features: { maxDirectoryDepth: 2, longestPathLength: 80 } });
+  assert.match(longPath.ineligible[0].reason, /at most 40 characters per path/);
+
+  const fine = plan([provider({ capabilities: caps })], { features: { maxDirectoryDepth: 5, longestPathLength: 40 } });
+  assert.equal(fine.eligible.length, 1, 'a boundary case is allowed, not rounded up into a rejection');
+
+  // A manifest built by hand without measured features must not be rejected on layout.
+  const legacy = plan([provider({ capabilities: caps })], {});
+  assert.equal(legacy.eligible.length, 1);
+});
+
 test('a plan summary is rank-ordered and carries the machine-readable facts', () => {
   const result = plan([provider({ id: 'a', priority: 20 }), provider({ id: 'b', priority: 10 })]);
   const summary = summarizePlan(result);

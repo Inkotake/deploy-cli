@@ -59,6 +59,8 @@ const OPTIONAL_CAPABILITIES = {
   updateInPlace: 'boolean',
   singlePageOnly: 'boolean',
   spa: 'boolean',
+  maxDirectoryDepth: 'number',
+  maxPathLength: 'number',
   maxTotalBytesSource: 'string',
   supportsModelFilesSource: 'string'
 };

@@ -14,6 +14,10 @@ First release of the standalone tool, extracted from the Teacher DSH desktop dis
   commands, plus `verified-publish <dir>` as shorthand for `deploy <dir>`.
 - Capability-aware provider planning: extension allowlists and blocklists, file-count, per-file and
   total-size limits, model/`wasm` support and HTML-rewrite behaviour are enforced **before** upload.
+- Documented layout limits are enforced too: `capabilities.maxDirectoryDepth` and `maxPathLength`
+  (Dropley publishes 5 directory levels and 255-character paths) are measured by `inspect`
+  (`features.maxDirectoryDepth`, `features.longestPathLength`) and rejected by the planner as
+  `file-layout` rather than discovered by the service after the upload.
 - Failover across compatible providers with a per-provider circuit breaker, and a refusal to
   silently downgrade `persistent` to an anonymous host.
 - Post-publish verification: every deployed resource is re-fetched and compared by SHA-256, with an
