@@ -124,6 +124,7 @@ installed for you: a missing CLI is reported as unavailable rather than download
 | [`docs/consuming.md`](./docs/consuming.md) | Using this as an upstream dependency (pinning, rules, aliases). |
 | [`docs/releasing.md`](./docs/releasing.md) | Publishing to npm, 2FA, credential hygiene. |
 | [`docs/troubleshooting.md`](./docs/troubleshooting.md) | The failures that actually cost time. |
+| [`docs/reachability.md`](./docs/reachability.md) | Which hosts are reachable from mainland China, measured from two egresses. |
 | [`research/README.md`](./research/README.md) | How provider policy facts, cost status and China reachability evidence are recorded. |
 
 ## Status

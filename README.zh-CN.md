@@ -117,6 +117,7 @@ $ vpublish ./dist --json | jq .verification
 | [`docs/consuming.md`](./docs/consuming.md) | 当下游依赖使用（锁版本、自有规则、别名）。 |
 | [`docs/releasing.md`](./docs/releasing.md) | 发布到 npm、2FA、凭据卫生。 |
 | [`docs/troubleshooting.md`](./docs/troubleshooting.md) | 真正花过时间的那些故障。 |
+| [`docs/reachability.md`](./docs/reachability.md) | 哪些托管商在中国大陆可访问，两个出口实测得出。 |
 
 ## 尚未验证
 
