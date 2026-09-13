@@ -89,6 +89,10 @@ $ vpublish ./dist --json | jq .verification
 | **flypod** | quick-share | 已实测（大陆 + 海外两个出口） | 否（会注入自己的渲染插桩） | 14 天 |
 | **BrewPage** | quick-share | 已实测（大陆 + 海外两个出口） | 否（会注入自己的顶栏） | 15 天（最长 30 天） |
 | **ht-ml.app** | quick-share（单页） | 已实测（大陆 + 海外两个出口） | 是 | 不返回 |
+| **meethtml** | quick-share（单页） | 已实测（大陆 + 海外两个出口） | 是 | 24 小时 |
+| **shiply.now** | quick-share | 已实测（大陆 + 海外两个出口） | 否（认领前带 claim 横幅） | 24 小时 |
+| **Display.dev** | quick-share（单页） | 已实测（大陆 + 海外两个出口） | 否（在它自己的查看器里渲染） | 最长 30 天 |
+| **shippage.ai** | quick-share（单页） | 已实测（大陆 + 海外两个出口） | 否（在 /p/&lt;slug&gt; 渲染） | 14 天 |
 | Netlify · Cloudflare Pages · Vercel · GitHub Pages | persistent | 预期（未实测） | 是 | 持久 |
 
 `已实测`指协议在真实服务上量过；`预期`指 adapter 按官方 CLI 契约实现、但只跑过失败路径。注册表是唯一真相——

@@ -273,7 +273,7 @@ export async function deployArtifact(options) {
         verification = await verifyDeployment({
           publicUrl: deployment.url,
           manifest,
-          options: { ...(options.verifyOptions || {}), htmlPolicy: providerHtmlPolicy, full: verifyAll === true }
+          options: { ...(options.verifyOptions || {}), htmlPolicy: providerHtmlPolicy, full: verifyAll === true, rootServesDocument: provider.capabilities.rootServesDocument === true }
         });
       } catch (cause) {
         const failure = normalizeFailure(candidate.id, cause, 'verification');

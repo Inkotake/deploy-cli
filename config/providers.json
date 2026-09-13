@@ -967,6 +967,283 @@
         },
         "note": "anonymous deploy measured 2026-09-13 and read from both egresses: 200 with site_id, update_key and url; the single page was served byte-identically with no injection. No expiry is returned. Referenced assets are not uploaded, so the adapter reports which ones were left behind."
       }
+    },
+    {
+      "id": "meethtml",
+      "label": "meethtml",
+      "adapter": "meethtml",
+      "transport": "http",
+      "cli": null,
+      "protocol": "json-single-document",
+      "protocolNotes": "POST /api/v1/publish with {\"html\": ...} and no credential; returns url, slug, expires_at and edit_token. One HTML document per site.",
+      "endpoint": "https://api.meethtml.com/api/v1/publish",
+      "allowedHosts": [
+        "meethtml.com",
+        "*.meethtml.com"
+      ],
+      "enabled": true,
+      "modes": [
+        "quick-share"
+      ],
+      "priority": 5,
+      "cnPriority": 3,
+      "persistent": false,
+      "claim": {
+        "kind": "edit_token",
+        "field": "edit_token",
+        "pattern": null,
+        "warning": "The edit token updates or deletes this page. Never forward it."
+      },
+      "capabilities": {
+        "anonymous": true,
+        "maxFiles": 1,
+        "maxFileBytes": 5242880,
+        "maxTotalBytes": null,
+        "maxTotalBytesSource": null,
+        "supportedExtensions": [
+          ".html",
+          ".htm"
+        ],
+        "denyExtensions": [],
+        "extensionPolicy": "any",
+        "supportsModelFiles": false,
+        "claimable": true,
+        "htmlExact": true,
+        "singlePageOnly": true,
+        "ttl": {
+          "defaultSeconds": 86400,
+          "optionsSeconds": null,
+          "source": "anonymous pages expire after 24 hours; the response carries expires_at"
+        },
+        "cost": {
+          "status": "free",
+          "note": "publishing needs no account",
+          "source": "https://meethtml.com/docs",
+          "checkedAt": "2026-09-13"
+        }
+      },
+      "verification": {
+        "status": "live-tested",
+        "resourcesByteExact": true,
+        "verifiedAt": "2026-09-13",
+        "reachability": {
+          "mainland": "reachable",
+          "overseas": "reachable",
+          "measuredAt": "2026-09-13",
+          "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+          "overseasProbe": "this workstation (US egress)",
+          "evidence": "research/reachability-p1b-mainland-2026-09-13.json, research/reachability-p1b-overseas-2026-09-13.json",
+          "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
+        },
+        "note": "anonymous publish measured 2026-09-13 and read from both egresses: 201 with url, slug, expires_at and edit_token; the document came back byte-identical with no injection. Anonymous publishing is rate limited to 200 requests/hour per IP and 5 MB per page."
+      }
+    },
+    {
+      "id": "display-dev",
+      "label": "Display.dev",
+      "adapter": "display-dev",
+      "transport": "http",
+      "cli": null,
+      "protocol": "multipart-single-document",
+      "protocolNotes": "POST /v1/public/artifacts with the document as the `file` part and no credential; returns shortId, previewUrl, claimUrl and expiresAt. Unclaimed artifacts serve the preview URL for 0-30 days.",
+      "endpoint": "https://api.display.dev/v1/public/artifacts",
+      "allowedHosts": [
+        "dsp.so",
+        "*.dsp.so",
+        "display.dev",
+        "*.display.dev"
+      ],
+      "enabled": true,
+      "modes": [
+        "quick-share"
+      ],
+      "priority": 6,
+      "cnPriority": 2,
+      "persistent": false,
+      "claim": {
+        "kind": "claim_url",
+        "field": "claimUrl",
+        "urlField": "claimUrl",
+        "pattern": null,
+        "warning": "The claim URL is single-use and attaches this artifact to an account. Never forward it."
+      },
+      "capabilities": {
+        "anonymous": true,
+        "maxFiles": 1,
+        "maxFileBytes": 52428800,
+        "maxTotalBytes": null,
+        "maxTotalBytesSource": null,
+        "supportedExtensions": [
+          ".html",
+          ".htm"
+        ],
+        "denyExtensions": [],
+        "extensionPolicy": "any",
+        "supportsModelFiles": false,
+        "claimable": true,
+        "htmlExact": false,
+        "singlePageOnly": true,
+        "ttl": {
+          "defaultSeconds": null,
+          "optionsSeconds": null,
+          "source": "an unclaimed artifact serves the preview URL for 0-30 days; the response carries expiresAt"
+        },
+        "cost": {
+          "status": "free",
+          "note": "publishing needs no account",
+          "source": "https://display.dev/docs/claimable",
+          "checkedAt": "2026-09-13"
+        }
+      },
+      "verification": {
+        "status": "live-tested",
+        "resourcesByteExact": false,
+        "verifiedAt": "2026-09-13",
+        "reachability": {
+          "mainland": "reachable",
+          "overseas": "reachable",
+          "measuredAt": "2026-09-13",
+          "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+          "overseasProbe": "this workstation (US egress)",
+          "evidence": "research/reachability-p1b-mainland-2026-09-13.json, research/reachability-p1b-overseas-2026-09-13.json",
+          "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
+        },
+        "note": "anonymous publish measured 2026-09-13 and read from both egresses: 201 with shortId, previewUrl, claimUrl and expiresAt. The preview is public but serves the provider own viewer page (43 KB for a 241-byte upload), so htmlExact is false and the page is presence-checked while nothing is byte-comparable. Anonymous artifacts are noindex."
+      }
+    },
+    {
+      "id": "shiply",
+      "label": "shiply.now",
+      "adapter": "shiply",
+      "transport": "http",
+      "cli": null,
+      "protocol": "three-step-manifest",
+      "protocolNotes": "POST /api/v1/publish with a file manifest and no credential, PUT each file to the returned upload URL, then POST upload.finalizeUrl with the versionId: the site is live only after finalize.",
+      "endpoint": "https://shiply.now/api/v1/publish",
+      "allowedHosts": [
+        "shiply.now",
+        "*.shiply.now"
+      ],
+      "enabled": true,
+      "modes": [
+        "quick-share"
+      ],
+      "priority": 5,
+      "cnPriority": 3,
+      "persistent": false,
+      "claim": {
+        "kind": "claim_token",
+        "field": "claimToken",
+        "urlField": "claimUrl",
+        "pattern": null,
+        "warning": "The claim token claims this site and also acts as its update key. Never forward it."
+      },
+      "capabilities": {
+        "anonymous": true,
+        "maxFiles": 2000,
+        "maxFileBytes": 104857600,
+        "maxTotalBytes": 2147483648,
+        "maxTotalBytesSource": "2 GiB total per publish",
+        "supportedExtensions": null,
+        "denyExtensions": [],
+        "extensionPolicy": "any",
+        "supportsModelFiles": true,
+        "claimable": true,
+        "htmlExact": false,
+        "singlePageOnly": false,
+        "ttl": {
+          "defaultSeconds": 86400,
+          "optionsSeconds": null,
+          "source": "anonymous sites expire after 24 hours; the response carries expiresAt"
+        },
+        "cost": {
+          "status": "free",
+          "note": "publishing needs no account",
+          "source": "https://shiply.now/llms.txt",
+          "checkedAt": "2026-09-13"
+        }
+      },
+      "verification": {
+        "status": "live-tested",
+        "resourcesByteExact": true,
+        "verifiedAt": "2026-09-13",
+        "reachability": {
+          "mainland": "reachable",
+          "overseas": "reachable",
+          "measuredAt": "2026-09-13",
+          "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+          "overseasProbe": "this workstation (US egress)",
+          "evidence": "research/reachability-p1c-mainland-2026-09-13.json, research/reachability-p1c-overseas-2026-09-13.json",
+          "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
+        },
+        "note": "three-step anonymous publish measured 2026-09-13 and read from both egresses: create returned the manifest with upload URLs, finalize made the site live, and both assets came back byte-identical. The page is not byte-exact because shiply documents, and the measurement confirmed, that it injects a claim banner and OG tags until the site is claimed. Upload URLs last one hour."
+      }
+    },
+    {
+      "id": "shippage",
+      "label": "shippage.ai",
+      "adapter": "shippage",
+      "transport": "http",
+      "cli": null,
+      "protocol": "json-single-document",
+      "protocolNotes": "POST /v1/publish with {\"html\": ...} and no credential: the service auto-registers the calling agent on the first call and renders the page at /p/<slug>.",
+      "endpoint": "https://shippage.ai/v1/publish",
+      "allowedHosts": [
+        "shippage.ai",
+        "*.shippage.ai"
+      ],
+      "enabled": true,
+      "modes": [
+        "quick-share"
+      ],
+      "priority": 6,
+      "cnPriority": 2,
+      "persistent": false,
+      "claim": null,
+      "capabilities": {
+        "anonymous": true,
+        "maxFiles": 1,
+        "maxFileBytes": 512000,
+        "maxTotalBytes": null,
+        "maxTotalBytesSource": null,
+        "supportedExtensions": [
+          ".html",
+          ".htm"
+        ],
+        "denyExtensions": [],
+        "extensionPolicy": "any",
+        "supportsModelFiles": false,
+        "claimable": false,
+        "htmlExact": false,
+        "singlePageOnly": true,
+        "ttl": {
+          "defaultSeconds": 1209600,
+          "optionsSeconds": null,
+          "source": "free tier retention is 14 days; the response carries expires_at"
+        },
+        "cost": {
+          "status": "free",
+          "note": "publishing needs no account",
+          "source": "https://shippage.ai/llms.txt",
+          "checkedAt": "2026-09-13"
+        },
+        "rootServesDocument": true
+      },
+      "verification": {
+        "status": "live-tested",
+        "resourcesByteExact": false,
+        "verifiedAt": "2026-09-13",
+        "reachability": {
+          "mainland": "reachable",
+          "overseas": "reachable",
+          "measuredAt": "2026-09-13",
+          "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+          "overseasProbe": "this workstation (US egress)",
+          "evidence": "research/reachability-p1d-mainland-2026-09-13.json, research/reachability-p1d-overseas-2026-09-13.json",
+          "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
+        },
+        "note": "anonymous publish measured 2026-09-13 and read from both egresses: 201 with url, slug, expires_at and password_protected, plus _registration because the service auto-registers the agent. The page is rendered by the provider at /p/<slug> inside its own viewer (750 bytes for a 241-byte upload, /index.html 404), so htmlExact is false. No claim credential is exposed at the top level: the _registration object is undocumented bookkeeping, so this adapter does not treat it as a claim. Free tier: 20 publishes per month, 14-day retention, 500 KB per page."
+      }
     }
   ]
 }

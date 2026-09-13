@@ -101,6 +101,18 @@ required`). `docs/releasing.md` records both ways to finish that step.
 - The registry's extension list is written with a leading dot (`.html`), and the planner compares it that
   way; an entry written as `html` silently rejects every file. Caught by running the planner against the
   new provider rather than trusting the adapter tests, which bypass it.
+- Four more quick-share providers, each measured from two egresses and then deployed through the real
+  CLI before being enabled: **meethtml** (JSON `html` to `/api/v1/publish`, document served
+  byte-identically, 24 hours, `edit_token`), **Display.dev** (multipart `file` to
+  `/v1/public/artifacts`, preview served inside the provider's own viewer, `claimUrl`),
+  **shiply.now** (three-step manifest → PUT → finalize, assets byte-identical, a claim banner the
+  provider documents, 24 hours, `claimToken`) and **shippage.ai** (`{"html": …}` to `/v1/publish`,
+  auto-registers the agent, page rendered at `/p/<slug>`, 14 days).
+- A provider capability for hosts that render the entry document at the deployment root
+  (`rootServesDocument`): verification then checks the root instead of requesting `/index.html`, which
+  such a host answers with 404. Found by deploying to shippage.ai live — the tool had reported an
+  integrity failure that was really a tool assumption, and the receipt still says the page was
+  presence-checked rather than hash-verified.
 - An offline test suite (`node:test`) covering the adapters, verification, planning, the registry
   schema, the policy split, claims, snapshots, the proxy path and the CLI contract.
 

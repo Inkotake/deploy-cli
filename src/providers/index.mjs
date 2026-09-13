@@ -15,6 +15,10 @@ import * as dropley from './dropley.mjs';
 import * as flypod from './flypod.mjs';
 import * as brewpage from './brewpage.mjs';
 import * as htMlApp from './ht-ml-app.mjs';
+import * as meethtml from './meethtml.mjs';
+import * as displayDev from './display-dev.mjs';
+import * as shiply from './shiply.mjs';
+import * as shippage from './shippage.mjs';
 import * as persistent from './persistent.mjs';
 
 export const ADAPTERS = new Map([
@@ -27,6 +31,10 @@ export const ADAPTERS = new Map([
   [flypod.id, flypod],
   [brewpage.id, brewpage],
   [htMlApp.id, htMlApp],
+  [meethtml.id, meethtml],
+  [displayDev.id, displayDev],
+  [shiply.id, shiply],
+  [shippage.id, shippage],
   [persistent.id, persistent]
 ]);
 

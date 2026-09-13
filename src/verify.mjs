@@ -43,13 +43,17 @@ export function isHtmlPath(relativePath) {
 
 export function selectVerificationTargets(manifest, options = {}) {
   const limit = options.fullLimitBytes ?? FULL_VERIFY_LIMIT_BYTES;
+  // A host that renders the entry document at the deployment root does not serve it at its own path
+  // (shippage.ai renders at /p/<slug>, where /index.html is 404), so requesting that path would report a
+  // missing file that is not missing. The root is verified separately in that case.
+  const drop = (paths) => (options.rootServesDocument === true ? paths.filter((item) => item !== 'index.html') : paths);
   if (options.full === true || manifest.totalBytes <= limit) {
-    return { strategy: 'all-files', limitBytes: limit, targets: manifest.files.map((file) => file.path) };
+    return { strategy: 'all-files', limitBytes: limit, targets: drop(manifest.files.map((file) => file.path)) };
   }
   const targets = new Set();
   const isExt = (file, list) => list.includes(path.extname(file).toLowerCase());
   for (const file of manifest.files) {
-    if (file.path === 'index.html') targets.add(file.path);
+    if (file.path === 'index.html' && options.rootServesDocument !== true) targets.add(file.path);
     else if (isExt(file.path, CODE_EXTENSIONS)) targets.add(file.path);
     else if (isExt(file.path, BINARY_EXTENSIONS)) targets.add(file.path);
     else if (isHtmlPath(file.path)) targets.add(file.path);
@@ -59,7 +63,7 @@ export function selectVerificationTargets(manifest, options = {}) {
     .sort((a, b) => b.bytes - a.bytes)
     .slice(0, 3);
   for (const file of ranked) targets.add(file.path);
-  return { strategy: 'selective', limitBytes: limit, targets: [...targets] };
+  return { strategy: 'selective', limitBytes: limit, targets: drop([...targets]) };
 }
 
 function joinUrl(base, relative) {
@@ -202,6 +206,47 @@ export async function verifyDeployment({ publicUrl, manifest, options = {} }) {
   const mismatches = [];
   const failures = [];
   const htmlNotCompared = [];
+
+  // The entry document of a wrapping host lives at the deployment root. It is verified there — status,
+  // content type, error page and hash under the same HTML policy — so the receipt still says exactly
+  // what was and was not compared.
+  if (options.rootServesDocument === true) {
+    const rootRecord = manifest.byRelative.get('index.html');
+    try {
+      const rootResponse = await fetchResource(publicUrl, { timeoutMs: LARGE_TIMEOUT_MS });
+      const rootContentType = baseContentType(rootResponse);
+      const rootBody = rootResponse.body || Buffer.alloc(0);
+      if (rootResponse.status < 200 || rootResponse.status >= 300) {
+        failures.push({ path: '(deployment root)', kind: 'status', detail: `HTTP ${rootResponse.status}`, status: rootResponse.status });
+      } else if (!looksLikeHtml(rootContentType, rootBody)) {
+        failures.push({
+          path: '(deployment root)', kind: 'wrong-content-type',
+          detail: `expected the entry document at the deployment root but the host served ${rootContentType || 'unknown'}`,
+          status: rootResponse.status, contentType: rootContentType
+        });
+      } else if (rootRecord && hashOf(rootBody) === rootRecord.record.sha256) {
+        filesVerified += 1;
+        bytesVerified += rootBody.length;
+      } else if (htmlPolicy === 'presence-only') {
+        htmlPresenceChecked += 1;
+        htmlNotCompared.push({
+          path: '(deployment root)',
+          localBytes: rootRecord ? rootRecord.record.bytes : 0,
+          remoteBytes: rootBody.length,
+          detail: 'the entry document is served at the deployment root rather than at its own path; presence and content type were confirmed and the bytes were not hash-verified under the presence-only policy'
+        });
+      } else {
+        mismatches.push({
+          path: '(deployment root)', kind: 'sha256',
+          detail: `local ${rootRecord ? rootRecord.record.sha256.slice(0, 16) : 'unknown'}… (${rootRecord ? rootRecord.record.bytes : 0} bytes) vs remote ${hashOf(rootBody).slice(0, 16)}… (${rootBody.length} bytes)`,
+          status: rootResponse.status,
+          contentType: rootContentType
+        });
+      }
+    } catch (cause) {
+      failures.push({ path: '(deployment root)', kind: 'fetch', detail: cause && cause.message ? cause.message : String(cause) });
+    }
+  }
 
   for (const relative of selection.targets) {
     const record = manifest.byRelative.get(relative);

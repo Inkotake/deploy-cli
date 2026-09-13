@@ -91,6 +91,10 @@ Common flags: `--json`, `--mode`, `--region`, `--provider`, `--dry-run`, `--veri
 | **flypod** | quick-share | live-tested, mainland + overseas | no (injects its render instrumentation) | 14 days |
 | **BrewPage** | quick-share | live-tested, mainland + overseas | no (injects its own top bar) | 15 days (30 max) |
 | **ht-ml.app** | quick-share, single page | live-tested, mainland + overseas | yes | not returned |
+| **meethtml** | quick-share, single page | live-tested, mainland + overseas | yes | 24 hours |
+| **shiply.now** | quick-share | live-tested, mainland + overseas | no (claim banner until claimed) | 24 hours |
+| **Display.dev** | quick-share, single page | live-tested, mainland + overseas | no (served in its own viewer) | up to 30 days |
+| **shippage.ai** | quick-share, single page | live-tested, mainland + overseas | no (rendered at /p/&lt;slug&gt;) | 14 days |
 | Netlify · Cloudflare Pages · Vercel · GitHub Pages | persistent | expected | yes | durable |
 
 `live-tested` means the protocol was measured against the live service; `expected` means the adapter
