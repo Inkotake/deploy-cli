@@ -127,6 +127,17 @@ export const CANDIDATES = {
     publisherAuth: 'generated-secret',
     assetExpectations: 'none',
     notes: 'POST /v1/public/artifacts with the document as the `file` part and an optional `name`: returns shortId, previewUrl, claimUrl and expiresAt. Unclaimed artifacts serve the preview URL for 0-30 days; anonymous artifacts are noindex; 50 MB limit'
+  },
+  shiply: {
+    label: 'shiply.now',
+    docs: 'https://shiply.now/llms.txt',
+    endpoint: 'https://shiply.now/api/v1/publish',
+    liveness: 'https://shiply.now/docs',
+    bodyStyle: 'three-step',
+    agentName: 'vpublish-compliance/0.1',
+    artifactModel: 'directory',
+    publisherAuth: 'generated-secret',
+    notes: 'POST a file manifest to /api/v1/publish with no account, PUT each file to the returned upload URL, then POST upload.finalizeUrl with the versionId: the site is live only after finalize. Anonymous sites expire after 24h and the response carries claimUrl + claimToken; until claimed, the provider documents that it injects a claim banner and OG tags into the page'
   }
 };
 
@@ -201,6 +212,88 @@ async function liveness(candidate) {
   };
 }
 
+/**
+ * Three-step publish: declare a manifest, PUT each file to the pre-signed URL the service returns, then
+ * finalize. The site is not live until the third call — a probe that stops after two would report a
+ * failure the service never had, and one that trusts the create response would report a URL that 404s.
+ */
+async function runThreeStep(candidate, manifest, nonce) {
+  const files = [...manifest.byRelative.entries()].map(([rel, entry]) => ({
+    path: rel,
+    size: entry.record.bytes,
+    contentType: entry.record.mime,
+    hash: entry.record.sha256
+  }));
+  const body = Buffer.from(JSON.stringify({ agentName: candidate.agentName || 'vpublish-compliance/0.1', files, ...(candidate.extraBody || {}) }), 'utf8');
+  const created = await httpRequest({
+    url: candidate.endpoint,
+    method: 'POST',
+    headers: { 'content-type': 'application/json', accept: 'application/json', 'content-length': String(body.length), ...(candidate.headers || {}) },
+    body,
+    timeoutMs: 120000
+  });
+
+  let payload = null;
+  try {
+    payload = JSON.parse(created.body.toString('utf8'));
+  } catch {
+    payload = null;
+  }
+  const steps = [{ step: 'create', status: created.status, fields: payload ? Object.keys(payload) : [] }];
+  if (!payload) return { upload: created, payload: null, steps };
+
+  const upload = payload.upload && typeof payload.upload === 'object' ? payload.upload : payload;
+  const entries = Array.isArray(upload.uploads) ? upload.uploads : [];
+  const puts = [];
+  for (const entry of entries) {
+    const rel = entry.path || entry.filePath || entry.key || entry.name || null;
+    const local = rel ? manifest.byRelative.get(String(rel).replace(/^\/+/, '')) : null;
+    const target = entry.url || entry.uploadUrl || entry.presignedUrl;
+    if (!local || !target) {
+      puts.push({ path: rel, status: 0, error: 'no matching local file or no upload url' });
+      continue;
+    }
+    const put = await httpRequest({
+      url: target,
+      method: 'PUT',
+      headers: { 'content-type': entry.contentType || local.record.mime, 'content-length': String(local.bytes.length) },
+      body: local.bytes,
+      timeoutMs: 120000
+    });
+    puts.push({ path: rel, status: put.status });
+  }
+  steps.push({ step: 'upload', puts });
+
+  const finalizeUrl = typeof upload.finalizeUrl === 'string' && upload.finalizeUrl
+    ? new URL(upload.finalizeUrl, candidate.endpoint).toString()
+    : null;
+  let finalized = null;
+  if (finalizeUrl) {
+    const finalBody = Buffer.from(JSON.stringify({ versionId: upload.versionId || payload.versionId }), 'utf8');
+    const response = await httpRequest({
+      url: finalizeUrl,
+      method: 'POST',
+      headers: { 'content-type': 'application/json', accept: 'application/json', 'content-length': String(finalBody.length) },
+      body: finalBody,
+      timeoutMs: 120000
+    });
+    try {
+      finalized = JSON.parse(response.body.toString('utf8'));
+    } catch {
+      finalized = null;
+    }
+    steps.push({ step: 'finalize', status: response.status, fields: finalized ? Object.keys(finalized) : [] });
+  }
+
+  // The finalize response owns the live URL; the create response owns the credentials, so merge both and
+  // never let a missing field in one erase a present field in the other.
+  const merged = { ...(finalized || {}), ...payload, ...(finalized || {}) };
+  for (const key of ['claimToken', 'claimUrl', 'expiresAt', 'siteUrl', 'url']) {
+    if (merged[key] === undefined && payload[key] !== undefined) merged[key] = payload[key];
+  }
+  return { upload: created, payload: merged, steps };
+}
+
 async function checkCandidate(id) {
   const candidate = CANDIDATES[id];
   if (!candidate) throw new Error(`unknown candidate ${id} (see --list)`);
@@ -253,19 +346,24 @@ async function checkCandidate(id) {
 
   const platform = await liveness(candidate);
 
-  const upload = await httpRequest({
-    url: candidate.endpoint,
-    method: 'POST',
-    headers: uploadHeaders,
-    body: uploadBody,
-    timeoutMs: 180000
-  });
-
+  let upload;
   let payload = null;
-  try {
-    payload = JSON.parse(upload.body.toString('utf8'));
-  } catch {
-    payload = null;
+  let steps = null;
+  if (bodyStyle === 'three-step') {
+    ({ upload, payload, steps } = await runThreeStep(candidate, manifest, nonce));
+  } else {
+    upload = await httpRequest({
+      url: candidate.endpoint,
+      method: 'POST',
+      headers: uploadHeaders,
+      body: uploadBody,
+      timeoutMs: 180000
+    });
+    try {
+      payload = JSON.parse(upload.body.toString('utf8'));
+    } catch {
+      payload = null;
+    }
   }
 
   const url = payload && (payload.url || payload.siteUrl || payload.link || payload.previewUrl);
@@ -340,6 +438,7 @@ async function checkCandidate(id) {
       candidate: candidate.label,
       endpoint: candidate.endpoint,
       bodyStyle,
+      steps,
       platformAlive: platform,
       nonce,
       uploadStatus: upload.status,

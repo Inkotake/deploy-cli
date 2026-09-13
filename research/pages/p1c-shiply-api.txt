@@ -1,0 +1,5 @@
+source: https://shiply.now/docs/api
+fetched: 2026-09-13T09:06:25.743Z
+httpStatus: 404
+
+ Not found — shiply.now 

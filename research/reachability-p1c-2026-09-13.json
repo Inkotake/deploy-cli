@@ -1,0 +1,28 @@
+{
+  "collectedAt": "2026-09-13T09:07:26.983Z",
+  "purpose": "shiply.now three-step anonymous publish, so the reader probe can read it from a mainland and an overseas egress.",
+  "results": [
+    {
+      "provider": "shiply",
+      "url": "https://quick-garnet-t9km.shiply.now/",
+      "nonce": "f65fa345603a9af1",
+      "persistence": "temporary",
+      "htmlExact": false,
+      "expiresAt": "2026-09-14T09:06:56.427Z",
+      "localHashes": {
+        "assets/app.css": {
+          "sha256": "621c02b9b946948f2944278c0b3e52791a239752a7a763576514f76bd049f22a",
+          "bytes": 45
+        },
+        "assets/app.js": {
+          "sha256": "b1358624abb244471fba68b4f4f0f5e85be130355d055f1814b9531924883be8",
+          "bytes": 41
+        },
+        "index.html": {
+          "sha256": "0aa0342aaf582a9605dffe006693d0b59e953a2edad9ca6b37580021f6c17977",
+          "bytes": 241
+        }
+      }
+    }
+  ]
+}

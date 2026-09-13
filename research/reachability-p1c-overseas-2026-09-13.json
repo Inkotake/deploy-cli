@@ -1,0 +1,84 @@
+{
+  "vantage": "windows-desktop-us-egress",
+  "probedAt": "2026-09-13T09:07:29.497Z",
+  "hostname": "doudou",
+  "platform": "win32/x64",
+  "nonce": "",
+  "verdicts": {
+    "shiply": "reachable"
+  },
+  "results": [
+    {
+      "provider": "shiply",
+      "url": "https://quick-garnet-t9km.shiply.now/",
+      "nonce": "f65fa345603a9af1",
+      "persistence": "temporary",
+      "htmlExact": false,
+      "expiresAt": "2026-09-14T09:06:56.427Z",
+      "localHashes": {
+        "assets/app.css": {
+          "sha256": "621c02b9b946948f2944278c0b3e52791a239752a7a763576514f76bd049f22a",
+          "bytes": 45
+        },
+        "assets/app.js": {
+          "sha256": "b1358624abb244471fba68b4f4f0f5e85be130355d055f1814b9531924883be8",
+          "bytes": 41
+        },
+        "index.html": {
+          "sha256": "0aa0342aaf582a9605dffe006693d0b59e953a2edad9ca6b37580021f6c17977",
+          "bytes": 241
+        }
+      },
+      "verdict": "reachable",
+      "htmlWrapped": false,
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 1475,
+          "sha256": "d7d9a22d2179376879abe4d7fc633fd7403ee1b8ccd53ded2e1f10e216f8bbd7",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "621c02b9b946948f2944278c0b3e52791a239752a7a763576514f76bd049f22a",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "text/javascript",
+          "bytes": 41,
+          "sha256": "b1358624abb244471fba68b4f4f0f5e85be130355d055f1814b9531924883be8",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 1475,
+          "sha256": "d7d9a22d2179376879abe4d7fc633fd7403ee1b8ccd53ded2e1f10e216f8bbd7",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "assets/app.css",
+          "expected": "621c02b9b946948f2944278c0b3e52791a239752a7a763576514f76bd049f22a",
+          "actual": "621c02b9b946948f2944278c0b3e52791a239752a7a763576514f76bd049f22a",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "b1358624abb244471fba68b4f4f0f5e85be130355d055f1814b9531924883be8",
+          "actual": "b1358624abb244471fba68b4f4f0f5e85be130355d055f1814b9531924883be8",
+          "status": 200
+        }
+      ]
+    }
+  ]
+}
