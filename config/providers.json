@@ -64,7 +64,7 @@
       "verification": {
         "status": "live-tested",
         "resourcesByteExact": true,
-        "verifiedAt": "2026-09-10",
+        "verifiedAt": "2026-09-13",
         "note": "live-tested: a 63-file artifact was served byte-identical for every file, HTML included. Re-measured 2026-09-11: a plain GET still receives byte-identical HTML, but a browser-like Accept header receives the upload plus a Cloudflare Insights beacon (+367 bytes on a 277-byte page), which verification now reports as browserRepresentation instead of hiding."
       }
     },
@@ -122,7 +122,7 @@
       "verification": {
         "status": "live-tested",
         "resourcesByteExact": true,
-        "verifiedAt": "2026-09-10",
+        "verifiedAt": "2026-09-13",
         "note": "live-tested: JS/CSS/font resources are served byte-identical. ShipStatic rewrites served HTML by appending a ?_ship=<id> cache-busting query to asset URLs, so HTML bytes differ and are not hash-verified. Its multipart parser also silently drops zero-byte file parts, so an artifact containing one is rejected as a capability failure before upload."
       }
     },
@@ -180,7 +180,7 @@
       "verification": {
         "status": "live-tested",
         "resourcesByteExact": null,
-        "verifiedAt": "2026-09-10",
+        "verifiedAt": "2026-09-13",
         "note": "live-tested: aft.page does not serve the uploaded HTML at all - it injects a wrapper/summary page (a 416-byte index.html was served as 9873 bytes, 9461 without the import-map banner). Excluded from the default plan because its served output can never satisfy the verification contract."
       }
     },
@@ -239,7 +239,7 @@
       "verification": {
         "status": "live-tested",
         "resourcesByteExact": true,
-        "verifiedAt": "2026-09-10",
+        "verifiedAt": "2026-09-13",
         "note": "live-tested: the create/finalize flow works (upload.versionId, upload.finalizeUrl, siteUrl) and JS/CSS/font resources are served byte-identical. An earlier 416-byte index.html was served as 798 bytes with injected Open Graph meta tags, so HTML bytes are not hash-verified; a 2026-09-11 re-probe served a minimal 86-byte page verbatim, so the rewriting is conditional — the presence-only policy stays conservative."
       }
     },
@@ -314,7 +314,7 @@
       "verification": {
         "status": "live-tested",
         "resourcesByteExact": null,
-        "verifiedAt": "2026-09-10",
+        "verifiedAt": "2026-09-13",
         "note": "The tar.gz archive upload was accepted live and returns a deployment URL on a *.127.dev subdomain (for example https://<id>-<name>.127.dev), which is why *.127.dev is in allowedHosts. Byte fidelity is decided by verification at runtime."
       }
     },
@@ -378,7 +378,7 @@
       "verification": {
         "status": "unverified",
         "resourcesByteExact": null,
-        "verifiedAt": "2026-09-10",
+        "verifiedAt": "2026-09-13",
         "note": "UNVERIFIED, and the server allowlist is stricter than documented: live tests rejected .ttf, .woff, .woff2 and extensionless files, so a typical Vite artifact cannot be served. Verification decides at runtime."
       }
     },
