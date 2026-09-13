@@ -1,9 +1,9 @@
 {
   "id": "sitebin",
-  "publisherAuth": "none",
+  "publisherAuth": "account-token",
   "viewerAccess": "unknown",
   "artifactModel": "directory",
-  "shareability": "owner-preview",
+  "shareability": "not-applicable",
   "lifecycle": {
     "contentExpiresAt": null,
     "claimDeadline": null,
@@ -24,7 +24,7 @@
     "sourceUrl": "https://sitebin.io/",
     "checkedAt": "2026-09-13",
     "testCommit": null,
-    "reason": "upload status 401; reads: root n/a, html n/a"
+    "reason": "The anonymous endpoint answered 401: publishing through the API needs an account, so there is no anonymous deployment to share and shareability is not-applicable rather than owner-preview. upload status 401; reads: root n/a, html n/a"
   },
   "measured": {
     "candidate": "Sitebin",
@@ -68,5 +68,13 @@
     "classification": "login-free-upload-only",
     "testedAt": "2026-09-13T06:56:55.918Z",
     "crossEgressAvailable": false
+  },
+  "reachability": {
+    "mainland": "not-measured",
+    "overseas": "not-measured",
+    "measuredAt": "2026-09-13",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "evidence": "research/reachability-mainland-2026-09-13.json, research/reachability-overseas-2026-09-13.json"
   }
 }

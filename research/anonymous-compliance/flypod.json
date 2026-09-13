@@ -3,7 +3,7 @@
   "publisherAuth": "generated-secret",
   "viewerAccess": "public",
   "artifactModel": "archive",
-  "shareability": "unverified",
+  "shareability": "independent-public",
   "lifecycle": {
     "contentExpiresAt": "1790492273606",
     "claimDeadline": null,
@@ -13,18 +13,18 @@
   "verification": {
     "uploadSucceeded": true,
     "sameEgressRead": true,
-    "crossEgressRead": null,
-    "independentReaderVerified": false,
+    "crossEgressRead": true,
+    "independentReaderVerified": true,
     "assetsVerified": true,
     "htmlTransform": "injected",
-    "testedAt": "2026-09-13T06:57:57.224Z"
+    "testedAt": "2026-09-13T08:05:05.100Z"
   },
   "evidence": {
     "level": "A-live",
     "sourceUrl": "https://docs.flypod.dev/docs/api/http",
     "checkedAt": "2026-09-13",
     "testCommit": null,
-    "reason": "upload and every read succeeded from this network; a second network was not available, so independent readership stays unconfirmed"
+    "reason": "Confirmed from two egresses (mainland Beijing and overseas) on 2026-09-13: the root and both assets matched by SHA-256 from both. upload and every read succeeded from this network; a second network was not available, so independent readership stays unconfirmed"
   },
   "measured": {
     "candidate": "flypod",
@@ -128,5 +128,13 @@
     "classification": "independent-public",
     "testedAt": "2026-09-13T06:57:57.225Z",
     "crossEgressAvailable": false
+  },
+  "reachability": {
+    "mainland": "reachable",
+    "overseas": "reachable",
+    "measuredAt": "2026-09-13",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "evidence": "research/reachability-mainland-2026-09-13.json, research/reachability-overseas-2026-09-13.json"
   }
 }

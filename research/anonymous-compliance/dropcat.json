@@ -3,7 +3,7 @@
   "publisherAuth": "generated-secret",
   "viewerAccess": "public",
   "artifactModel": "archive",
-  "shareability": "owner-preview",
+  "shareability": "not-applicable",
   "lifecycle": {
     "contentExpiresAt": "2026-09-20T06:56:59.000Z",
     "claimDeadline": null,
@@ -24,7 +24,7 @@
     "sourceUrl": "https://drop.cat/help/",
     "checkedAt": "2026-09-13",
     "testCommit": null,
-    "reason": "upload status 201; reads: root 404, html 404"
+    "reason": "Nothing was ever served: the API returned a success envelope while the site, its assets and even the platform screenshot URL were 404, and the apex shows a Coming Soon page. There is no site to share, so shareability is not-applicable rather than owner-preview. upload status 201; reads: root 404, html 404"
   },
   "measured": {
     "candidate": "DropCat",
@@ -110,5 +110,13 @@
     "classification": "login-free-upload-only",
     "testedAt": "2026-09-13T06:57:23.353Z",
     "crossEgressAvailable": false
+  },
+  "reachability": {
+    "mainland": "not-measured",
+    "overseas": "not-measured",
+    "measuredAt": "2026-09-13",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "evidence": "research/reachability-mainland-2026-09-13.json, research/reachability-overseas-2026-09-13.json"
   }
 }

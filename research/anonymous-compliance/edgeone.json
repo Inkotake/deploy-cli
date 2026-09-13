@@ -1,0 +1,30 @@
+{
+  "id": "edgeone",
+  "publisherAuth": "generated-secret",
+  "viewerAccess": "cookie",
+  "artifactModel": "directory",
+  "shareability": "not-applicable",
+  "lifecycle": {
+    "contentExpiresAt": null,
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": true,
+    "sameEgressRead": false,
+    "crossEgressRead": false,
+    "independentReaderVerified": false,
+    "assetsVerified": false,
+    "htmlTransform": "unknown",
+    "testedAt": "2026-09-13T05:19:35.000Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://pages.edgeone.ai/zh/document/edgeone-cli",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "Classification: login-free-upload-only. `edgeone makers deploy --anonymous` succeeded with no account and printed an access URL, a project id, a claim command and a 60-minute claim deadline, but every read of that URL returned 401 from a platform page that tells the visitor to obtain a link from the owner and the owner to mint one in the console. A controlled matrix (60 reads at 0/2/5/15/30/60s, both sites, with and without the query token, plain and browser-like headers) never returned 200; after the claim window the same URLs returned 404 because the unclaimed project is removed. Nothing was ever served."
+  },
+  "notes": "A second independent network was not available for this candidate; the verdict is conservative for that reason as well. Raw reads: research/edgeone-anonymous-measurement-2026-09-13.json."
+}

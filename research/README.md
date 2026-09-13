@@ -1,5 +1,29 @@
 # Research layer
 
+## Judged candidates (one schema-aligned record each)
+
+`research/anonymous-compliance/*.json` follows `received-anonymous-provider-evidence.schema.json`. Every
+candidate this project has actually measured has a record, and the verdict is the one the evidence
+supports:
+
+| Candidate | `shareability` | Evidence level | Basis |
+|---|---|---|---|
+| ship-page, shipstatic, here-now, show, aft-page, dropley | enabled (registry) | A-live | live protocol re-probe 2026-09-13, both egresses |
+| flypod, BrewPage, ht-ml.app | `independent-public` | A-live | anonymous deploy measured, read from a mainland and an overseas egress, now registered and enabled |
+| EdgeOne Makers (anonymous) | `not-applicable` | A-live | 60 controlled reads: 401 while the project lived, 404 after the claim window, never a 200 |
+| Cloudflare temporary accounts | `independent-public` (overseas only) | A-live | deploys with no account and serves byte-identical files, but unreachable from the mainland egress |
+| Netlify anonymous | `owner-preview` | A-live | uploads with no account, but the site is password-protected until claimed (401 everywhere) |
+| DropCat | `not-applicable` | A-live | returns a success envelope while serving nothing; the apex is a Coming Soon page |
+| Sitebin | `not-applicable` | A-live | the anonymous endpoint answers 401; publishing needs an account |
+
+**Not measured, and therefore not claimed:** the remaining P1 candidates from the received matrix —
+shiply.now (three-step upload), display.dev, meethtml, openpouch, shippage.ai, Roxer and MindsPage. They
+stay listed in `received-anonymous-provider-matrix.json` as candidates; none appears in the registry, and
+nothing above should be read as a statement about them.
+
+**Out of scope by instruction:** every account-required provider. The user deferred those explicitly, so
+their success paths remain documented as `expected` rather than verified.
+
 ## Reachability: mainland vs overseas (measured 2026-09-13)
 
 `tools/probe-reader.mjs` runs from **any** vantage point against a deployment list and reports, per
