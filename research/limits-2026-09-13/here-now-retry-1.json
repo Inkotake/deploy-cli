@@ -1,0 +1,12 @@
+{
+  "provider": "here-now",
+  "attempt": 1,
+  "fixtureFiles": 102,
+  "ranAt": "2026-09-13T14:56:32.944Z",
+  "seconds": 97,
+  "cliExit": 0,
+  "success": true,
+  "url": "https://oaken-fjord-pj8x.here.now/",
+  "filesVerified": 102,
+  "reason": null
+}

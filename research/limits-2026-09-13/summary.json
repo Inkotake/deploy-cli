@@ -1,0 +1,88 @@
+{
+  "ranAt": "2026-09-13T14:53:53.120Z",
+  "fixtureFiles": 102,
+  "note": "One tiny artifact with 100 files in a directory plus index.html and one asset, deployed to every directory-capable channel. For channels documenting a 100-file limit this is limit+1; for the rest it asks whether every file is really served.",
+  "results": [
+    {
+      "provider": "ship-page",
+      "documentedMaxFiles": 100,
+      "success": false,
+      "filesVerified": null,
+      "failures": null,
+      "reason": "incompatible: accepts at most 100 files, artifact has 102",
+      "seconds": 0.2
+    },
+    {
+      "provider": "shipstatic",
+      "documentedMaxFiles": 500,
+      "success": true,
+      "filesVerified": 102,
+      "failures": null,
+      "reason": null,
+      "seconds": 58.2
+    },
+    {
+      "provider": "aft-page",
+      "documentedMaxFiles": 500,
+      "success": true,
+      "filesVerified": 101,
+      "failures": null,
+      "reason": null,
+      "seconds": 79.9
+    },
+    {
+      "provider": "here-now",
+      "documentedMaxFiles": 1000,
+      "success": false,
+      "filesVerified": null,
+      "failures": null,
+      "reason": "every compatible provider failed; the last failure was here-now (server): HTTP 502 during here-now finalize: server error. {\"status\":\"error\",\"code\":502,\"message\":\"Application failed to respond\",\"request_id\":\"awpmQBZYT1SZL5rYYqVb7A\"}",
+      "seconds": 70.8
+    },
+    {
+      "provider": "show",
+      "documentedMaxFiles": 100,
+      "success": false,
+      "filesVerified": null,
+      "failures": null,
+      "reason": "incompatible: accepts at most 100 files, artifact has 102",
+      "seconds": 0.2
+    },
+    {
+      "provider": "dropley",
+      "documentedMaxFiles": 1000,
+      "success": false,
+      "filesVerified": null,
+      "failures": null,
+      "reason": "every compatible provider failed; the last failure was dropley (capability): dropley: the service rejected the upload as an unsupported file type ({\"error\":\"File type not allowed: many/f001.txt\",\"code\":\"VALIDATION_ERROR\",\"message\":\"File type not allowed: many/f001.txt\",\"requestId\":\"7fabf277-6671-4b4",
+      "seconds": 4.3
+    },
+    {
+      "provider": "flypod",
+      "documentedMaxFiles": null,
+      "success": true,
+      "filesVerified": 101,
+      "failures": null,
+      "reason": null,
+      "seconds": 87.1
+    },
+    {
+      "provider": "brewpage",
+      "documentedMaxFiles": 100,
+      "success": false,
+      "filesVerified": null,
+      "failures": null,
+      "reason": "incompatible: accepts at most 100 files, artifact has 102",
+      "seconds": 0.2
+    },
+    {
+      "provider": "shiply",
+      "documentedMaxFiles": 2000,
+      "success": true,
+      "filesVerified": 101,
+      "failures": null,
+      "reason": null,
+      "seconds": 137.2
+    }
+  ]
+}

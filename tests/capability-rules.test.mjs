@@ -133,6 +133,34 @@ test('a model-file blocklist rejects the measured extensions', () => {
   assert.match(JSON.stringify(refusal.failures), /model\/binary assets|allowlist|blocklist/);
 });
 
+test('the shipped registry keeps ship-page as the default choice', async () => {
+  // A product decision taken from measurement (30 days, byte-exact, 25 MB, an enforced 100-file cap,
+  // mainland-reachable from two egresses, no account). Pinning it means a future re-ranking has to
+  // argue with evidence instead of quietly reordering the list.
+  const { loadRegistry } = await import('../src/registry.mjs');
+  const registry = loadRegistry();
+  const result = planProviders({
+    registry,
+    manifest: manifest({
+      files: [
+        { path: 'index.html', bytes: 400, mime: 'text/html' },
+        { path: 'assets/app.js', bytes: 900, mime: 'text/javascript' }
+      ],
+      extensions: ['.html', '.js'],
+      fileCount: 2,
+      totalBytes: 1300
+    }),
+    mode: 'quick-share',
+    region: 'auto',
+    healthState: { providers: {} },
+    context: { config: { byProvider: {}, other: [] }, gitRemote: null, cliAuth: {} },
+    healthFor: () => ({ state: 'unknown', circuitOpen: false })
+  });
+
+  assert.equal(result.eligible[0].id, 'ship-page',
+    `the default channel must be the measured best, got: ${result.eligible.slice(0, 3).map((entry) => entry.id).join(', ')}`);
+});
+
 test('the shipped registry reflects what was measured for these hosts', async () => {
   const { loadRegistry } = await import('../src/registry.mjs');
   const registry = loadRegistry();
@@ -142,6 +170,8 @@ test('the shipped registry reflects what was measured for these hosts', async ()
   assert.equal(byId('brewpage').capabilities.supportsModelFiles, false,
     'BrewPage answered 422 "File type is not allowed" for .glb and .wasm');
   assert.deepEqual(byId('brewpage').capabilities.denyExtensions, ['.glb', '.wasm']);
+  assert.deepEqual(byId('dropley').capabilities.denyExtensions, ['.txt'],
+    'dropley rejected ".txt" with "File type not allowed", so a build with robots.txt cannot be hosted there');
   assert.equal(byId('flypod').capabilities.nonAsciiPaths, false,
     'flypod accepted a non-ASCII path and then served 404 in every encoding');
   for (const id of ['show', 'dropley']) {

@@ -61,6 +61,42 @@ carried no expiry and the tool does not invent one.
   byte-exact delivery: each adds its own banner, viewer or instrumentation, and the tool reports that
   rather than hiding it.
 
+## Measured limits (2026-09-13)
+
+A second fixture — `index.html`, one asset and **100 files in one directory** (102 files, ~2 KB total) —
+was deployed to every directory-capable channel, so the tool verified each file individually. The
+question was not "does it accept this" but **"does it serve every file it accepted"**:
+
+| Channel | Documented cap | Result |
+|---|---|---|
+| ship-page | 100 files | refused **before upload**: "accepts at most 100 files, artifact has 102" |
+| show | 100 files | refused before upload, same clear message |
+| BrewPage | 100 files | refused before upload, same clear message |
+| shipstatic | 500 files | **102/102 verified**, no silent drops |
+| aft-page | 500 files | 101/102 verified (the page itself is presence-checked) |
+| flypod | not documented | 101/102 verified (page injected by the host) |
+| shiply.now | 2000 files | 101/102 verified (claim banner) |
+| dropley | 1000 files | **refused**: `File type not allowed: many/f001.txt` |
+| here-now | 1000 files | first attempt: `HTTP 502 Application failed to respond` at finalize; **two retries both succeeded, 102/102 verified** (97 s and 120 s) |
+
+What this establishes:
+
+- **No channel silently dropped a file.** Every difference between "verified" and the file count is
+  explained by a host that rewrites the page: that file is presence-checked, never counted as a hash.
+- **The three 100-file channels enforce their cap honestly**, refusing the artifact up front instead of
+  truncating it.
+- **dropley cannot host a typical build**: it rejects `.txt`, so a build containing `robots.txt` fails
+  outright, on top of the already-recorded rejection of fonts, `.glb`, `.wasm` and extensionless files.
+- **here-now is the slowest and least predictable** of the set: 97–120 s for 102 tiny files and one
+  transient 502 that two retries cleared. It is not a limit, but it is a reason not to make it a default.
+
+## The default
+
+`ship-page` is the default choice, and that is a measured decision rather than a preference: a 30-day
+lifetime, byte-exact HTML and assets, 25 MB total, a 100-file cap that is enforced with a clear message,
+mainland reachability from both egresses, and no account required. A test asserts that it still ranks
+first, so re-ranking it has to argue with evidence.
+
 ## What is still unmeasured
 
 - **Limits above the fixture**: file counts and totals are taken from each provider's documentation where

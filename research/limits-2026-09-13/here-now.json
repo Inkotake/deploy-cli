@@ -1,0 +1,12 @@
+{
+  "provider": "here-now",
+  "documentedMaxFiles": 1000,
+  "fixtureFiles": 102,
+  "ranAt": "2026-09-13T14:50:04.014Z",
+  "seconds": 70.8,
+  "cliExit": 1,
+  "success": false,
+  "url": null,
+  "verification": null,
+  "reason": "every compatible provider failed; the last failure was here-now (server): HTTP 502 during here-now finalize: server error. {\"status\":\"error\",\"code\":502,\"message\":\"Application failed to respond\",\"request_id\":\"awpmQBZYT1SZL5rYYqVb7A\"}"
+}

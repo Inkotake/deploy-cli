@@ -1,0 +1,12 @@
+{
+  "provider": "show",
+  "documentedMaxFiles": 100,
+  "fixtureFiles": 102,
+  "ranAt": "2026-09-13T14:50:04.244Z",
+  "seconds": 0.2,
+  "cliExit": 1,
+  "success": false,
+  "url": null,
+  "verification": null,
+  "reason": "incompatible: accepts at most 100 files, artifact has 102"
+}

@@ -1,0 +1,46 @@
+{
+  "provider": "aft-page",
+  "documentedMaxFiles": 500,
+  "fixtureFiles": 102,
+  "ranAt": "2026-09-13T14:48:53.229Z",
+  "seconds": 79.9,
+  "cliExit": 0,
+  "success": true,
+  "url": "https://xublqurq.aft.page/",
+  "verification": {
+    "passed": true,
+    "method": "http-sha256",
+    "filesExpected": 102,
+    "filesRequired": 102,
+    "filesVerified": 101,
+    "filesPresenceChecked": 1,
+    "bytesVerified": 2530,
+    "browserVerified": false,
+    "strategy": "all-files",
+    "htmlPolicy": "presence-only",
+    "htmlExact": false,
+    "htmlNotCompared": [
+      {
+        "path": "index.html",
+        "localBytes": 65,
+        "remoteBytes": 8628,
+        "detail": "served HTML differs from the uploaded bytes (the provider rewrites HTML on the wire) and was not hash-verified under the presence-only policy"
+      }
+    ],
+    "hashComplete": false,
+    "rootStatus": 200,
+    "browserRepresentation": {
+      "checked": true,
+      "identical": false,
+      "status": 200,
+      "bytes": 8995,
+      "expectedBytes": 65,
+      "contentEncoding": "br",
+      "decoded": true,
+      "addedBytes": 8930,
+      "note": "a browser-like request receives 8995 bytes where 65 were uploaded (+8930); the host or an edge network in front of it rewrites HTML for browsers"
+    },
+    "note": "101 of 102 required resources were hash-compared; 1 HTML resource(s) were presence-checked only (htmlPolicy=presence-only); a browser-like request receives 8995 bytes where 65 were uploaded (+8930); the host or an edge network in front of it rewrites HTML for browsers; no browser rendering was performed."
+  },
+  "reason": null
+}

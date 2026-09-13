@@ -1,0 +1,39 @@
+{
+  "provider": "shipstatic",
+  "documentedMaxFiles": 500,
+  "fixtureFiles": 102,
+  "ranAt": "2026-09-13T14:47:33.317Z",
+  "seconds": 58.2,
+  "cliExit": 0,
+  "success": true,
+  "url": "https://pure-synth-35bt5e7.shipstatic.com/",
+  "verification": {
+    "passed": true,
+    "method": "http-sha256",
+    "filesExpected": 102,
+    "filesRequired": 102,
+    "filesVerified": 102,
+    "filesPresenceChecked": 0,
+    "bytesVerified": 2595,
+    "browserVerified": false,
+    "strategy": "all-files",
+    "htmlPolicy": "presence-only",
+    "htmlExact": true,
+    "htmlNotCompared": [],
+    "hashComplete": true,
+    "rootStatus": 200,
+    "browserRepresentation": {
+      "checked": true,
+      "identical": true,
+      "status": 200,
+      "bytes": 65,
+      "expectedBytes": 65,
+      "contentEncoding": "br",
+      "decoded": true,
+      "addedBytes": 0,
+      "note": "a browser-like request receives exactly the uploaded HTML"
+    },
+    "note": "102 of 102 required resources were hash-compared; no browser rendering was performed."
+  },
+  "reason": null
+}

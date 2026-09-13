@@ -1,0 +1,46 @@
+{
+  "provider": "shiply",
+  "documentedMaxFiles": 2000,
+  "fixtureFiles": 102,
+  "ranAt": "2026-09-13T14:53:53.119Z",
+  "seconds": 137.2,
+  "cliExit": 0,
+  "success": true,
+  "url": "https://mellow-delta-csw2.shiply.now/",
+  "verification": {
+    "passed": true,
+    "method": "http-sha256",
+    "filesExpected": 102,
+    "filesRequired": 102,
+    "filesVerified": 101,
+    "filesPresenceChecked": 1,
+    "bytesVerified": 2530,
+    "browserVerified": false,
+    "strategy": "all-files",
+    "htmlPolicy": "presence-only",
+    "htmlExact": false,
+    "htmlNotCompared": [
+      {
+        "path": "index.html",
+        "localBytes": 65,
+        "remoteBytes": 1072,
+        "detail": "served HTML differs from the uploaded bytes (the provider rewrites HTML on the wire) and was not hash-verified under the presence-only policy"
+      }
+    ],
+    "hashComplete": false,
+    "rootStatus": 200,
+    "browserRepresentation": {
+      "checked": true,
+      "identical": false,
+      "status": 200,
+      "bytes": 1439,
+      "expectedBytes": 65,
+      "contentEncoding": "br",
+      "decoded": true,
+      "addedBytes": 1374,
+      "note": "a browser-like request receives 1439 bytes where 65 were uploaded (+1374); the host or an edge network in front of it rewrites HTML for browsers"
+    },
+    "note": "101 of 102 required resources were hash-compared; 1 HTML resource(s) were presence-checked only (htmlPolicy=presence-only); a browser-like request receives 1439 bytes where 65 were uploaded (+1374); the host or an edge network in front of it rewrites HTML for browsers; no browser rendering was performed."
+  },
+  "reason": null
+}

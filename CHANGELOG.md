@@ -123,6 +123,14 @@ required`). `docs/releasing.md` records both ways to finish that step.
   non-ASCII path and then serves `404` for it in every encoding tried. The registry now carries those
   facts, the planner refuses such artifacts before uploading (`nonAsciiPaths: false` is the new rule),
   and `docs/providers.md` publishes the whole matrix.
+- Measured limits, and specifically whether a channel serves every file it accepted: a 102-file fixture
+  (100 files in one directory, ~2 KB) deployed to every directory-capable channel. **No channel silently
+  dropped a file.** ship-page, show and BrewPage refuse an artifact over their 100-file cap before
+  uploading with a clear message; shipstatic, aft-page, flypod and shiply served every file; dropley
+  rejected `.txt` outright (`File type not allowed`), so a build containing `robots.txt` cannot be hosted
+  there; here-now answered `HTTP 502` at finalize once and then succeeded twice with 102/102 verified
+  (97 s and 120 s), so the failure is transient rather than a limit — but it is the slowest channel of the
+  set. `docs/providers.md` carries the table, and `ship-page` is pinned by a test as the measured default.
 - An offline test suite (`node:test`) covering the adapters, verification, planning, the registry
   schema, the policy split, claims, snapshots, the proxy path and the CLI contract.
 

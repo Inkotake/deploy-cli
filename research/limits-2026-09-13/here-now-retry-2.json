@@ -1,0 +1,12 @@
+{
+  "provider": "here-now",
+  "attempt": 2,
+  "fixtureFiles": 102,
+  "ranAt": "2026-09-13T14:58:33.126Z",
+  "seconds": 120.2,
+  "cliExit": 0,
+  "success": true,
+  "url": "https://mineral-banner-8gpf.here.now/",
+  "filesVerified": 102,
+  "reason": null
+}
