@@ -1,0 +1,30 @@
+{
+  "id": "netlify-anonymous",
+  "publisherAuth": "generated-secret",
+  "viewerAccess": "unknown",
+  "artifactModel": "directory",
+  "shareability": "unverified",
+  "lifecycle": {
+    "contentExpiresAt": null,
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": false,
+    "sameEgressRead": null,
+    "crossEgressRead": null,
+    "independentReaderVerified": false,
+    "assetsVerified": false,
+    "htmlTransform": "unknown",
+    "testedAt": null
+  },
+  "evidence": {
+    "level": "B-official-contract",
+    "sourceUrl": "https://cli.netlify.com/commands/deploy/",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "Documented contract only, not measured: the netlify CLI is not installed on this machine and this project never installs a CLI for the user. The official CLI reference states verbatim that allow-anonymous (boolean) means 'If not logged in, deploy anonymously and create a claimable site instead of requiring authentication', with the example 'netlify deploy --allow-anonymous --dir ./public --no-build'. The same CLI ships a claim command, so the ownership path exists in the tool. The page does NOT state a claim deadline, so the widely repeated one hour stays unverified and is not recorded here."
+  },
+  "notes": "Not measured: claim deadline, served host, HTML rewriting, byte fidelity, and reachability from mainland China."
+}
