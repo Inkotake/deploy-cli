@@ -656,6 +656,58 @@
         "verifiedAt": null,
         "note": "Byte fidelity expected, but the branch build is asynchronous, so immediate verification can legitimately fail."
       }
+    },
+    {
+      "id": "edgeone",
+      "label": "EdgeOne Makers (anonymous)",
+      "adapter": "edgeone",
+      "transport": "cli",
+      "cli": "edgeone",
+      "protocol": "cli-anonymous",
+      "protocolNotes": "edgeone makers deploy <dir> --anonymous; the anonymous preview is access-restricted and must be claimed within 60 minutes",
+      "endpoint": null,
+      "allowedHosts": [
+        "*.edgeone.cool"
+      ],
+      "enabled": false,
+      "disabledReason": "anonymous preview could not be verified: every request (including the URL as printed by the CLI) returned 401 in testing on 2026-09-13, and the provider documents visitor/IP limits and calls the preview unsuitable for sharing. See research/edgeone-anonymous-2026-09-13.md",
+      "modes": [
+        "quick-share"
+      ],
+      "priority": 2,
+      "cnPriority": 99,
+      "persistent": false,
+      "capabilities": {
+        "anonymous": true,
+        "maxFiles": 20000,
+        "maxFileBytes": 26214400,
+        "maxTotalBytes": null,
+        "maxTotalBytesSource": null,
+        "supportedExtensions": null,
+        "denyExtensions": [],
+        "extensionPolicy": "any",
+        "supportsModelFiles": true,
+        "claimable": true,
+        "htmlExact": true,
+        "singlePageOnly": false,
+        "ttl": {
+          "defaultSeconds": null,
+          "optionsSeconds": null,
+          "source": "anonymous projects are removed unless claimed within 60 minutes"
+        },
+        "cost": {
+          "status": "free",
+          "note": "public beta: anonymous deploys need no account",
+          "source": "https://pages.edgeone.ai/zh/document/limits-and-quotas",
+          "checkedAt": "2026-09-13"
+        }
+      },
+      "verification": {
+        "status": "unverified",
+        "resourcesByteExact": null,
+        "verifiedAt": "2026-09-13",
+        "note": "the login-free deploy path succeeded live (temporary project created, token-gated *.edgeone.cool URL returned) but the preview answered 401 for every request, so no delivery could be verified. The provider documents visitor/IP restrictions and recommends claiming before sharing."
+      }
     }
   ]
 }
