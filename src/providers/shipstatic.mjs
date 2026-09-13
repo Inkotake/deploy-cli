@@ -7,6 +7,7 @@
  */
 
 import { md5Hex, trace } from '../common.mjs';
+import { providerTtlSeconds } from './shared.mjs';
 import * as identity from '../identity.mjs';
 import { ProviderError } from './errors.mjs';
 import { artifactFiles, buildClaim, expiresAtFrom, idempotencyKey, multipartRequest, requireJson, requireUrl } from './shared.mjs';

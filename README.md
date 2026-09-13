@@ -88,6 +88,7 @@ Common flags: `--json`, `--mode`, `--region`, `--provider`, `--dry-run`, `--veri
 | show | quick-share | live-tested | strict | 48 hours |
 | aft.page | quick-share | live-tested | no (serves a wrapper page) | 30 days idle |
 | Dropley | quick-share | unverified | strict | 1/3/7 days |
+| **flypod** | quick-share | live-tested, mainland + overseas | no (injects its render instrumentation) | 14 days |
 | Netlify · Cloudflare Pages · Vercel · GitHub Pages | persistent | expected | yes | durable |
 
 `live-tested` means the protocol was measured against the live service; `expected` means the adapter

@@ -12,6 +12,7 @@ import * as aftPage from './aft-page.mjs';
 import * as hereNow from './here-now.mjs';
 import * as show from './show.mjs';
 import * as dropley from './dropley.mjs';
+import * as flypod from './flypod.mjs';
 import * as persistent from './persistent.mjs';
 
 export const ADAPTERS = new Map([
@@ -21,6 +22,7 @@ export const ADAPTERS = new Map([
   [hereNow.id, hereNow],
   [show.id, show],
   [dropley.id, dropley],
+  [flypod.id, flypod],
   [persistent.id, persistent]
 ]);
 

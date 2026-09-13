@@ -1,0 +1,179 @@
+{
+  "collectedAt": "2026-09-13T07:05:16.577Z",
+  "purpose": "One fixture deployed to every anonymous channel, so the same reader probe can be run from an overseas vantage (this machine, US egress) and a mainland vantage (Ubuntu vps, Beijing, CN).",
+  "nonce": "9849bbf349192c90",
+  "fixture": "C:\\Users\\inkot\\AppData\\Local\\Temp\\reach-P4L1eS",
+  "results": [
+    {
+      "provider": "ship-page",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://autumn-caper-ap4ue.shipped.page/",
+      "persistence": "temporary",
+      "expiresAt": "2026-10-13T07:04:29.832Z",
+      "htmlExact": true,
+      "filesVerified": 3,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      }
+    },
+    {
+      "provider": "shipstatic",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://hovering-loop-3pw3evv.shipstatic.com/",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-16T07:04:40.000Z",
+      "htmlExact": false,
+      "filesVerified": 2,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      }
+    },
+    {
+      "provider": "here-now",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://scarlet-ether-p9qd.here.now/",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-14T07:04:45.707Z",
+      "htmlExact": true,
+      "filesVerified": 3,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      }
+    },
+    {
+      "provider": "show",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://29k3vu-reach-p4l1es.127.dev/",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-15T07:04:53.907Z",
+      "htmlExact": true,
+      "filesVerified": 3,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      }
+    },
+    {
+      "provider": "aft-page",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://reach-9849bbf349192c90.aft.page/",
+      "persistence": "temporary",
+      "expiresAt": null,
+      "htmlExact": false,
+      "filesVerified": 2,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      }
+    },
+    {
+      "provider": "dropley",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://preview.dropley.app/p/qxkHW0K5",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-20T07:05:06.728Z",
+      "htmlExact": true,
+      "filesVerified": 3,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      }
+    },
+    {
+      "provider": "flypod",
+      "cliExit": null,
+      "success": true,
+      "url": "https://eb1101e8a2424ff8.flypod.dev",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-27T06:57:53.606Z",
+      "htmlExact": false,
+      "filesVerified": 2,
+      "reason": "reused from research/anonymous-compliance/flypod.json (registered disabled pending this cross-egress probe)",
+      "localHashes": {
+        "assets/app.js": {
+          "sha256": "bb2c6364c42dedafbeceefb25579e023af3857514e874b137c84fc8d611d76ab",
+          "bytes": 41
+        },
+        "assets/app.css": {
+          "sha256": "da4e4210d0fdfd76f53c6d453bebdaae539ea7da15173573ccf70e5a7ea73dd1",
+          "bytes": 45
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,548 @@
+{
+  "vantage": "windows-desktop-us-egress",
+  "probedAt": "2026-09-13T07:06:10.837Z",
+  "hostname": "doudou",
+  "platform": "win32/x64",
+  "nonce": "9849bbf349192c90",
+  "verdicts": {
+    "ship-page": "reachable",
+    "shipstatic": "reachable",
+    "here-now": "partial",
+    "show": "reachable",
+    "aft-page": "reachable",
+    "dropley": "reachable",
+    "flypod": "reachable"
+  },
+  "results": [
+    {
+      "provider": "ship-page",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://autumn-caper-ap4ue.shipped.page/",
+      "persistence": "temporary",
+      "expiresAt": "2026-10-13T07:04:29.832Z",
+      "htmlExact": true,
+      "filesVerified": 3,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      },
+      "verdict": "reachable",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 221,
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 221,
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "text/javascript",
+          "bytes": 37,
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "actual": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "actual": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "actual": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "provider": "shipstatic",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://hovering-loop-3pw3evv.shipstatic.com/",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-16T07:04:40.000Z",
+      "htmlExact": false,
+      "filesVerified": 2,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      },
+      "verdict": "reachable",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 249,
+          "sha256": "b3fe9794150bb947478eb1bd150ec913a1ced1a986ba11d26167681d74147c8e",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 249,
+          "sha256": "b3fe9794150bb947478eb1bd150ec913a1ced1a986ba11d26167681d74147c8e",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "application/javascript",
+          "bytes": 37,
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "assets/app.js",
+          "expected": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "actual": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "actual": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "provider": "here-now",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://scarlet-ether-p9qd.here.now/",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-14T07:04:45.707Z",
+      "htmlExact": true,
+      "filesVerified": 3,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      },
+      "verdict": "partial",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 591,
+          "sha256": "70f516c3acca6c161d28846bbac35bd714c2a303ef5cb786eb328230e384290f",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 601,
+          "sha256": "7b1220313a17a636f7959b102f3e069470e1e5d5d244f304d7c118ac90cc0716",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "text/javascript",
+          "bytes": 37,
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "actual": "7b1220313a17a636f7959b102f3e069470e1e5d5d244f304d7c118ac90cc0716",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "actual": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "actual": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "provider": "show",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://29k3vu-reach-p4l1es.127.dev/",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-15T07:04:53.907Z",
+      "htmlExact": true,
+      "filesVerified": 3,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      },
+      "verdict": "reachable",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 221,
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 221,
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "application/javascript",
+          "bytes": 37,
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "actual": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "actual": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "actual": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "provider": "aft-page",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://reach-9849bbf349192c90.aft.page/",
+      "persistence": "temporary",
+      "expiresAt": null,
+      "htmlExact": false,
+      "filesVerified": 2,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      },
+      "verdict": "reachable",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 9703,
+          "sha256": "a60c67c215f91443063188302917a989bb3b875c34183788def4b650fe901de6",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 9703,
+          "sha256": "a60c67c215f91443063188302917a989bb3b875c34183788def4b650fe901de6",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "text/javascript",
+          "bytes": 37,
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "assets/app.js",
+          "expected": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "actual": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "actual": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "provider": "dropley",
+      "cliExit": 0,
+      "success": true,
+      "url": "https://preview.dropley.app/p/qxkHW0K5",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-20T07:05:06.728Z",
+      "htmlExact": true,
+      "filesVerified": 3,
+      "reason": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "bytes": 221
+        },
+        "assets/app.js": {
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "bytes": 37
+        },
+        "assets/app.css": {
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "bytes": 45
+        }
+      },
+      "verdict": "reachable",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 2414,
+          "sha256": "52551d1188018c9eeaa8790340774949226b5d8006240372e9a202a3afd3e603",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 221,
+          "sha256": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "application/javascript",
+          "bytes": 37,
+          "sha256": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "actual": "7bc842d1218d6bcf02a601f1cc3cd9701f8e5992ff010d5cae20378e20c7a040",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "actual": "67e06fb1d21869a75b89564780d54a4d0348221fb65e9ceecfc5e104a49e5897",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "actual": "d7ab24dda0f34140bc6bd2df9b03a498f16d37df4e64f93c22ac368289b7f18f",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "provider": "flypod",
+      "cliExit": null,
+      "success": true,
+      "url": "https://eb1101e8a2424ff8.flypod.dev",
+      "persistence": "temporary",
+      "expiresAt": "2026-09-27T06:57:53.606Z",
+      "htmlExact": false,
+      "filesVerified": 2,
+      "reason": "reused from research/anonymous-compliance/flypod.json (registered disabled pending this cross-egress probe)",
+      "localHashes": {
+        "assets/app.js": {
+          "sha256": "bb2c6364c42dedafbeceefb25579e023af3857514e874b137c84fc8d611d76ab",
+          "bytes": 41
+        },
+        "assets/app.css": {
+          "sha256": "da4e4210d0fdfd76f53c6d453bebdaae539ea7da15173573ccf70e5a7ea73dd1",
+          "bytes": 45
+        }
+      },
+      "verdict": "reachable",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 1453,
+          "sha256": "d0eb8616044efad99383733fbdaebe0f5911d63b8fdab7ff05565a7e27da26d0",
+          "markerFound": false,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "text/javascript",
+          "bytes": 41,
+          "sha256": "bb2c6364c42dedafbeceefb25579e023af3857514e874b137c84fc8d611d76ab",
+          "markerFound": false,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "da4e4210d0fdfd76f53c6d453bebdaae539ea7da15173573ccf70e5a7ea73dd1",
+          "markerFound": false,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "assets/app.js",
+          "expected": "bb2c6364c42dedafbeceefb25579e023af3857514e874b137c84fc8d611d76ab",
+          "actual": "bb2c6364c42dedafbeceefb25579e023af3857514e874b137c84fc8d611d76ab",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "da4e4210d0fdfd76f53c6d453bebdaae539ea7da15173573ccf70e5a7ea73dd1",
+          "actual": "da4e4210d0fdfd76f53c6d453bebdaae539ea7da15173573ccf70e5a7ea73dd1",
+          "status": 200
+        }
+      ]
+    }
+  ]
+}

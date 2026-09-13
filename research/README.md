@@ -1,5 +1,31 @@
 # Research layer
 
+## Reachability: mainland vs overseas (measured 2026-09-13)
+
+`tools/probe-reader.mjs` runs from **any** vantage point against a deployment list and reports, per
+provider, whether the root and every asset could be read with the expected SHA-256. The same tool was
+run from two egresses on the same fixture:
+
+| Vantage | Where | Egress |
+|---|---|---|
+| `mainland-vps-beijing` | Ubuntu 24.04 host, `vps` | 39.106.154.227, Beijing, CN (no proxy) |
+| `windows-desktop-us-egress` | this workstation | 64.118.152.45, San Jose, US |
+
+| Provider | Mainland | Overseas | Note |
+|---|---|---|---|
+| ship-page | reachable | reachable | HTML byte-exact from both |
+| shipstatic | reachable | reachable | HTML rewrites itself (`htmlExact: false`) |
+| here-now | partial | partial | assets byte-identical; the served HTML is injected (591 B root vs 601 B `/index.html`) |
+| show | reachable | reachable | — |
+| aft-page | reachable | reachable | serves its own wrapper page |
+| dropley | reachable | reachable | the deployment URL has no trailing slash, which broke the first probe run — the tool now normalises it |
+| flypod | reachable | reachable | cross-egress confirmed; HTML carries the provider's render instrumentation |
+
+**Honest boundary:** that is *one* mainland datacenter egress, not a three-carrier or campus-network
+measurement, and a datacenter network is usually more permissive than a school network. The registry
+stores this as `verification.reachability` per provider, with the evidence files named, rather than a
+`china: true` flag.
+
 This directory holds **policy facts about hosting platforms**, not runtime configuration. It exists so
 that "we looked this up, on this date, at this source" is a reviewable artifact instead of a fact
 someone remembers.

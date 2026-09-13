@@ -6,6 +6,7 @@
  */
 
 import { createTar, gzip } from '../common.mjs';
+import { providerTtlSeconds } from './shared.mjs';
 import * as identity from '../identity.mjs';
 import { ProviderError } from './errors.mjs';
 import { artifactFiles, artifactName, expiresAtFrom, multipartRequest, requireJson, requireUrl } from './shared.mjs';

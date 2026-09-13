@@ -61,6 +61,19 @@ required`). `docs/releasing.md` records both ways to finish that step.
   primary sources and writes `research/policy-checks.json`; `research/README.md` documents the three
   layers (research catalog, executable adapter, default candidate) and why reachability evidence is
   recorded per probe instead of as a `china: true` attribute.
+- **flypod** as a quick-share provider: `POST https://flypod.dev/sites` with the zip as the raw request
+  body, no credential, 14-day anonymous lifetime, claim token stored like every other claim. Verified
+  live from two vantage points (a mainland Beijing egress and an overseas one); the served HTML is not
+  byte-exact because the provider injects its own render instrumentation, so the page is
+  presence-checked while every asset is hash-compared.
+- Two-vantage reachability evidence: `tools/probe-reader.mjs` runs from any network against a
+  deployment list, and `research/reachability-{mainland,overseas}-2026-09-13.json` record the same
+  fixture read from a Beijing egress and a US egress. The registry carries the result per provider as
+  `verification.reachability`, with the honest boundary that one datacenter egress is not a
+  three-carrier measurement.
+- `tools/check-anonymous.mjs`: one harness for every login-free candidate (nonce fixture, documented
+  packaging, anonymous upload, masked response, read-back with retry, platform liveness) producing
+  records that follow the received evidence schema.
 - An offline test suite (`node:test`) covering the adapters, verification, planning, the registry
   schema, the policy split, claims, snapshots, the proxy path and the CLI contract.
 
@@ -87,6 +100,13 @@ required`). `docs/releasing.md` records both ways to finish that step.
   per-path manifest from `inspect --json` before it calls `deploy` — see `docs/consuming.md`.
 
 ### Fixed
+
+- Four anonymous adapters (`shipstatic`, `here-now`, `show`, `aft-page`) called an undefined helper
+  since the de-branding sweep, because that sweep rewrote the call site and then skipped adding the
+  import. Nothing caught it: only the ship-page adapter had an end-to-end test. All four work again,
+  and the reachability evidence above was produced after the fix.
+- `tools/probe-reader.mjs` joined relative paths onto a base URL without normalising a missing trailing
+  slash, which made dropley look broken; the probe was wrong, not the host.
 
 - A single `cwd`-defaulting git helper made staging commands (`git clean -fdx`, `git rm`) run inside
   the user's own project during a GitHub Pages deploy. Commands are now routed to the project or to
