@@ -51,6 +51,34 @@ login)"*, with `--sid` optional if `.edgeone/anonymous.json` exists.
 
 The access URL carries a token in the query string, and the region was `ap-shanghai`.
 
+## The 401 is not a region, header or token problem — the link is console-bound
+
+Two further anonymous deploys were run to isolate the variable, both from this machine and read back
+within seconds of the CLI printing the URL:
+
+| Deploy | Access URL host | Region (from `.edgeone/anonymous.json`) | Plain GET | Browser-like GET | Sub-resource |
+|---|---|---|---|---|---|
+| `--site global` | `*.edgeone.dev` | `ap-singapore` | 401 | 401 | 401 |
+| `--site china` | `*.edgeone.cool` | `ap-shanghai` | 401 | 401 | 401 |
+
+Every variant returned the same 2715-byte page, served by `server: edgeone makers`, and the page names
+the mechanism itself:
+
+```text
+Tencent Edgeone 401 : UNAUTHORIZED (Code: UNAUTHORIZED) Access Restricted or Authentication Expired.
+Site Visitor: Please contact the site administrator to obtain a valid access link.
+Site Owner:   Click "Preview" in the console for a new link.
+For "Global (MLC excluded)" projects, check your network environment.
+```
+
+So the printed Access URL is not a shareable link: the preview is bound to a console session, and the
+platform tells the *owner* to mint a new link from the console. Neither an anonymous fetch nor a
+browser-like fetch can read the deployment.
+
+**Consequence for the roadmap:** EdgeOne's login-free *deploy* is real, but its login-free *delivery* is
+not. It therefore cannot serve the "no account" use case at all — it belongs with the account-required
+providers, and only after claiming does a usable URL exist.
+
 ## Why no adapter was added
 
 Every request returned **401** — the URL exactly as the CLI printed it, `/index.html`, and
@@ -74,11 +102,13 @@ reader may not be able to open. So it is registered **disabled, with the reason*
 
 ## If it is picked up again
 
-1. Re-run the deploy and immediately fetch the URL **from the same egress path** the CLI used
-   (compare with the polling IP) to separate the IP restriction from a token problem.
-2. If the preview can be read reliably, the adapter is a normal CLI adapter: parse `siteUrl`,
-   `projectId`, `deploymentId` and the deadline from stdout, and read `.edgeone/anonymous.json` from a
-   private staging directory (never the artifact directory, or `.edgeone/` would be published).
+1. Do **not** start by re-testing the 401: it is reproduced for both sites, with and without the token,
+   with plain and browser-like headers, and the platform page explains it. Start from the assumption
+   that a usable URL requires claiming (i.e. an account).
+2. If a *claimed* project is available later, the adapter is a normal CLI adapter: parse `siteUrl`,
+   `projectId`, `deploymentId` and the deadline from stdout while deploying, then read
+   `.edgeone/anonymous.json` from a private staging directory (never the artifact directory, or
+   `.edgeone/` would be published).
 3. Treat the `Sid` as a claim credential: store it with the other claims, never print it by default,
    and surface the claim deadline as `lifecycle.claimDeadline`.
 4. The claimed/persistent path needs an account and belongs with the other persistent adapters, whose

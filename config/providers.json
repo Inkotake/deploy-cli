@@ -670,7 +670,7 @@
         "*.edgeone.cool"
       ],
       "enabled": false,
-      "disabledReason": "anonymous preview could not be verified: every request (including the URL as printed by the CLI) returned 401 in testing on 2026-09-13, and the provider documents visitor/IP limits and calls the preview unsuitable for sharing. See research/edgeone-anonymous-2026-09-13.md",
+      "disabledReason": "the login-free deploy works, but its delivery does not: the printed Access URL returned 401 for both sites (global *.edgeone.dev, china *.edgeone.cool), with and without the token and with browser-like headers. The platform page says the visitor must obtain a valid access link from the owner and the owner must mint a new link from the console, so the preview is console-session-bound and not shareable. See research/edgeone-anonymous-2026-09-13.md",
       "modes": [
         "quick-share"
       ],
@@ -706,7 +706,7 @@
         "status": "unverified",
         "resourcesByteExact": null,
         "verifiedAt": "2026-09-13",
-        "note": "the login-free deploy path succeeded live (temporary project created, token-gated *.edgeone.cool URL returned) but the preview answered 401 for every request, so no delivery could be verified. The provider documents visitor/IP restrictions and recommends claiming before sharing."
+        "note": "measured 2026-09-13: anonymous deploy succeeded twice (global ap-singapore, china ap-shanghai) with no account, and both printed URLs answered 401 to every client tried. No delivery could be verified, so this provider cannot serve the no-account use case."
       }
     }
   ]
