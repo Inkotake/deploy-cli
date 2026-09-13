@@ -44,8 +44,8 @@ import { adapterAvailability } from './providers/index.mjs';
 
 /* -------------------------------------------------------------------- args ---- */
 
-const BOOLEAN_FLAGS = new Set(['json', 'help', 'version', 'auto', 'dry-run', 'no-verify', 'verify-all', 'verbose', 'cn', 'yes', 'allow-inexact', 'show-claim-secret', 'reveal', 'keep-snapshot', 'force-push']);
-const VALUE_FLAGS = new Set(['mode', 'provider', 'port', 'timeout', 'region', 'tool', 'branch', 'proxy']);
+const BOOLEAN_FLAGS = new Set(['json', 'help', 'version', 'auto', 'dry-run', 'no-verify', 'verify-all', 'verbose', 'cn', 'yes', 'allow-inexact', 'show-claim-secret', 'reveal', 'keep-snapshot', 'force-push', 'no-failover', 'zero-cost']);
+const VALUE_FLAGS = new Set(['mode', 'provider', 'port', 'timeout', 'region', 'tool', 'branch', 'proxy', 'allow-provider']);
 
 export function parseArgs(argv) {
   const options = { positional: [], mode: DEFAULT_MODE, provider: null, port: null, timeout: null, region: null, branch: null };
@@ -97,6 +97,10 @@ export function parseArgs(argv) {
       if (cause instanceof UsageError) throw cause;
       throw new UsageError(`--proxy is not a valid URL (got ${options.proxy})`);
     }
+  }
+  if (options.allowProvider) {
+    options.allowProviders = String(options.allowProvider).split(',').map((entry) => entry.trim()).filter(Boolean);
+    if (!options.allowProviders.length) throw new UsageError('--allow-provider needs at least one provider id');
   }
   if (options.port !== null) {
     const port = Number(options.port);
@@ -158,6 +162,10 @@ Options:
                   print the ownership credential instead of only storing it (see claim)
   --force-push    allow a persistent deploy to overwrite a GitHub Pages branch this tool does not own
   --branch        GitHub Pages branch to publish to (default gh-pages)
+  --allow-provider <a,b>
+                  upload only to these provider ids; a failure never widens the set of recipients
+  --no-failover   attempt only the first eligible provider
+  --zero-cost     require a confirmed free tier; a provider whose cost status is unknown is refused
   --proxy         proxy URL for provider requests (also honours HTTPS_PROXY / NO_PROXY)
   --keep-snapshot retain the immutable upload snapshot for inspection (path is reported)
   --timeout       request timeout in milliseconds
@@ -634,6 +642,8 @@ export async function main(argv, streams = {}) {
         manifest: result.manifest,
         mode: options.mode,
         region: resolveRegion(options, env),
+        allowedProviders: options.allowProviders || null,
+        requireFreeCost: options.zeroCost === true,
         healthState: health.state,
         context,
         allowInexact: options.allowInexact === true,
@@ -643,6 +653,8 @@ export async function main(argv, streams = {}) {
       const payload = {
         mode: plan.mode,
         region: plan.region,
+        allowedProviders: plan.allowedProviders,
+        requireFreeCost: plan.requireFreeCost,
         dir: artifact.dir,
         artifact: {
           fileCount: result.manifest.fileCount,
@@ -688,6 +700,8 @@ export async function main(argv, streams = {}) {
         manifest: result.manifest,
         mode: options.mode,
         region: resolveRegion(options, env),
+        allowedProviders: options.allowProviders || null,
+        requireFreeCost: options.zeroCost === true,
         healthState: health.state,
         context,
         allowInexact: options.allowInexact === true,
@@ -709,6 +723,8 @@ export async function main(argv, streams = {}) {
         keepSnapshot: options.keepSnapshot === true,
         forcePush: options.forcePush === true,
         branch: options.branch || null,
+        allowedProviders: options.allowProviders || null,
+        failover: options.noFailover !== true,
         context: { ...context, root: path.dirname(artifact.dir), region: plan.region },
         env
       });

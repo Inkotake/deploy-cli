@@ -1,0 +1,222 @@
+{
+  "note": "Plan and policy claims re-checked against their primary sources. A confirmed entry means the page contained the required sentence fragments on checkedAt; it is evidence about documentation, not a measurement of the platform.",
+  "checkedAt": "2026-09-13T03:52:51.837Z",
+  "source": "tools/check-policies.mjs",
+  "summary": {
+    "total": 9,
+    "confirmed": 9,
+    "partlyConfirmed": 0,
+    "unreachable": 0
+  },
+  "checks": [
+    {
+      "id": "edgeone-makers-limits",
+      "platform": "EdgeOne Makers",
+      "claim": "public-beta free tier; 40 projects, 500 builds/month, 25 MB per file",
+      "source": "https://pages.edgeone.ai/zh/document/limits-and-quotas",
+      "checkedAt": "2026-09-13T03:52:51.837Z",
+      "httpStatus": 200,
+      "status": "confirmed",
+      "evidence": [
+        {
+          "pattern": "40\\s*(个|projects)",
+          "found": true,
+          "fragment": "40 个"
+        },
+        {
+          "pattern": "500\\s*(次|builds)",
+          "found": true,
+          "fragment": "500 次"
+        },
+        {
+          "pattern": "25\\s*MB",
+          "found": true,
+          "fragment": "25 MB"
+        }
+      ]
+    },
+    {
+      "id": "edgeone-cli-surface",
+      "platform": "EdgeOne Makers",
+      "claim": "the CLI is `edgeone makers` (with a legacy `edgeone pages` path) and offers China/Global site selection",
+      "source": "https://pages.edgeone.ai/zh/document/edgeone-cli",
+      "checkedAt": "2026-09-13T03:52:51.837Z",
+      "httpStatus": 200,
+      "status": "confirmed",
+      "evidence": [
+        {
+          "pattern": "edgeone\\s+(makers|pages)",
+          "found": true,
+          "fragment": "EdgeOne Makers"
+        },
+        {
+          "pattern": "(china|global|中国大陆|全球)",
+          "found": true,
+          "fragment": "Global"
+        }
+      ]
+    },
+    {
+      "id": "edgeone-anonymous-claim-window",
+      "platform": "EdgeOne Makers",
+      "claim": "a login-free deployment can be claimed within 60 minutes",
+      "source": "https://pages.edgeone.ai/zh/document/quick-launch-via-login-free-deployment-in-workbuddy",
+      "checkedAt": "2026-09-13T03:52:51.837Z",
+      "httpStatus": 200,
+      "status": "confirmed",
+      "evidence": [
+        {
+          "pattern": "60\\s*(分钟|min)",
+          "found": true,
+          "fragment": "60 分钟"
+        }
+      ]
+    },
+    {
+      "id": "esa-free-plan",
+      "platform": "Aliyun ESA",
+      "claim": "a zero-yuan free plan exists, with account and usage conditions and no SLA",
+      "source": "https://help.aliyun.com/zh/edge-security-acceleration/esa/product-overview/free-plan",
+      "checkedAt": "2026-09-13T03:52:51.837Z",
+      "httpStatus": 200,
+      "status": "confirmed",
+      "evidence": [
+        {
+          "pattern": "(0\\s*元|免费)",
+          "found": true,
+          "fragment": "免费"
+        },
+        {
+          "pattern": "(SLA|限制|条件)",
+          "found": true,
+          "fragment": "限制"
+        }
+      ]
+    },
+    {
+      "id": "esa-cli-pages-token",
+      "platform": "Aliyun ESA",
+      "claim": "the public test domain needs a token that is valid for 60 minutes; a custom domain must be onboarded first; RAM users are recommended",
+      "source": "https://help.aliyun.com/zh/edge-security-acceleration/esa/user-guide/create-pages-by-cli",
+      "checkedAt": "2026-09-13T03:52:51.837Z",
+      "httpStatus": 200,
+      "status": "confirmed",
+      "evidence": [
+        {
+          "pattern": "60\\s*(分钟|min)",
+          "found": true,
+          "fragment": "60 分钟"
+        },
+        {
+          "pattern": "token",
+          "found": true,
+          "fragment": "token"
+        },
+        {
+          "pattern": "RAM",
+          "found": true,
+          "fragment": "RAM"
+        },
+        {
+          "pattern": "自定义域名",
+          "found": true,
+          "fragment": "自定义域名"
+        }
+      ]
+    },
+    {
+      "id": "cloudflare-workers-static-assets",
+      "platform": "Cloudflare Workers",
+      "claim": "static asset requests are free and unlimited, while Worker invocations follow the compute plan",
+      "source": "https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/",
+      "checkedAt": "2026-09-13T03:52:51.837Z",
+      "httpStatus": 200,
+      "status": "confirmed",
+      "evidence": [
+        {
+          "pattern": "(free|免费)",
+          "found": true,
+          "fragment": "free"
+        },
+        {
+          "pattern": "(unlimited|不限)",
+          "found": true,
+          "fragment": "unlimited"
+        }
+      ]
+    },
+    {
+      "id": "netlify-credits",
+      "platform": "Netlify",
+      "claim": "the free plan is 300 credits per month and a production deploy costs 15 credits",
+      "source": "https://www.netlify.com/pricing/",
+      "checkedAt": "2026-09-13T03:52:51.837Z",
+      "httpStatus": 200,
+      "status": "confirmed",
+      "evidence": [
+        {
+          "pattern": "credit",
+          "found": true,
+          "fragment": "credit"
+        },
+        {
+          "pattern": "300",
+          "found": true,
+          "fragment": "300"
+        },
+        {
+          "pattern": "15\\s*credit",
+          "found": true,
+          "fragment": "15 credit"
+        }
+      ]
+    },
+    {
+      "id": "surge-plans",
+      "platform": "Surge",
+      "claim": "the free plan covers custom domains and automatic SSL",
+      "source": "https://surge.sh/docs/platform/plans",
+      "checkedAt": "2026-09-13T03:52:51.837Z",
+      "httpStatus": 200,
+      "status": "confirmed",
+      "evidence": [
+        {
+          "pattern": "free",
+          "found": true,
+          "fragment": "Free"
+        },
+        {
+          "pattern": "custom domain",
+          "found": true,
+          "fragment": "Custom Domain"
+        },
+        {
+          "pattern": "(SSL|HTTPS)",
+          "found": true,
+          "fragment": "SSL"
+        }
+      ]
+    },
+    {
+      "id": "ship-page-lifetime",
+      "platform": "ship.page",
+      "claim": "documented lifetime differs by page (free plan vs anonymous agent drops) — deploy from the response, not a constant",
+      "source": "https://ship.page/docs/limits",
+      "checkedAt": "2026-09-13T03:52:51.837Z",
+      "httpStatus": 200,
+      "status": "confirmed",
+      "evidence": [
+        {
+          "pattern": "(7|30)\\s*days?",
+          "found": true,
+          "fragment": "30 days"
+        },
+        {
+          "pattern": "free",
+          "found": true,
+          "fragment": "Free"
+        }
+      ]
+    }
+  ]
+}

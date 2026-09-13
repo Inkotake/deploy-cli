@@ -42,7 +42,13 @@
           "optionsSeconds": null,
           "source": "30 days anonymous lifetime"
         },
-        "singlePageOnly": false
+        "singlePageOnly": false,
+        "cost": {
+          "status": "free",
+          "note": "anonymous drops need no account; the documented lifetime differs by page, so the expiry is taken from the deploy response",
+          "source": "https://ship.page/docs/limits",
+          "checkedAt": "2026-09-13"
+        }
       },
       "claim": {
         "kind": "claim_token",
@@ -459,7 +465,13 @@
         "htmlExact": true,
         "updateInPlace": true,
         "ttl": null,
-        "singlePageOnly": false
+        "singlePageOnly": false,
+        "cost": {
+          "status": "quota-limited",
+          "note": "Free plan is 300 credits per month and a production deploy costs 15 credits",
+          "source": "https://www.netlify.com/pricing/",
+          "checkedAt": "2026-09-13"
+        }
       },
       "configMarkers": [
         "netlify.toml",

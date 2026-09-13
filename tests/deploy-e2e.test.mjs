@@ -253,3 +253,83 @@ test('the requested provider only is attempted, and a disabled one is refused wi
   assert.match(result.reason, /not eligible|disabled|unknown provider/i);
   assert.equal(result.attempts.length, 0, 'nothing may be attempted when the requested provider cannot serve');
 });
+
+test('the receipt answers who owns it, when it expires, what ran, and what it can cost', async () => {
+  const { manifest } = makeArtifact('receipt');
+  const origin = await startOrigin('receipt', manifest);
+  const provider = await startProvider(origin.baseUrl);
+  const registryFile = makeRegistryFixture('receipt', provider.port);
+  const { env, registry, plan, health } = planFor(registryFile, manifest, 'receipt');
+
+  const result = await deployArtifact({
+    manifest, registry, mode: 'quick-share', healthState: health.state, plan, env,
+    context: { root: path.dirname(manifest.dir) }
+  });
+  assert.equal(result.success, true);
+  const receipt = result.receipt;
+  assert.ok(receipt, 'every successful deploy carries a receipt');
+
+  // What went out: one comparable value for the delivered bytes.
+  assert.equal(receipt.artifact.fileCount, manifest.fileCount);
+  assert.equal(receipt.artifact.totalBytes, manifest.totalBytes);
+  assert.match(receipt.artifact.manifestSha256, /^[0-9a-f]{64}$/);
+
+  // Who owns it, and where the credential is kept — never the credential itself.
+  assert.equal(receipt.owner.mode, 'anonymous');
+  assert.equal(receipt.owner.provider, 'live-host');
+  assert.equal(receipt.owner.claimAvailable, true);
+  assert.ok(receipt.owner.claimStoredIn.endsWith('claims.json'));
+  assert.ok(!JSON.stringify(receipt).includes(CLAIM_TOKEN), 'the receipt must not contain the secret');
+
+  // When it stops working: the fixture returns expires_at, so that clock is known and the clocks
+  // nobody established stay null instead of being guessed.
+  assert.ok(receipt.lifecycle.contentExpiresAt, 'the provider returned an expiry');
+  assert.equal(receipt.lifecycle.previewAccessExpiresAt, null);
+  assert.equal(receipt.lifecycle.claimDeadline, null);
+  assert.equal(receipt.lifecycle.renewalDueAt, null);
+  assert.equal(result.lifecycle.contentExpiresAt, receipt.lifecycle.contentExpiresAt, 'lifecycle is also top-level for older callers');
+
+  // Which checks ran, stated per stage rather than as one boolean.
+  assert.deepEqual(receipt.stages, { uploaded: 'passed', files: 'passed', browser: 'not-implemented', targetNetwork: 'not-measured' });
+
+  // Who received the content, and what it can cost.
+  assert.deepEqual(receipt.providersAttempted, ['dead-host', 'live-host']);
+  assert.equal(receipt.allowedProviders, null);
+  assert.equal(receipt.failover, 'enabled');
+  assert.equal(receipt.cost.status, 'free', 'the fixture clones a provider whose cost was checked');
+  assert.match(receipt.cost.checkedAt, /^\d{4}-\d{2}-\d{2}$/);
+});
+
+test('failover can be switched off, and the allowed set is honoured', async () => {
+  const { manifest } = makeArtifact('scope');
+  const origin = await startOrigin('scope', manifest);
+  const provider = await startProvider(origin.baseUrl);
+  const registryFile = makeRegistryFixture('scope', provider.port);
+  const { env, registry, plan, health } = planFor(registryFile, manifest, 'scope');
+
+  // No failover: the dead provider is attempted and the run stops there.
+  const single = await deployArtifact({
+    manifest, registry, mode: 'quick-share', healthState: health.state, plan, env,
+    failover: false, context: { root: path.dirname(manifest.dir) }
+  });
+  assert.equal(single.success, false);
+  assert.equal(single.attempts.length, 1, 'a failure must not widen the set of recipients');
+  assert.equal(single.attempts[0].provider, 'dead-host');
+
+  // An explicit allowed set means only that provider is ever offered the artifact.
+  const scopedFixture = planFor(registryFile, manifest, 'scope2');
+  const scoped = await deployArtifact({
+    manifest,
+    registry: scopedFixture.registry,
+    mode: 'quick-share',
+    healthState: scopedFixture.health.state,
+    plan: scopedFixture.plan,
+    env: scopedFixture.env,
+    allowedProviders: ['live-host'],
+    context: { root: path.dirname(manifest.dir) }
+  });
+  assert.equal(scoped.success, true);
+  assert.deepEqual(scoped.attempts.map((attempt) => attempt.provider), ['live-host']);
+  assert.deepEqual(scoped.receipt.allowedProviders, ['live-host']);
+  assert.deepEqual(scoped.receipt.providersAttempted, ['live-host']);
+});

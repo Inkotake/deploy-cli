@@ -8,7 +8,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { log, redact, statePath, trace, warn } from './common.mjs';
+import { log, redact, sha256Hex, statePath, trace, warn } from './common.mjs';
 import * as identity from './identity.mjs';
 import { claimForOutput, storeClaim } from './claims.mjs';
 import { createSnapshot, verifySnapshot } from './snapshot.mjs';
@@ -68,6 +68,8 @@ export async function deployArtifact(options) {
     keepSnapshot = false,
     verifyAll = false,
     forcePush = false,
+    allowedProviders = null,
+    failover = true,
     branch = null
   } = options;
 
@@ -115,6 +117,26 @@ export async function deployArtifact(options) {
       };
     }
   }
+
+  // The receipt claims which providers were allowed, so that has to be true even when the caller hands
+  // in a plan that was built without the restriction. A receipt that disagrees with what happened is
+  // worse than no receipt.
+  if (Array.isArray(allowedProviders) && allowedProviders.length) {
+    candidates = candidates.filter((entry) => allowedProviders.includes(entry.id));
+    if (!candidates.length) {
+      return {
+        success: false,
+        artifactOk: true,
+        reason: `none of the eligible providers is in the allowed set (${allowedProviders.join(', ')})`,
+        nextAction: 'drop --allow-provider, or include one of the eligible providers',
+        attempts: []
+      };
+    }
+  }
+
+  // Failover is a privacy decision: with it switched off, only the first eligible provider is ever
+  // offered the artifact, so a failed attempt cannot silently widen the set of recipients.
+  if (failover === false && candidates.length > 1) candidates = candidates.slice(0, 1);
 
   if (!candidates.length) {
     return {
@@ -306,6 +328,61 @@ export async function deployArtifact(options) {
     const stored = storeClaim(deployment.claim, { url: deployment.url, provider: candidate.id }, env);
     releaseSnapshots();
 
+    const persistence = deployment.persistence || candidate.persistence || (mode === 'tunnel' ? 'session' : 'temporary');
+    const urlSource = deployment.providerDetail?.urlSource || 'provider-response';
+    const ttlSource = provider.capabilities?.ttl ? provider.capabilities.ttl.source : null;
+
+    /**
+     * Named clocks instead of one vague expiry: a host can expire the content, the preview credential
+     * and the anonymous claim at three different times (EdgeOne: a 60-minute claim window; ESA: a
+     * 60-minute test-domain token; uniCloud: monthly renewal). A clock this tool cannot observe stays
+     * `null` rather than being guessed.
+     */
+    const lifecycle = {
+      contentExpiresAt: deployment.lifecycle?.contentExpiresAt ?? deployment.expiresAt ?? null,
+      previewAccessExpiresAt: deployment.lifecycle?.previewAccessExpiresAt ?? null,
+      claimDeadline: deployment.lifecycle?.claimDeadline ?? null,
+      idleReclaimAfter: deployment.lifecycle?.idleReclaimAfter ?? null,
+      renewalDueAt: deployment.lifecycle?.renewalDueAt ?? null,
+      source: deployment.lifecycle?.source || deployment.expiresAtSource || ttlSource || null
+    };
+
+    /**
+     * The receipt answers the six questions a caller has after a deploy: what went out, who owns it,
+     * where it landed, when it stops working, which checks ran, and what it can cost. It is built from
+     * measured values only — a fact nobody established stays `unknown`.
+     */
+    const receipt = {
+      tool: identity.MARKERS.producedBy,
+      artifact: {
+        dir: manifest.dir,
+        fileCount: manifest.fileCount,
+        totalBytes: manifest.totalBytes,
+        // One hash over the sorted path:sha pairs, so "what was delivered" is a single comparable value.
+        manifestSha256: manifestDigest(manifest)
+      },
+      owner: {
+        mode: candidate.persistence === 'persistent' ? 'account' : 'anonymous',
+        provider: candidate.id,
+        claimAvailable: Boolean(deployment.claim && (deployment.claim.value || deployment.claim.claimUrl)),
+        claimStoredIn: stored ? stored.file : null
+      },
+      delivered: { url: deployment.url, urlSource, persistence },
+      lifecycle,
+      stages: {
+        uploaded: 'passed',
+        files: verification ? (verification.passed ? 'passed' : 'failed') : 'skipped',
+        browser: 'not-implemented',
+        targetNetwork: 'not-measured'
+      },
+      cost: provider.capabilities?.cost
+        ? { ...provider.capabilities.cost }
+        : { status: 'unknown', note: 'no confirmed policy check for this provider', source: null, checkedAt: null },
+      providersAttempted: attempts.filter((entry) => entry.result !== 'skipped').map((entry) => entry.provider),
+      allowedProviders: allowedProviders ? [...allowedProviders] : null,
+      failover: failover === false ? 'disabled' : 'enabled'
+    };
+
     return {
       success: true,
       provider: candidate.id,
@@ -318,6 +395,8 @@ export async function deployArtifact(options) {
       expiresAtSource: deployment.expiresAtSource || (provider.capabilities?.ttl ? provider.capabilities.ttl.source : null),
       claim: stored ? claimForOutput(deployment.claim, { reveal: revealClaim, storedIn: stored.file }) : null,
       snapshot: attempt.snapshot || null,
+      lifecycle,
+      receipt,
       verification: verification
         ? {
             passed: true,
@@ -408,6 +487,15 @@ function providerAllowedHostsSane(provider) {
   return Array.isArray(provider.allowedHosts) && provider.allowedHosts.length > 0;
 }
 
+/**
+ * One hash over the artifact's sorted path:sha256 pairs. Comparing two receipts answers "were these
+ * the same bytes?" without shipping the manifest around.
+ */
+function manifestDigest(manifest) {
+  const lines = manifest.files.map((file) => `${file.path}:${file.sha256}`).join('\n');
+  return sha256Hex(Buffer.from(lines, 'utf8'));
+}
+
 /* -------------------------------------------------------------------- output ---- */
 
 export function printDeployResult(result) {
@@ -461,6 +549,8 @@ export function summarizeDeploy(result) {
       expiresAtSource: result.expiresAtSource,
       claim: result.claim,
       snapshot: result.snapshot || null,
+      lifecycle: result.lifecycle || null,
+      receipt: result.receipt || null,
       verification: result.verification,
       artifact: result.artifact,
       providerDetail: result.providerDetail

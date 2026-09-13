@@ -240,6 +240,13 @@ export function planProviders(options) {
   const { registry, manifest, mode, healthState, context } = options;
   const now = options.now ?? Date.now();
   const region = REGIONS.includes(options.region) ? options.region : DEFAULT_REGION;
+  // Failover widens the set of parties that receive the artifact, which is a privacy decision, not an
+  // implementation detail: a caller can name the providers it consents to, or demand a confirmed
+  // free tier before anything is uploaded.
+  const allowed = Array.isArray(options.allowedProviders) && options.allowedProviders.length
+    ? new Set(options.allowedProviders)
+    : null;
+  const requireFreeCost = options.requireFreeCost === true;
   const modeManifest = { ...manifest, mode };
 
   const eligible = [];
@@ -266,6 +273,30 @@ export function planProviders(options) {
         detail: 'Never attempted.'
       });
       continue;
+    }
+
+    if (allowed && !allowed.has(provider.id)) {
+      ineligible.push({
+        id: provider.id,
+        label: provider.label,
+        reason: `excluded: this run was allowed to use only ${[...allowed].join(', ')}`,
+        kind: 'not-allowed'
+      });
+      continue;
+    }
+
+    if (requireFreeCost) {
+      const cost = provider.capabilities.cost;
+      if (!cost || cost.status !== 'free') {
+        ineligible.push({
+          id: provider.id,
+          label: provider.label,
+          reason: `excluded: --zero-cost requires a confirmed free tier, and this provider's cost status is ${cost ? cost.status : 'unknown'}`
+            + `${cost && cost.note ? ` (${cost.note})` : ''}`,
+          kind: 'cost-not-free'
+        });
+        continue;
+      }
     }
 
     const compatibility = checkCompatibility(provider, modeManifest);
@@ -377,7 +408,16 @@ export function planProviders(options) {
       || (a.id < b.id ? -1 : 1);
   });
 
-  return { mode, region, eligible, ineligible, disabled, generatedAt: new Date(now).toISOString() };
+  return {
+    mode,
+    region,
+    allowedProviders: allowed ? [...allowed] : null,
+    requireFreeCost,
+    eligible,
+    ineligible,
+    disabled,
+    generatedAt: new Date(now).toISOString()
+  };
 }
 
 /* ------------------------------------------------------------------ context ---- */

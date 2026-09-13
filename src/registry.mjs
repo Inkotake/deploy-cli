@@ -61,9 +61,33 @@ const OPTIONAL_CAPABILITIES = {
   spa: 'boolean',
   maxDirectoryDepth: 'number',
   maxPathLength: 'number',
+  cost: 'cost',
   maxTotalBytesSource: 'string',
   supportsModelFilesSource: 'string'
 };
+
+/** What a free tier actually means, and what nobody has checked yet. */
+const COST_STATUSES = ['free', 'quota-limited', 'may-charge', 'trial', 'unknown'];
+
+/**
+ * Cost is a constraint, not a prediction. `unknown` is a first-class value because a plan that might
+ * bill the user must never be enabled automatically on the strength of an unread pricing page, and
+ * the source plus the date it was read are part of the fact.
+ */
+function costProblems(id, cost) {
+  if (cost === null || cost === undefined) return [];
+  if (typeof cost !== 'object' || Array.isArray(cost)) return [`${id}: capabilities.cost must be an object or null`];
+  const problems = [];
+  if (!('status' in cost)) problems.push(`${id}: capabilities.cost.status is missing`);
+  else if (!COST_STATUSES.includes(cost.status)) {
+    problems.push(`${id}: capabilities.cost.status "${cost.status}" is not one of ${COST_STATUSES.join(', ')}`);
+  }
+  for (const key of ['note', 'source', 'checkedAt']) {
+    if (!(key in cost)) problems.push(`${id}: capabilities.cost.${key} is missing (use null when there is nothing to say)`);
+    else if (cost[key] !== null && typeof cost[key] !== 'string') problems.push(`${id}: capabilities.cost.${key} must be a string or null`);
+  }
+  return problems;
+}
 
 function shapeProblem(id, key, kind, value) {
   if (value === null) {
@@ -73,6 +97,8 @@ function shapeProblem(id, key, kind, value) {
   switch (kind) {
     case 'boolean':
       return typeof value === 'boolean' ? null : `${id}: capabilities.${key} must be a boolean`;
+    case 'cost':
+      return null; // validated by costProblems, which can explain itself properly
     case 'number':
       return typeof value === 'number' && Number.isFinite(value) ? null : `${id}: capabilities.${key} must be a finite number or null`;
     case 'string':
@@ -120,6 +146,7 @@ export function validateCapabilities(id, caps) {
     if (problem) problems.push(problem);
   }
   if ('ttl' in caps) problems.push(...ttlProblems(id, caps.ttl));
+  if ('cost' in caps) problems.push(...costProblems(id, caps.cost));
 
   if (typeof caps.extensionPolicy === 'string' && !EXTENSION_POLICIES.includes(caps.extensionPolicy)) {
     problems.push(`${id}: capabilities.extensionPolicy "${caps.extensionPolicy}" is not one of ${EXTENSION_POLICIES.join(', ')}`);

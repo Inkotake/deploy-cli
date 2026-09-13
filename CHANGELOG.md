@@ -48,6 +48,19 @@ required`). `docs/releasing.md` records both ways to finish that step.
 - A versioned JSON contract: every payload starts with `schemaVersion` and `command`.
 - `schemaVersion` / `capabilitySchema` versioning, with an unknown capability schema refused rather
   than misread.
+- A deployment **receipt** on every success: what went out (`artifact.manifestSha256`), who owns it
+  (`owner`, with the claim stored privately), where it landed, named lifecycle clocks
+  (`contentExpiresAt`, `previewAccessExpiresAt`, `claimDeadline`, `idleReclaimAfter`,
+  `renewalDueAt`), per-stage checks (`uploaded`, `files`, `browser`, `targetNetwork`), the provider's
+  cost status, which providers were attempted, and which were allowed.
+- Recipient scope and cost constraints: `--allow-provider <a,b>` (a failure never widens the set of
+  parties that receive the artifact), `--no-failover`, and `--zero-cost`, which refuses any provider
+  whose free tier has not been confirmed. Cost facts live in the registry and must carry a status, a
+  note, a source and the date they were read.
+- `tools/check-policies.mjs` re-checks the plan and limit claims this project repeats against their
+  primary sources and writes `research/policy-checks.json`; `research/README.md` documents the three
+  layers (research catalog, executable adapter, default candidate) and why reachability evidence is
+  recorded per probe instead of as a `china: true` attribute.
 - An offline test suite (`node:test`) covering the adapters, verification, planning, the registry
   schema, the policy split, claims, snapshots, the proxy path and the CLI contract.
 

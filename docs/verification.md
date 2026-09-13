@@ -61,6 +61,20 @@ served and a third party wrapped it — but it is never hidden: it also appears 
 The probe can be disabled from the API (`options.browserCheck = false`); the CLI does not expose a flag
 for it, because hiding it by default would defeat the purpose.
 
+## Four stages, never one boolean
+
+The deploy receipt reports each stage separately, because they are decided by different evidence and
+only the first two are decidable by this tool:
+
+| Stage | Meaning | How it is decided |
+|---|---|---|
+| `uploaded` | the host accepted the files | an HTTP 2xx from the upload |
+| `files` | the served bytes match the manifest, or the provider's declared rewrite policy | this file |
+| `browser` | the page executes: modules, WebGL, fonts, SPA routes | **not implemented** — reported as `not-implemented`, never as passed |
+| `targetNetwork` | reachable from a named region and operator at a named time | **not measured** — needs a probe; one 200 from anywhere is not evidence |
+
+A caller that needs the last two should read them as unknowns, not as passes.
+
 ## What this cannot prove
 
 - **No browser rendering is performed.** WebGL context creation, ES-module execution, CORS and texture

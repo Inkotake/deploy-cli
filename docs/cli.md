@@ -43,6 +43,9 @@ directory, and artifact discovery descends up to three levels.
 | `--proxy <url>` | Proxy provider requests (also honours `HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY`). |
 | `--show-claim-secret` | Print the ownership credential instead of only storing it. |
 | `--force-push`, `--branch <name>` | GitHub Pages: allow overwriting a branch this tool does not own, or publish to a different branch. |
+| `--allow-provider <a,b>` | Upload only to these provider ids. A failure never widens the set of recipients. |
+| `--no-failover` | Attempt only the first eligible provider. |
+| `--zero-cost` | Require a **confirmed** free tier; a provider whose cost status is unknown is refused. |
 | `--keep-snapshot` | Keep the upload snapshot and report its path. |
 | `--auto` | Do not prompt for confirmation. |
 | `--timeout <ms>` | Request timeout. |
@@ -80,6 +83,8 @@ Every `--json` payload starts with the contract version and the command that pro
 | `mode`, `persistence`, `expiresAt`, `expiresAtSource` | How durable it is, and where that answer came from. |
 | `verification` | See [`verification.md`](./verification.md) for every field. |
 | `claim` | `{ kind, available, valuePreview, secretStored, hidden }` — the secret itself only with `--show-claim-secret`. |
+| `lifecycle` | Named clocks: `contentExpiresAt`, `previewAccessExpiresAt`, `claimDeadline`, `idleReclaimAfter`, `renewalDueAt`, `source`. A clock nobody established is `null`. |
+| `receipt` | The six answers: `artifact` (including a `manifestSha256`), `owner`, `delivered`, `lifecycle`, `stages`, `cost`, `providersAttempted`, `allowedProviders`, `failover`. |
 | `snapshot` | `{ strategy, fileCount, bytes }` when the provider was driven through an external CLI or `git`. |
 | `attempts` | One entry per provider tried, with `result` and, on failure, `failureKind`. |
 

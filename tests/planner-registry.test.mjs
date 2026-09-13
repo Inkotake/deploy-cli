@@ -354,3 +354,50 @@ test('a plan summary is rank-ordered and carries the machine-readable facts', ()
   assert.equal(summary.region, 'auto');
   assert.equal(summary.mode, 'quick-share');
 });
+
+test('a caller can name the providers it consents to upload to', () => {
+  const providers = [provider({ id: 'a' }), provider({ id: 'b' })];
+  const restricted = plan(providers, {}, { allowedProviders: ['a'] });
+  assert.deepEqual(restricted.eligible.map((entry) => entry.id), ['a']);
+  assert.deepEqual(restricted.allowedProviders, ['a']);
+  const excluded = restricted.ineligible.find((entry) => entry.id === 'b');
+  assert.equal(excluded.kind, 'not-allowed');
+  assert.match(excluded.reason, /allowed to use only a/);
+
+  // No restriction means no restriction, not an empty set.
+  assert.equal(plan(providers).allowedProviders, null);
+});
+
+test('--zero-cost refuses a provider whose cost status nobody established', () => {
+  const free = provider({ id: 'free', capabilities: { ...provider().capabilities, cost: { status: 'free', note: null, source: 'https://example.test/pricing', checkedAt: '2026-09-13' } } });
+  const unknown = provider({ id: 'unknown' });
+  const risky = provider({ id: 'risky', capabilities: { ...provider().capabilities, cost: { status: 'may-charge', note: 'overage is billed', source: null, checkedAt: null } } });
+
+  const strict = plan([free, unknown, risky], {}, { requireFreeCost: true });
+  assert.deepEqual(strict.eligible.map((entry) => entry.id), ['free'], 'only a confirmed free tier may be attempted');
+  assert.equal(strict.requireFreeCost, true);
+  assert.ok(strict.ineligible.every((entry) => entry.kind === 'cost-not-free'));
+  assert.match(strict.ineligible.find((entry) => entry.id === 'unknown').reason, /cost status is unknown/);
+  assert.match(strict.ineligible.find((entry) => entry.id === 'risky').reason, /may-charge/);
+
+  // Without the flag nothing changes: the constraint is opt-in, like every other refusal here.
+  assert.equal(plan([free, unknown, risky]).eligible.length, 3);
+});
+
+test('a cost fact must carry a status, a note, a source and a date', () => {
+  const complete = structuredClone(provider());
+  complete.capabilities.cost = { status: 'free', note: 'no account needed', source: 'https://example.test/pricing', checkedAt: '2026-09-13' };
+  assert.equal(loadFixture(withProviders([complete]), 'cost-ok').ok, true);
+
+  const badStatus = structuredClone(complete);
+  badStatus.capabilities.cost.status = 'probably-fine';
+  const refused = loadFixture(withProviders([badStatus]), 'cost-status');
+  assert.equal(refused.ok, false);
+  assert.ok(refused.problems.some((problem) => problem.includes('capabilities.cost.status')));
+
+  const missingDate = structuredClone(complete);
+  delete missingDate.capabilities.cost.checkedAt;
+  const noDate = loadFixture(withProviders([missingDate]), 'cost-nodate');
+  assert.equal(noDate.ok, false);
+  assert.ok(noDate.problems.some((problem) => problem.includes('capabilities.cost.checkedAt')));
+});
