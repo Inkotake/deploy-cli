@@ -1,0 +1,157 @@
+{
+  "vantage": "windows-desktop-us-egress",
+  "probedAt": "2026-09-13T07:34:21.896Z",
+  "hostname": "doudou",
+  "platform": "win32/x64",
+  "nonce": "456674ec2ce2ed7b",
+  "verdicts": {
+    "cloudflare-temporary": "reachable",
+    "netlify-anonymous": "unreachable"
+  },
+  "results": [
+    {
+      "provider": "cloudflare-temporary",
+      "url": "https://vpublish-anon-probe.branch-vessel.workers.dev",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "localHashes": {
+        "index.html": {
+          "sha256": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec"
+        },
+        "assets/app.js": {
+          "sha256": "834cdd5ec93e2087b93f338965068f9a3231bd910ba9343b62d5e373872ab352"
+        },
+        "assets/app.css": {
+          "sha256": "f26e5e416b5b5d31e149637609b9f16e9dbdbe6e4e22032fd4b467701eac3134"
+        }
+      },
+      "verdict": "reachable",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 224,
+          "sha256": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec",
+          "markerFound": false,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 224,
+          "sha256": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec",
+          "markerFound": false,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "text/javascript",
+          "bytes": 36,
+          "sha256": "834cdd5ec93e2087b93f338965068f9a3231bd910ba9343b62d5e373872ab352",
+          "markerFound": false,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "f26e5e416b5b5d31e149637609b9f16e9dbdbe6e4e22032fd4b467701eac3134",
+          "markerFound": false,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec",
+          "actual": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "834cdd5ec93e2087b93f338965068f9a3231bd910ba9343b62d5e373872ab352",
+          "actual": "834cdd5ec93e2087b93f338965068f9a3231bd910ba9343b62d5e373872ab352",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "f26e5e416b5b5d31e149637609b9f16e9dbdbe6e4e22032fd4b467701eac3134",
+          "actual": "f26e5e416b5b5d31e149637609b9f16e9dbdbe6e4e22032fd4b467701eac3134",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "provider": "netlify-anonymous",
+      "url": "http://brilliant-praline-1e5099.netlify.app",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "localHashes": {
+        "index.html": {
+          "sha256": "28a6cc0e3ccc3e94738f4783e1d7b1addee07fc506e224071f5bc1405a1d9944"
+        },
+        "assets/app.js": {
+          "sha256": "2020bb220314f692294b7c176b30bd2a86ef9944db29ae229224052c14762aa0"
+        },
+        "assets/app.css": {
+          "sha256": "c23491f7bd72890c1bd14966b715cd30eb8777f54a370b6e7d3a681248af3c93"
+        }
+      },
+      "verdict": "unreachable",
+      "readings": {
+        "root": {
+          "status": 401,
+          "contentType": "text/html",
+          "bytes": 3551,
+          "sha256": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "markerFound": false,
+          "error": null
+        },
+        "index.html": {
+          "status": 401,
+          "contentType": "text/html",
+          "bytes": 3551,
+          "sha256": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "markerFound": false,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 401,
+          "contentType": "text/html",
+          "bytes": 3551,
+          "sha256": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "markerFound": false,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 401,
+          "contentType": "text/html",
+          "bytes": 3551,
+          "sha256": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "markerFound": false,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "28a6cc0e3ccc3e94738f4783e1d7b1addee07fc506e224071f5bc1405a1d9944",
+          "actual": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "status": 401
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "2020bb220314f692294b7c176b30bd2a86ef9944db29ae229224052c14762aa0",
+          "actual": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "status": 401
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "c23491f7bd72890c1bd14966b715cd30eb8777f54a370b6e7d3a681248af3c93",
+          "actual": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "status": 401
+        }
+      ]
+    }
+  ]
+}

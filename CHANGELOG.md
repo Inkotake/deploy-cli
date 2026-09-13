@@ -74,6 +74,14 @@ required`). `docs/releasing.md` records both ways to finish that step.
 - `tools/check-anonymous.mjs`: one harness for every login-free candidate (nonce fixture, documented
   packaging, anonymous upload, masked response, read-back with retry, platform liveness) producing
   records that follow the received evidence schema.
+- Measured the two CLI-only anonymous candidates with prefix-local installs (no account, no global
+  state, removed afterwards): **Cloudflare temporary accounts** (`wrangler deploy --temporary`) deploy
+  an assets-only Worker and serve every file byte-identically with no HTML injection, print a
+  60-minute claim window, and are **unreachable from a mainland datacenter egress** (every path timed
+  out against four different addresses); **Netlify anonymous deploys** upload and print a claim window
+  of the same 60 minutes but serve **401 for every path from both egresses** because the anonymous site
+  is password-protected until claimed. Records:
+  `research/anonymous-compliance/{cloudflare-temporary,netlify-anonymous}.json`.
 - An offline test suite (`node:test`) covering the adapters, verification, planning, the registry
   schema, the policy split, claims, snapshots, the proxy path and the CLI contract.
 

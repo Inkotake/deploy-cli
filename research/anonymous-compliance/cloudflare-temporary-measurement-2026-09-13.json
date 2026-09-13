@@ -1,0 +1,75 @@
+{
+  "provider": "cloudflare-temporary",
+  "measuredAt": "2026-09-13T07:33:03.033Z",
+  "nonce": "11903048d40c41ac",
+  "cliExit": 0,
+  "url": "https://vpublish-anon-probe.branch-vessel.workers.dev",
+  "claimUrlPresent": true,
+  "extra": {
+    "claimUrl": "https://dash.cloudflare.com/claim-preview?claimToken=<masked>",
+    "claimWindow": "60 minutes"
+  },
+  "localHashes": {
+    "index.html": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec",
+    "assets/app.js": "834cdd5ec93e2087b93f338965068f9a3231bd910ba9343b62d5e373872ab352",
+    "assets/app.css": "f26e5e416b5b5d31e149637609b9f16e9dbdbe6e4e22032fd4b467701eac3134"
+  },
+  "reads": {
+    "root": {
+      "status": 404,
+      "contentType": "text/plain",
+      "bytes": 17,
+      "sha256": "a4daf148dd64d1a3e8e8101040915e50d12df29153c5936d377cf2260ccc8ba0",
+      "markerFound": false
+    },
+    "index.html": {
+      "status": 200,
+      "contentType": "text/html",
+      "bytes": 224,
+      "sha256": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec",
+      "markerFound": true
+    },
+    "assets/app.js": {
+      "status": 200,
+      "contentType": "text/javascript",
+      "bytes": 36,
+      "sha256": "834cdd5ec93e2087b93f338965068f9a3231bd910ba9343b62d5e373872ab352",
+      "markerFound": true
+    },
+    "assets/app.css": {
+      "status": 200,
+      "contentType": "text/css",
+      "bytes": 45,
+      "sha256": "f26e5e416b5b5d31e149637609b9f16e9dbdbe6e4e22032fd4b467701eac3134",
+      "markerFound": true
+    }
+  },
+  "assetsVerified": true,
+  "htmlByteExact": true,
+  "output": [
+    " ⛅️ wrangler 4.131.1",
+    "────────────────────",
+    "Continuing means you accept Cloudflare's Terms of Service (https://www.cloudflare.com/terms/) and Privacy Policy (https://www.cloudflare.com/privacypolicy/).",
+    "Solving proof-of-work challenge…",
+    "Temporary account ready:",
+    "\tAccount: Branch Vessel (created)",
+    "\tClaim within: 60 minutes",
+    "\tClaim URL: https://dash.cloudflare.com/claim-preview?claimToken=<masked>",
+    "🌀 Building list of assets...",
+    "✨ Read 4 files from the assets directory C:\\Users\\inkot\\AppData\\Local\\Temp\\anoncli-work-2isQU8\\dist",
+    "🌀 Starting asset upload...",
+    "🌀 Found 3 new or modified static assets to upload. Proceeding with upload...",
+    "+ /assets/app.js",
+    "+ /assets/app.css",
+    "+ /index.html",
+    "Uploaded 1 of 3 assets",
+    "Uploaded 2 of 3 assets",
+    "Uploaded 3 of 3 assets",
+    "✨ Success! Uploaded 3 files (1.29 sec)",
+    "Total Upload: 0.32 KiB / gzip: 0.23 KiB",
+    "Uploaded vpublish-anon-probe (3.77 sec)",
+    "Deployed vpublish-anon-probe triggers (1.15 sec)",
+    "  https://vpublish-anon-probe.branch-vessel.workers.dev",
+    "Current Version ID: a60a8819-c708-4885-9618-20233b02c29b"
+  ]
+}

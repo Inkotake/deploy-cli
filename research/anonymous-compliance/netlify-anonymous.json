@@ -1,9 +1,15 @@
 {
   "id": "netlify-anonymous",
   "publisherAuth": "generated-secret",
-  "viewerAccess": "unknown",
+  "viewerAccess": "password",
   "artifactModel": "directory",
-  "shareability": "unverified",
+  "shareability": "owner-preview",
+  "reachability": {
+    "mainland": "unreachable",
+    "overseas": "unreachable",
+    "detail": "Both egresses received 401 for the root and for every asset, which is the password gate rather than a network problem.",
+    "measuredAt": "2026-09-13"
+  },
   "lifecycle": {
     "contentExpiresAt": null,
     "claimDeadline": null,
@@ -11,20 +17,20 @@
     "idleExpiry": null
   },
   "verification": {
-    "uploadSucceeded": false,
-    "sameEgressRead": null,
-    "crossEgressRead": null,
+    "uploadSucceeded": true,
+    "sameEgressRead": false,
+    "crossEgressRead": false,
     "independentReaderVerified": false,
     "assetsVerified": false,
     "htmlTransform": "unknown",
-    "testedAt": null
+    "testedAt": "2026-09-13T07:45:19.414Z"
   },
   "evidence": {
-    "level": "B-official-contract",
+    "level": "A-live",
     "sourceUrl": "https://cli.netlify.com/commands/deploy/",
     "checkedAt": "2026-09-13",
     "testCommit": null,
-    "reason": "Documented contract only, not measured: the netlify CLI is not installed on this machine and this project never installs a CLI for the user. The official CLI reference states verbatim that allow-anonymous (boolean) means 'If not logged in, deploy anonymously and create a claimable site instead of requiring authentication', with the example 'netlify deploy --allow-anonymous --dir ./public --no-build'. The same CLI ships a claim command, so the ownership path exists in the tool. The page does NOT state a claim deadline, so the widely repeated one hour stays unverified and is not recorded here."
+    "reason": "Measured with netlify-cli 27.5.2 and no account: `netlify deploy --allow-anonymous --dir <dist> --no-build` succeeded and printed a site URL, a claim URL, a `netlify claim --site <id> --token <jwt>` command, and the verbatim warning \"Anonymously deployed sites need to be claimed within 60 minutes\". But the deployed site answered 401 to every path from both egresses, and the CLI banner showed a password, so an anonymous Netlify deploy is password-protected until it is claimed. That contradicts the received matrix entry, which lists viewerAccess as a public URL."
   },
-  "notes": "Not measured: claim deadline, served host, HTML rewriting, byte fidelity, and reachability from mainland China."
+  "notes": "No flag on `netlify deploy` or `sites:update` disables that password. The 60-minute claim window is confirmed from the CLI output, which is what the documentation page did not state. As a shareable anonymous host this candidate fails on the viewer side, not the publisher side."
 }

@@ -1,9 +1,17 @@
 {
   "id": "cloudflare-temporary",
   "publisherAuth": "generated-secret",
-  "viewerAccess": "unknown",
+  "viewerAccess": "public",
   "artifactModel": "directory",
-  "shareability": "unverified",
+  "shareability": "independent-public",
+  "reachability": {
+    "mainland": "unreachable",
+    "overseas": "reachable",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "detail": "From the mainland egress every path failed with connect ETIMEDOUT against four different resolved addresses (103.56.16.112, 108.160.167.156, 199.59.148.15, 31.13.96.194), which is the classic DNS-interference pattern. Cloudflare also sells a separate China Network product, so this is consistent rather than surprising.",
+    "measuredAt": "2026-09-13"
+  },
   "lifecycle": {
     "contentExpiresAt": null,
     "claimDeadline": null,
@@ -11,20 +19,20 @@
     "idleExpiry": null
   },
   "verification": {
-    "uploadSucceeded": false,
-    "sameEgressRead": null,
-    "crossEgressRead": null,
+    "uploadSucceeded": true,
+    "sameEgressRead": true,
+    "crossEgressRead": false,
     "independentReaderVerified": false,
-    "assetsVerified": false,
-    "htmlTransform": "unknown",
-    "testedAt": null
+    "assetsVerified": true,
+    "htmlTransform": "none",
+    "testedAt": "2026-09-13T07:45:19.413Z"
   },
   "evidence": {
-    "level": "B-official-contract",
+    "level": "A-live",
     "sourceUrl": "https://developers.cloudflare.com/workers/platform/claim-deployments/index.md",
     "checkedAt": "2026-09-13",
     "testCommit": null,
-    "reason": "Documented contract only, not measured: wrangler is not installed on this machine and this project never installs a CLI for the user. The page (last updated Jul 14, 2026) states that re-running with --temporary deploys before authentication and prints a claim URL, that the intended user must COMPLETE the claim within 60 minutes, and that Workers Static Assets on a temporary account are limited to 1,000 files with each asset up to 5 MiB. The per-deploy deadline is printed at run time, so claimDeadline is null here rather than guessed."
+    "reason": "Measured, not just documented. wrangler 4.131.1 deployed an assets-only Worker with `wrangler deploy --temporary` and no account, and the printed URL served every file byte-identically (/, /index.html, /index and both assets returned 200; / and /index.html also served the exact uploaded bytes, so there is no HTML injection). The CLI printed a claim URL and a 60-minute claim window. From the mainland egress, however, every path timed out, so the deployment is NOT reachable there: independentReaderVerified stays false and the provider must not be enabled for a China-facing default."
   },
-  "notes": "Not measured: whether an assets-only Worker (no script) deploys this way, the served host, HTML injection, byte fidelity of the assets, and reachability from mainland China. Cloudflare documents a separate China Network product, so no mainland claim is made from this page."
+  "notes": "claimDeadline is null because the deadline is printed per deploy rather than fixed by the API. Two corrections to the public record: an assets-only Worker works with --temporary (the docs only describe Workers generally), and workers.dev is unreachable from a mainland datacenter egress on this date."
 }

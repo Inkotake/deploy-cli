@@ -1,0 +1,42 @@
+{
+  "provider": "netlify-anonymous",
+  "measuredAt": "2026-09-13T07:33:36.849Z",
+  "nonce": "456674ec2ce2ed7b",
+  "cliExit": 0,
+  "url": "http://brilliant-praline-1e5099.netlify.app",
+  "claimUrlPresent": true,
+  "extra": {
+    "claimHint": [
+      "Claim on Netlify:",
+      "Claim via CLI:",
+      "netlify claim --site b0be13c2-b9e0-460c-947e-cca0186867ab --token <masked>"
+    ]
+  },
+  "localHashes": {
+    "index.html": "28a6cc0e3ccc3e94738f4783e1d7b1addee07fc506e224071f5bc1405a1d9944",
+    "assets/app.js": "2020bb220314f692294b7c176b30bd2a86ef9944db29ae229224052c14762aa0",
+    "assets/app.css": "c23491f7bd72890c1bd14966b715cd30eb8777f54a370b6e7d3a681248af3c93"
+  },
+  "reads": {},
+  "assetsVerified": false,
+  "htmlByteExact": null,
+  "output": [
+    "⬥ Deploying 3 files anonymously...",
+    "🚀 Deploy complete",
+    "────────────────────────────────────────────────────────────────",
+    "   ╭────────────── ⬥  Anonymous deploy is live ⬥  ──────────────╮",
+    "   │                                                            │",
+    "   │   Site URL:  http://brilliant-praline-1e5099.netlify.app   │",
+    "   │                                                            │",
+    "   │                  Password:  My-Drop-Site                   │",
+    "   │                                                            │",
+    "   ╰────────────────────────────────────────────────────────────╯",
+    "  Claim on Netlify:",
+    "  https://app.netlify.com/drop/brilliant-praline-1e5099#drop_token=<masked>",
+    "  Claim via CLI:",
+    "  netlify claim --site b0be13c2-b9e0-460c-947e-cca0186867ab --token <masked>",
+    " »   Warning: Anonymously deployed sites need to be claimed within 60 minutes.",
+    "⠋ Uploading 3 files",
+    "✔ Finished uploading 3 assets"
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "vantage": "mainland-vps-beijing",
+  "probedAt": "2026-09-13T07:44:00.098Z",
+  "hostname": "iZ2zea6pyblaksmijo5u85Z",
+  "platform": "linux/x64",
+  "nonce": "456674ec2ce2ed7b",
+  "verdicts": {
+    "cloudflare-temporary": "unreachable",
+    "netlify-anonymous": "unreachable"
+  },
+  "results": [
+    {
+      "provider": "cloudflare-temporary",
+      "url": "https://vpublish-anon-probe.branch-vessel.workers.dev",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "localHashes": {
+        "index.html": {
+          "sha256": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec"
+        },
+        "assets/app.js": {
+          "sha256": "834cdd5ec93e2087b93f338965068f9a3231bd910ba9343b62d5e373872ab352"
+        },
+        "assets/app.css": {
+          "sha256": "f26e5e416b5b5d31e149637609b9f16e9dbdbe6e4e22032fd4b467701eac3134"
+        }
+      },
+      "verdict": "unreachable",
+      "readings": {
+        "root": {
+          "status": 0,
+          "contentType": null,
+          "bytes": 0,
+          "sha256": null,
+          "markerFound": false,
+          "error": "connect ETIMEDOUT 103.56.16.112:443"
+        },
+        "index.html": {
+          "status": 0,
+          "contentType": null,
+          "bytes": 0,
+          "sha256": null,
+          "markerFound": false,
+          "error": "connect ETIMEDOUT 108.160.167.156:443"
+        },
+        "assets/app.js": {
+          "status": 0,
+          "contentType": null,
+          "bytes": 0,
+          "sha256": null,
+          "markerFound": false,
+          "error": "connect ETIMEDOUT 199.59.148.15:443"
+        },
+        "assets/app.css": {
+          "status": 0,
+          "contentType": null,
+          "bytes": 0,
+          "sha256": null,
+          "markerFound": false,
+          "error": "connect ETIMEDOUT 31.13.96.194:443"
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec",
+          "actual": null,
+          "status": 0
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "834cdd5ec93e2087b93f338965068f9a3231bd910ba9343b62d5e373872ab352",
+          "actual": null,
+          "status": 0
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "f26e5e416b5b5d31e149637609b9f16e9dbdbe6e4e22032fd4b467701eac3134",
+          "actual": null,
+          "status": 0
+        }
+      ]
+    },
+    {
+      "provider": "netlify-anonymous",
+      "url": "http://brilliant-praline-1e5099.netlify.app",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "localHashes": {
+        "index.html": {
+          "sha256": "28a6cc0e3ccc3e94738f4783e1d7b1addee07fc506e224071f5bc1405a1d9944"
+        },
+        "assets/app.js": {
+          "sha256": "2020bb220314f692294b7c176b30bd2a86ef9944db29ae229224052c14762aa0"
+        },
+        "assets/app.css": {
+          "sha256": "c23491f7bd72890c1bd14966b715cd30eb8777f54a370b6e7d3a681248af3c93"
+        }
+      },
+      "verdict": "unreachable",
+      "readings": {
+        "root": {
+          "status": 401,
+          "contentType": "text/html",
+          "bytes": 3551,
+          "sha256": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "markerFound": false,
+          "error": null
+        },
+        "index.html": {
+          "status": 401,
+          "contentType": "text/html",
+          "bytes": 3551,
+          "sha256": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "markerFound": false,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 401,
+          "contentType": "text/html",
+          "bytes": 3551,
+          "sha256": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "markerFound": false,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 401,
+          "contentType": "text/html",
+          "bytes": 3551,
+          "sha256": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "markerFound": false,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "28a6cc0e3ccc3e94738f4783e1d7b1addee07fc506e224071f5bc1405a1d9944",
+          "actual": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "status": 401
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "2020bb220314f692294b7c176b30bd2a86ef9944db29ae229224052c14762aa0",
+          "actual": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "status": 401
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "c23491f7bd72890c1bd14966b715cd30eb8777f54a370b6e7d3a681248af3c93",
+          "actual": "e96aa8b3126f903631b4f69ba1c1b24cd7078fb274a361dd990f16ffcbb34116",
+          "status": 401
+        }
+      ]
+    }
+  ]
+}

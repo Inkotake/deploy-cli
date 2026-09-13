@@ -1,0 +1,41 @@
+{
+  "collectedAt": "2026-09-13T07:34:17.094Z",
+  "purpose": "The two CLI-only anonymous candidates, deployed through their vendor CLIs with no account, so the reader probe can read them from a mainland and an overseas egress.",
+  "nonce": "456674ec2ce2ed7b",
+  "results": [
+    {
+      "provider": "cloudflare-temporary",
+      "url": "https://vpublish-anon-probe.branch-vessel.workers.dev",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "localHashes": {
+        "index.html": {
+          "sha256": "5aae81f72595247993c2456d8c0168e1a2f586fcbd4187bc6d3377a62edf9aec"
+        },
+        "assets/app.js": {
+          "sha256": "834cdd5ec93e2087b93f338965068f9a3231bd910ba9343b62d5e373872ab352"
+        },
+        "assets/app.css": {
+          "sha256": "f26e5e416b5b5d31e149637609b9f16e9dbdbe6e4e22032fd4b467701eac3134"
+        }
+      }
+    },
+    {
+      "provider": "netlify-anonymous",
+      "url": "http://brilliant-praline-1e5099.netlify.app",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "localHashes": {
+        "index.html": {
+          "sha256": "28a6cc0e3ccc3e94738f4783e1d7b1addee07fc506e224071f5bc1405a1d9944"
+        },
+        "assets/app.js": {
+          "sha256": "2020bb220314f692294b7c176b30bd2a86ef9944db29ae229224052c14762aa0"
+        },
+        "assets/app.css": {
+          "sha256": "c23491f7bd72890c1bd14966b715cd30eb8777f54a370b6e7d3a681248af3c93"
+        }
+      }
+    }
+  ]
+}
