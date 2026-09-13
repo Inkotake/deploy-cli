@@ -1,0 +1,108 @@
+{
+  "id": "shippage",
+  "publisherAuth": "generated-secret",
+  "viewerAccess": "public",
+  "artifactModel": "single-html",
+  "shareability": "independent-public",
+  "lifecycle": {
+    "contentExpiresAt": "2026-09-27T09:10:29.314Z",
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": true,
+    "sameEgressRead": true,
+    "crossEgressRead": true,
+    "independentReaderVerified": true,
+    "assetsVerified": false,
+    "htmlTransform": "wrapped",
+    "testedAt": "2026-09-13T09:11:06.318Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://shippage.ai/llms.txt",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "Anonymous publish measured and read from both egresses: 201 with url, slug, expires_at and password_protected, plus _registration because the service auto-registers the agent on the first call. The page is served by the provider at /p/<slug> inside its own viewer (750 bytes for a 241-byte upload, and /index.html is 404), so it is wrapped rather than byte-comparable. Free tier: 20 publishes per month, 14-day retention, 500 KB per page. This is a different service from ship.page/shipped.page, already registered as ship-page. upload status 201; reads: root 200, html 404"
+  },
+  "measured": {
+    "candidate": "shippage.ai",
+    "endpoint": "https://shippage.ai/v1/publish",
+    "bodyStyle": "json-doc",
+    "steps": null,
+    "platformAlive": {
+      "url": "https://shippage.ai/docs",
+      "status": 200,
+      "bytes": 8393,
+      "text": "ShipPage Docs — the publishing API for AI agents | ShipPage {\"@context\":\"https://schema.org\",\"@type\":\"TechArticle\",\"head"
+    },
+    "nonce": "87bb3bf4be718141",
+    "uploadStatus": 201,
+    "uploadResponse": {
+      "ok": true,
+      "url": "https://shippage.ai/p/ltycyx",
+      "slug": "ltycyx",
+      "expires_at": "2026-09-27T09:10:29.314Z",
+      "password_protected": false,
+      "_registration": {
+        "agent_id": "ag_xK96IQ3lotst",
+        "api_key": "sk_…(27 chars)",
+        "claim_url": "https://shippage.ai/claim/CUDL-QWDN",
+        "message": "Auto-registered. Save api_key to ~/.shippage/credentials.json for future requests. Share claim_url with the user to manage pages via web UI (optional)."
+      },
+      "_skill_update": {
+        "latest_version": "1.2.0",
+        "message": "ShipPage skill v1.2.0 is available. Update: curl -s https://shippage.ai/v1/skill/download -o ~/.claude/skills/shippage/SKILL.md",
+        "download_url": "https://shippage.ai/v1/skill/download"
+      }
+    },
+    "responseHeaders": {
+      "date": "Sun, 13 Sep 2026 09:10:30 GMT",
+      "content-type": "application/json",
+      "server": "cloudflare"
+    },
+    "url": "https://shippage.ai/p/ltycyx",
+    "localFiles": {
+      "assets/app.css": {
+        "sha256": "bc4cd1622ca1102c0a677154f42e2a68b5bbd01763ab38deb6d6dea12cb9a87b",
+        "bytes": 45
+      },
+      "assets/app.js": {
+        "sha256": "298382a6d77dd37e36d8917e57cf956227ab946690c644595f7088194620d607",
+        "bytes": 41
+      },
+      "index.html": {
+        "sha256": "190e348ffa76e37e145ab0b2d75745a5852942c77d5df22f711ba66073590d92",
+        "bytes": 241
+      }
+    },
+    "reads": {
+      "root": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 750,
+        "sha256": "abc70eb9618b9a0af7e275952504f7078e2bfb0f0babf89f829904c883e98bef",
+        "error": null
+      },
+      "html": {
+        "status": 404,
+        "contentType": "application/json",
+        "bytes": 32,
+        "sha256": "97aac78b90e6d0ee29f54df82a12ec0b3cbf07351b27a5affa4f96d5507418b1",
+        "error": null
+      }
+    },
+    "classification": "wrapped-preview",
+    "testedAt": "2026-09-13T09:10:29.940Z",
+    "crossEgressAvailable": false
+  },
+  "reachability": {
+    "mainland": "reachable",
+    "overseas": "reachable",
+    "measuredAt": "2026-09-13",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "evidence": "research/reachability-p1d-mainland-2026-09-13.json, research/reachability-p1d-overseas-2026-09-13.json"
+  }
+}

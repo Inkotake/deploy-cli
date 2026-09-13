@@ -41,13 +41,14 @@ Verdicts: `reachable` (root and every asset matched) · `partial` (root loaded, 
 | **meethtml** | reachable | reachable | single document served byte-identically; 24-hour anonymous lifetime; `edit_token` claim |
 | **Display.dev** | reachable | reachable | content is public but served inside the provider's own 43 KB viewer page, so it is never byte-comparable |
 | **shiply.now** | reachable | reachable | three-step publish with no account; assets byte-identical, the page carries the claim banner it documents |
+| **shippage.ai** | reachable | reachable | anonymous single page rendered by the provider at `/p/<slug>`, so the content is public but wrapped |
 | **Cloudflare temporary account** | **unreachable** | reachable | every path timed out against four different addresses: DNS interference. Cloudflare sells a separate China Network product, so this is consistent |
 | **Netlify anonymous deploy** | 401 (password) | 401 (password) | an unclaimed anonymous site is password-protected from every network — a viewer-side limit, not a network one |
 | EdgeOne Makers (anonymous) | nothing served | nothing served | classification `login-free-upload-only`: the upload works, no reader can open the result |
 
 The full split requested for this project is therefore:
 
-- **reachable from mainland China**: ship-page, shipstatic, here-now, show, aft-page, dropley, flypod, BrewPage, ht-ml.app, meethtml, Display.dev, shiply.now
+- **reachable from mainland China**: ship-page, shipstatic, here-now, show, aft-page, dropley, flypod, BrewPage, ht-ml.app, meethtml, Display.dev, shiply.now, shippage.ai
 - **not reachable from mainland China**: Cloudflare `*.workers.dev` temporary deployments
 - **not readable by anyone without a credential**: Netlify anonymous deploys (password), EdgeOne anonymous previews (console session)
 

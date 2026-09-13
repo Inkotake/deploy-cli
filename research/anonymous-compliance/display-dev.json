@@ -5,7 +5,7 @@
   "artifactModel": "single-html",
   "shareability": "independent-public",
   "lifecycle": {
-    "contentExpiresAt": "2026-10-13T08:55:10.711Z",
+    "contentExpiresAt": "2026-10-13T09:10:25.167Z",
     "claimDeadline": null,
     "previewAccessExpiresAt": null,
     "idleExpiry": null
@@ -17,51 +17,51 @@
     "independentReaderVerified": true,
     "assetsVerified": false,
     "htmlTransform": "wrapped",
-    "testedAt": "2026-09-13T08:56:49.691Z",
-    "assetNote": "the artifact is served inside the provider viewer page (43 KB for a 241-byte upload); the fixture nonce is present, so the content is public, but no byte comparison is possible"
+    "testedAt": "2026-09-13T09:11:06.316Z"
   },
   "evidence": {
     "level": "A-live",
     "sourceUrl": "https://display.dev/docs/claimable",
     "checkedAt": "2026-09-13",
     "testCommit": null,
-    "reason": "Read from both egresses: the root carried the fixture nonce, inside the provider's own viewer page (43 KB) rather than as the uploaded bytes, which is why shareability is public-with-wrapper and assetsVerified stays false. upload status 201; reads: root 200, html 200"
+    "reason": "Read from both egresses: the root carried the fixture nonce inside the provider's own 43 KB viewer page, so the content is public but nothing is byte-comparable. The uploaded document is not present verbatim, which makes this a wrapper rather than an injection. upload status 201; reads: root 200, html 200"
   },
   "measured": {
     "candidate": "Display.dev",
     "endpoint": "https://api.display.dev/v1/public/artifacts",
     "bodyStyle": "multipart",
+    "steps": null,
     "platformAlive": {
       "url": "https://display.dev/docs/claimable",
       "status": 200,
       "bytes": 93150,
       "text": "Publish without an account – Display.dev Docs try{if(localStorage.theme==='dark'||(!('theme' in localStorage)&&matchMedi"
     },
-    "nonce": "0e33bc3da37ffc3f",
+    "nonce": "379cc138ba0bced2",
     "uploadStatus": 201,
     "uploadResponse": {
-      "shortId": "0SNEx1Jp",
-      "previewUrl": "https://public.dsp.so/0SNEx1Jp",
-      "claimUrl": "https://app.display.dev/claim?code=kjUMUUtpY3Jp99k95iv8LjRl",
-      "expiresAt": "2026-10-13T08:55:10.711Z"
+      "shortId": "mtx9ooAr",
+      "previewUrl": "https://public.dsp.so/mtx9ooAr",
+      "claimUrl": "https://app.display.dev/claim?code=qOwr7h9F8YYTAOJ73ivBb7c3",
+      "expiresAt": "2026-10-13T09:10:25.167Z"
     },
     "responseHeaders": {
-      "date": "Sun, 13 Sep 2026 08:55:11 GMT",
+      "date": "Sun, 13 Sep 2026 09:10:25 GMT",
       "content-type": "application/json; charset=utf-8",
       "server": "cloudflare"
     },
-    "url": "https://public.dsp.so/0SNEx1Jp",
+    "url": "https://public.dsp.so/mtx9ooAr",
     "localFiles": {
       "assets/app.css": {
-        "sha256": "d33bcc6424d5a94669cda3ed01a72c940fa9323d191884b90f2d9ecfe5ece715",
+        "sha256": "4bbdb64d6b1b5fd5cb50f8c05279eceb6a3fbe01041da139bf23d4086b7c6dcc",
         "bytes": 45
       },
       "assets/app.js": {
-        "sha256": "f9ceca4ca2fb4e381b9056f5024cfba5d9744dcf3b0624f8ab493da85267e8ca",
+        "sha256": "b9bf6e84588cc7b077f3f16c9a6d0cb7492b9dcdc4dfc6878eafce45d8698101",
         "bytes": 41
       },
       "index.html": {
-        "sha256": "c18f145cc307fd830f63b73d58347411d944e377c7e3e581304627abf95ec0b5",
+        "sha256": "45d12f8e868b8968a0ace313a8ead22460af60a2672af1f2265ebaaa6ff4dc1c",
         "bytes": 241
       }
     },
@@ -70,19 +70,19 @@
         "status": 200,
         "contentType": "text/html",
         "bytes": 43539,
-        "sha256": "8e5b5d5c3ca203c04ef9c1734881cedcfc6d88aa6b4216042ebab5bfe24fb396",
+        "sha256": "8fe6534dd7f4235e5c9ab955316f519b94a56887ea4b2ad8e1c0b686587b936f",
         "error": null
       },
       "html": {
         "status": 200,
         "contentType": "text/html",
         "bytes": 43563,
-        "sha256": "645d7d554cb3b46efbc0e95134d6ceee5a0a2f09857c3cee04933e142a262a4d",
+        "sha256": "4da8f1b035756f7c116e614c2d244bc6333172799bcf525fcae6939c1637bbc8",
         "error": null
       }
     },
     "classification": "wrapped-preview",
-    "testedAt": "2026-09-13T08:55:12.143Z",
+    "testedAt": "2026-09-13T09:10:26.216Z",
     "crossEgressAvailable": false
   },
   "reachability": {

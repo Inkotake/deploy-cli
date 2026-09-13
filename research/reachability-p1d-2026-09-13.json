@@ -1,0 +1,15 @@
+{
+  "collectedAt": "2026-09-13T09:09:45.917Z",
+  "purpose": "shippage.ai anonymous publish, so the reader probe can read it from a mainland and an overseas egress.",
+  "results": [
+    {
+      "provider": "shippage",
+      "url": "https://shippage.ai/p/3v5q2d",
+      "nonce": "8663d522e8d22ded",
+      "persistence": "temporary",
+      "htmlExact": false,
+      "expiresAt": "2026-09-27T09:09:18.543Z",
+      "localHashes": {}
+    }
+  ]
+}

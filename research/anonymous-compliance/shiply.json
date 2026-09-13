@@ -5,7 +5,7 @@
   "artifactModel": "directory",
   "shareability": "independent-public",
   "lifecycle": {
-    "contentExpiresAt": "2026-09-14T09:06:56.427Z",
+    "contentExpiresAt": "2026-09-14T09:10:17.958Z",
     "claimDeadline": null,
     "previewAccessExpiresAt": null,
     "idleExpiry": null
@@ -17,14 +17,14 @@
     "independentReaderVerified": true,
     "assetsVerified": true,
     "htmlTransform": "injected",
-    "testedAt": "2026-09-13T09:08:07.536Z"
+    "testedAt": "2026-09-13T09:11:06.309Z"
   },
   "evidence": {
     "level": "A-live",
     "sourceUrl": "https://shiply.now/llms.txt",
     "checkedAt": "2026-09-13",
     "testCommit": null,
-    "reason": "Three-step publish measured and confirmed from two egresses: the create call returned a manifest with upload URLs, finalize made the site live, and both egresses read the root (fixture nonce present) plus both assets byte-identically. The served HTML is not byte-exact because shiply documents that it injects a claim banner and OG tags until the site is claimed - the measurement matches that documentation. Anonymous lifetime is 24 hours and the response carried claimToken and claimUrl. upload and every read succeeded from this network; a second network was not available, so independent readership stays unconfirmed"
+    "reason": "Three-step publish measured and confirmed from two egresses: create returned the manifest with upload URLs, finalize made the site live, and both egresses read the root (fixture nonce present) plus both assets byte-identically. The page is injected rather than byte-exact because shiply documents a claim banner and OG tags until the site is claimed, and the served HTML contains the uploaded document verbatim. Anonymous lifetime is 24 hours; the response carried claimToken and claimUrl. upload and every read succeeded from this network; a second network was not available, so independent readership stays unconfirmed"
   },
   "measured": {
     "candidate": "shiply.now",
@@ -90,28 +90,28 @@
       "bytes": 81377,
       "text": "Overview — shiply.now docs (function () { try { var p = location.pathname; // Marketing surfaces are always dark (2026-0"
     },
-    "nonce": "f65fa345603a9af1",
+    "nonce": "aa654aa9a9d0ebc4",
     "uploadStatus": 200,
     "uploadResponse": {
       "success": true,
-      "slug": "quick-garnet-t9km",
-      "siteUrl": "https://quick-garnet-t9km.shiply.now/",
+      "slug": "rapid-fjord-qnbg",
+      "siteUrl": "https://rapid-fjord-qnbg.shiply.now/",
       "previousVersionId": null,
-      "currentVersionId": "01M2D0A2A8RGW7Z8X1TPDNX0BC",
+      "currentVersionId": "01M2D0G745EHDFN9Q6DE9YQJND",
       "addedToProfile": false,
-      "thumbnailJobId": "89d1639c-7cd9-4bb5-8977-9c0b71d1e471",
+      "thumbnailJobId": "dba268ca-36c5-4bce-b3d4-60d30d9855c1",
       "toUpdate": "To UPDATE this same site (do NOT create a new one), POST /api/v1/publish again with the claimToken from your publish response.",
-      "siteId": "74172c7f-6f86-40b3-a833-804ea687a918",
+      "siteId": "90b66f8f-7ee3-4b14-993d-28e6e95c3894",
       "status": "pending",
       "isLive": false,
       "requiresFinalize": true,
       "upload": {
-        "versionId": "01M2D0A2A8RGW7Z8X1TPDNX0BC",
+        "versionId": "01M2D0G745EHDFN9Q6DE9YQJND",
         "uploads": [
           {
             "path": "assets/app.css",
             "method": "PUT",
-            "url": "https://d8ee2c96edd90d9126136f05506ed95d.r2.cloudflarestorage.com/nowhost-sites/anon/quick-garnet-t9km/v/01M2D0A2A8RGW7Z8X1TPDNX0BC/assets/app.css?X-Amz-Expires=3600&X-Amz-Date=20260913T090656Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=93c52896415013c5998bf9a02d8537d5%2F20260913%2Fauto%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=057ccc60d99a9106e49aea6a7fb5cdfa3518a31f176de7a3951f69e3363670cf",
+            "url": "https://d8ee2c96edd90d9126136f05506ed95d.r2.cloudflarestorage.com/nowhost-sites/anon/rapid-fjord-qnbg/v/01M2D0G745EHDFN9Q6DE9YQJND/assets/app.css?X-Amz-Expires=3600&X-Amz-Date=20260913T091018Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=93c52896415013c5998bf9a02d8537d5%2F20260913%2Fauto%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=c130104de50bd101ffe2c23f93ce8a31c74e0226155e7c13fee02a676b225782",
             "headers": {
               "Content-Type": "text/css; charset=utf-8"
             }
@@ -119,7 +119,7 @@
           {
             "path": "assets/app.js",
             "method": "PUT",
-            "url": "https://d8ee2c96edd90d9126136f05506ed95d.r2.cloudflarestorage.com/nowhost-sites/anon/quick-garnet-t9km/v/01M2D0A2A8RGW7Z8X1TPDNX0BC/assets/app.js?X-Amz-Expires=3600&X-Amz-Date=20260913T090656Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=93c52896415013c5998bf9a02d8537d5%2F20260913%2Fauto%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=3f83695ebfed707307b950d554aa2fdb1ca5195cd4b82268df52fe40ca293c67",
+            "url": "https://d8ee2c96edd90d9126136f05506ed95d.r2.cloudflarestorage.com/nowhost-sites/anon/rapid-fjord-qnbg/v/01M2D0G745EHDFN9Q6DE9YQJND/assets/app.js?X-Amz-Expires=3600&X-Amz-Date=20260913T091018Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=93c52896415013c5998bf9a02d8537d5%2F20260913%2Fauto%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=345e375eec8e3211d5b6a875a894d210302a6a5911f6ad1a01c45d9a98aa53ac",
             "headers": {
               "Content-Type": "text/javascript; charset=utf-8"
             }
@@ -127,49 +127,49 @@
           {
             "path": "index.html",
             "method": "PUT",
-            "url": "https://d8ee2c96edd90d9126136f05506ed95d.r2.cloudflarestorage.com/nowhost-sites/anon/quick-garnet-t9km/v/01M2D0A2A8RGW7Z8X1TPDNX0BC/index.html?X-Amz-Expires=3600&X-Amz-Date=20260913T090656Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=93c52896415013c5998bf9a02d8537d5%2F20260913%2Fauto%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=02da3ce06e6bfd7f70c5df87f1fbd33f61d557bd91f57336b5c807d06efaa10f",
+            "url": "https://d8ee2c96edd90d9126136f05506ed95d.r2.cloudflarestorage.com/nowhost-sites/anon/rapid-fjord-qnbg/v/01M2D0G745EHDFN9Q6DE9YQJND/index.html?X-Amz-Expires=3600&X-Amz-Date=20260913T091018Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=93c52896415013c5998bf9a02d8537d5%2F20260913%2Fauto%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=6a22e859d9ffa7641e48cdd3d750b4d4216e09ccfe89c0f71bb7352d109be89b",
             "headers": {
               "Content-Type": "text/html; charset=utf-8"
             }
           }
         ],
         "skipped": [],
-        "finalizeUrl": "https://shiply.now/api/v1/publish/quick-garnet-t9km/finalize",
+        "finalizeUrl": "https://shiply.now/api/v1/publish/rapid-fjord-qnbg/finalize",
         "expiresInSeconds": 3600
       },
-      "claimToken": "83e…(64 chars)",
-      "claimUrl": "https://shiply.now/claim?slug=quick-garnet-t9km&token=83e1c13c168ab51e5772cabd24395aada506ed01b0052c06a39766a48faedae0",
+      "claimToken": "008…(64 chars)",
+      "claimUrl": "https://shiply.now/claim?slug=rapid-fjord-qnbg&token=00839364a7381f378494660bab9b1e26f8c8f03ad44eddf54c5f6b5605d55ac3",
       "warning": "Save the claimToken — it both (a) keeps the site forever via claimUrl and (b) is the key to UPDATE this same site later. Returned only once.",
       "deviceAuth": {
-        "user_code": "Q7EQ-WDJ9",
-        "device_code": "PFsLQw9eULvXoIjsPDMzjuhKFzqUJv0W3UXy4g-EozM",
-        "verification_url": "https://shiply.now/auth/Q7EQ-WDJ9",
+        "user_code": "JGVF-3CXW",
+        "device_code": "XqFKXGk26jekSZy_9odcfZSS0L9p_v-yE-dJrRrEPO8",
+        "verification_url": "https://shiply.now/auth/JGVF-3CXW",
         "poll_url": "https://shiply.now/api/v1/auth/device/poll",
         "expires_in": 900,
         "interval": 2
       },
-      "expiresAt": "2026-09-14T09:06:56.427Z",
+      "expiresAt": "2026-09-14T09:10:17.958Z",
       "anonymous": true,
       "resolvedClientId": null
     },
     "responseHeaders": {
-      "date": "Sun, 13 Sep 2026 09:06:56 GMT",
+      "date": "Sun, 13 Sep 2026 09:10:18 GMT",
       "content-type": "application/json",
       "x-content-type-options": "nosniff",
       "server": "cloudflare"
     },
-    "url": "https://quick-garnet-t9km.shiply.now/",
+    "url": "https://rapid-fjord-qnbg.shiply.now/",
     "localFiles": {
       "assets/app.css": {
-        "sha256": "621c02b9b946948f2944278c0b3e52791a239752a7a763576514f76bd049f22a",
+        "sha256": "bb6d500c120a48f8187422e3a4e6b489931f6b9b946b7d8e19036049f56e4922",
         "bytes": 45
       },
       "assets/app.js": {
-        "sha256": "b1358624abb244471fba68b4f4f0f5e85be130355d055f1814b9531924883be8",
+        "sha256": "543255747c902103217330127315e097f65858c51010b11b24b4ee437a9f4c91",
         "bytes": 41
       },
       "index.html": {
-        "sha256": "0aa0342aaf582a9605dffe006693d0b59e953a2edad9ca6b37580021f6c17977",
+        "sha256": "a3109d09ef69e7edc1c64b150fc5367c2943093fbc3a65f5aef3a0bb1c5a79ae",
         "bytes": 241
       }
     },
@@ -177,34 +177,34 @@
       "root": {
         "status": 200,
         "contentType": "text/html",
-        "bytes": 1475,
-        "sha256": "d7d9a22d2179376879abe4d7fc633fd7403ee1b8ccd53ded2e1f10e216f8bbd7",
+        "bytes": 1472,
+        "sha256": "fadf5dec99441d6231841f65b43cbbf9a8f90ff4b1167c5e6c13e580a0a22b17",
         "error": null
       },
       "html": {
         "status": 200,
         "contentType": "text/html",
-        "bytes": 1475,
-        "sha256": "d7d9a22d2179376879abe4d7fc633fd7403ee1b8ccd53ded2e1f10e216f8bbd7",
+        "bytes": 1472,
+        "sha256": "fadf5dec99441d6231841f65b43cbbf9a8f90ff4b1167c5e6c13e580a0a22b17",
         "error": null
       },
       "assets/app.js": {
         "status": 200,
         "contentType": "text/javascript",
         "bytes": 41,
-        "sha256": "b1358624abb244471fba68b4f4f0f5e85be130355d055f1814b9531924883be8",
+        "sha256": "543255747c902103217330127315e097f65858c51010b11b24b4ee437a9f4c91",
         "error": null
       },
       "assets/app.css": {
         "status": 200,
         "contentType": "text/css",
         "bytes": 45,
-        "sha256": "621c02b9b946948f2944278c0b3e52791a239752a7a763576514f76bd049f22a",
+        "sha256": "bb6d500c120a48f8187422e3a4e6b489931f6b9b946b7d8e19036049f56e4922",
         "error": null
       }
     },
     "classification": "independent-public",
-    "testedAt": "2026-09-13T09:07:01.521Z",
+    "testedAt": "2026-09-13T09:10:23.066Z",
     "crossEgressAvailable": false
   },
   "reachability": {

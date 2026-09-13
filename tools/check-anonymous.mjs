@@ -138,6 +138,18 @@ export const CANDIDATES = {
     artifactModel: 'directory',
     publisherAuth: 'generated-secret',
     notes: 'POST a file manifest to /api/v1/publish with no account, PUT each file to the returned upload URL, then POST upload.finalizeUrl with the versionId: the site is live only after finalize. Anonymous sites expire after 24h and the response carries claimUrl + claimToken; until claimed, the provider documents that it injects a claim banner and OG tags into the page'
+  },
+  shippage: {
+    label: 'shippage.ai',
+    docs: 'https://shippage.ai/llms.txt',
+    endpoint: 'https://shippage.ai/v1/publish',
+    liveness: 'https://shippage.ai/docs',
+    field: 'html',
+    bodyStyle: 'json-doc',
+    artifactModel: 'single-html',
+    publisherAuth: 'generated-secret',
+    assetExpectations: 'none',
+    notes: 'POST /v1/publish with {"html": ...}: the agent auto-registers on the first call. Free tier is 20 publishes per month, 14-day retention and 500 KB per page. This is a different service from ship.page/shipped.page, which the registry already has as ship-page'
   }
 };
 
@@ -382,10 +394,12 @@ async function checkCandidate(id) {
   const uploadRejected = upload.status === 401 || upload.status === 403;
   const markerInRoot = reads.root ? reads.root.body.toString('utf8').includes(nonce) : false;
   const htmlMatches = reads.html && reads.html.sha256 === local.get('index.html').sha256;
-  // An injected/wrapped HTML is a disclosure, not a failure: assets decide whether the site works.
-  const htmlTransform = htmlMatches ? 'none'
-    : markerInRoot ? 'injected'
-      : reads.html && /^text\/html/.test(reads.html.contentType || '') ? 'wrapped' : 'unknown';
+  // An injected page still contains the uploaded HTML verbatim, with additions around it; a wrapped one
+  // serves the provider's own viewer page with the content re-rendered inside it. Deciding this by
+  // byte-comparison above was wrong twice (display.dev, shippage.ai), so it is decided by containment.
+  const servedHtml = reads.html && reads.html.status === 200 ? reads.html.body.toString('utf8') : '';
+  const containsOriginal = servedHtml ? servedHtml.includes(manifest.byRelative.get('index.html').bytes.toString('utf8')) : false;
+  const htmlTransform = htmlMatches ? 'none' : containsOriginal ? 'injected' : (servedHtml ? 'wrapped' : 'unknown');
   const assetsVerified = candidate.assetExpectations === 'none'
     ? (reads.html ? reads.html.status === 200 && reads.html.sha256 === local.get('index.html').sha256 : false)
     : Object.entries(reads.assets).every(([rel, read]) => read.sha256 === local.get(rel).sha256);
