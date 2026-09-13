@@ -1,0 +1,81 @@
+{
+  "ranAt": "2026-09-13T15:12:29.827Z",
+  "note": "Each probe uploads one incompressible file sized just over the documented ceiling, so its size is both the per-file size and the artifact total.",
+  "results": [
+    {
+      "provider": "ship-page",
+      "documentedLimit": "25 MB total, no per-file limit documented",
+      "attemptedBytes": 27262976,
+      "attemptedMB": 26,
+      "rationale": "just over the documented total",
+      "ranAt": "2026-09-13T15:12:29.095Z",
+      "seconds": 0.2,
+      "cliExit": 1,
+      "success": false,
+      "url": null,
+      "filesVerified": null,
+      "reason": "incompatible: accepts at most 26214400 bytes in total, artifact is 27263028",
+      "verdict": "refused: incompatible: accepts at most 26214400 bytes in total, artifact is 27263028"
+    },
+    {
+      "provider": "shipstatic",
+      "documentedLimit": "20 MB per file, 50 MB total",
+      "attemptedBytes": 22020096,
+      "attemptedMB": 21,
+      "rationale": "just over the documented per-file limit",
+      "ranAt": "2026-09-13T15:12:29.285Z",
+      "seconds": 0.2,
+      "cliExit": 1,
+      "success": false,
+      "url": null,
+      "filesVerified": null,
+      "reason": "incompatible: accepts at most 20971520 bytes per file, largest is big.bin at 22020096",
+      "verdict": "refused: incompatible: accepts at most 20971520 bytes per file, largest is big.bin at 22020096"
+    },
+    {
+      "provider": "aft-page",
+      "documentedLimit": "25 MB per file, 100 MB total",
+      "attemptedBytes": 27262976,
+      "attemptedMB": 26,
+      "rationale": "just over the documented per-file limit",
+      "ranAt": "2026-09-13T15:12:29.482Z",
+      "seconds": 0.2,
+      "cliExit": 1,
+      "success": false,
+      "url": null,
+      "filesVerified": null,
+      "reason": "incompatible: accepts at most 26214400 bytes per file, largest is big.bin at 27262976",
+      "verdict": "refused: incompatible: accepts at most 26214400 bytes per file, largest is big.bin at 27262976"
+    },
+    {
+      "provider": "show",
+      "documentedLimit": "10 MB total",
+      "attemptedBytes": 11534336,
+      "attemptedMB": 11,
+      "rationale": "just over the documented total",
+      "ranAt": "2026-09-13T15:12:29.657Z",
+      "seconds": 0.2,
+      "cliExit": 1,
+      "success": false,
+      "url": null,
+      "filesVerified": null,
+      "reason": "incompatible: has a fixed extension allowlist and rejects .bin; treats model/binary assets as unsupported (.bin); accepts at most 10485760 bytes in total, artifact is 11534388",
+      "verdict": "refused: incompatible: has a fixed extension allowlist and rejects .bin; treats model/binary assets as unsupported (.bin); accepts at most 10485760 bytes in total, artifact is 11534388"
+    },
+    {
+      "provider": "brewpage",
+      "documentedLimit": "5 MB per file, 20 MB total",
+      "attemptedBytes": 6291456,
+      "attemptedMB": 6,
+      "rationale": "just over the documented per-file limit",
+      "ranAt": "2026-09-13T15:12:29.825Z",
+      "seconds": 0.2,
+      "cliExit": 1,
+      "success": false,
+      "url": null,
+      "filesVerified": null,
+      "reason": "incompatible: treats model/binary assets as unsupported (.bin); accepts at most 5242880 bytes per file, largest is big.bin at 6291456",
+      "verdict": "refused: incompatible: treats model/binary assets as unsupported (.bin); accepts at most 5242880 bytes per file, largest is big.bin at 6291456"
+    }
+  ]
+}

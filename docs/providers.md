@@ -90,12 +90,38 @@ What this establishes:
 - **here-now is the slowest and least predictable** of the set: 97–120 s for 102 tiny files and one
   transient 502 that two retries cleared. It is not a limit, but it is a reason not to make it a default.
 
-## The default
+## The default order, derived from measurement
 
-`ship-page` is the default choice, and that is a measured decision rather than a preference: a 30-day
-lifetime, byte-exact HTML and assets, 25 MB total, a 100-file cap that is enforced with a clear message,
-mainland reachability from both egresses, and no account required. A test asserts that it still ranks
-first, so re-ranking it has to argue with evidence.
+The order is computed from measured facts rather than chosen, and `ship-page` is pinned first:
+
+| Points | Criterion | Why |
+|---|---|---|
+| +40 | HTML **and** assets byte-exact | the property this project exists for; a wrapped or injected page loses it |
+| +2/day | lifetime, capped at 30 days | a 30-day deployment is worth more than a 24-hour one, but a claimed "1 year" cannot dominate |
+| +20 / +10 | mainland reachability `reachable` / `partial` | measured from a Beijing egress |
+| +2 per 25 MB | total capacity, capped at +10 | holds a real build |
+| +4 | 500+ files | file-count headroom |
+| −15 | single document only | cannot serve a built site |
+| −5 | no claim credential | nothing to hold if the user wants to keep it |
+| −15 | measured instability or a crippling allowlist | here-now (transient 502, 97–120 s) and dropley (rejects `.txt`) |
+| −5 | viewer-wrapped with no credential | Display.dev, shippage.ai |
+
+Resulting rank (`priority`, 2026-09-13): ship-page 100 · aft-page 75 · dropley 55 · show 48 · BrewPage 41 ·
+flypod 39 · meethtml 39 · ht-ml.app 37 · shiply.now 30 · shipstatic 28 · shippage.ai 19 · here-now 1 ·
+Display.dev 1.
+
+**How to read that order.** The planner filters first and ranks second, so priorities are only ever
+compared *among the providers eligible for the artifact in hand*:
+
+- a **built site** defaults to byte-exact hosts, because a provider with `htmlExact: false` is
+  ineligible unless the caller passes `--allow-inexact`. In that default set the order is ship-page,
+  dropley, show (and then the persistent channels);
+- a **single HTML document** is served by the single-document hosts, where meethtml and ht-ml.app
+  outrank the wrapped ones;
+- **large artifacts** reach shiply.now (2 GB) and here-now (250 MB per file), which rank low overall
+  because of their short lifetime and, for here-now, its measured instability.
+
+A test asserts that ship-page still ranks first, so changing this requires evidence rather than taste.
 
 ## What is still unmeasured
 

@@ -1,0 +1,14 @@
+{
+  "provider": "ship-page",
+  "documentedLimit": "25 MB total",
+  "attemptedMB": 26,
+  "payloadFile": "big.glb",
+  "ranAt": "2026-09-13T15:13:17.698Z",
+  "seconds": 0.4,
+  "accepted": false,
+  "url": null,
+  "expiresAt": null,
+  "errorKind": "capability",
+  "error": "ship-page: the generated zip is 27263227 bytes, above the documented 25 MiB limit of 26214400",
+  "verdict": "refused by the service"
+}

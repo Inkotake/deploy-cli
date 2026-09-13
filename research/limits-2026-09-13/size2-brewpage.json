@@ -1,0 +1,14 @@
+{
+  "provider": "brewpage",
+  "documentedLimit": "5 MB per file",
+  "attemptedMB": 6,
+  "payloadFile": "big.woff2",
+  "ranAt": "2026-09-13T15:13:35.508Z",
+  "seconds": 3.7,
+  "accepted": false,
+  "url": null,
+  "expiresAt": null,
+  "errorKind": "capability",
+  "error": "HTTP 400 during brewpage upload: request rejected. {\"status\":400,\"error\":\"Bad Request\",\"message\":\"File 'big.woff2' exceeds maximum size of 5242880 bytes\",\"timestamp\":\"2026-09-13T15:13:36.411110212Z\",\"result\":{\"code\":\"failed\",\"action\":\"rejected\",\"reason\":\"File 'big.woff2' exceeds maximum size of 5242",
+  "verdict": "refused by the service"
+}

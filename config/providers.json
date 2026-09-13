@@ -65,7 +65,7 @@
         "status": "live-tested",
         "resourcesByteExact": true,
         "verifiedAt": "2026-09-13",
-        "note": "live-tested: a 63-file artifact was served byte-identical for every file, HTML included. Re-measured 2026-09-11: a plain GET still receives byte-identical HTML, but a browser-like Accept header receives the upload plus a Cloudflare Insights beacon (+367 bytes on a 277-byte page), which verification now reports as browserRepresentation instead of hiding. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Chosen default, and the basis is measured: 30-day lifetime, byte-exact HTML and assets, 25 MB total, and a 100-file cap that the service enforces with a clear message rather than a silent truncation (\"accepts at most 100 files, artifact has 102\"). Reachable from both the mainland and the overseas egress, no account needed, and the capability fixture (woff2, GLB, WASM, CJK paths, deep directories) came back 21/21 byte-identical.",
+        "note": "live-tested: a 63-file artifact was served byte-identical for every file, HTML included. Re-measured 2026-09-11: a plain GET still receives byte-identical HTML, but a browser-like Accept header receives the upload plus a Cloudflare Insights beacon (+367 bytes on a 277-byte page), which verification now reports as browserRepresentation instead of hiding. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Chosen default, and the basis is measured: 30-day lifetime, byte-exact HTML and assets, 25 MB total, and a 100-file cap that the service enforces with a clear message rather than a silent truncation (\"accepts at most 100 files, artifact has 102\"). Reachable from both the mainland and the overseas egress, no account needed, and the capability fixture (woff2, GLB, WASM, CJK paths, deep directories) came back 21/21 byte-identical. Default rank derived from measurement 2026-09-13 (score 122, priority 100): HTML and assets byte-exact, 30-day lifetime, mainland: reachable, 25 MB total.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -92,8 +92,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 90,
-      "cnPriority": 90,
+      "priority": 28,
+      "cnPriority": 28,
       "enabled": true,
       "persistent": false,
       "availability": "live",
@@ -132,7 +132,7 @@
         "status": "live-tested",
         "resourcesByteExact": true,
         "verifiedAt": "2026-09-13",
-        "note": "live-tested: JS/CSS/font resources are served byte-identical. ShipStatic rewrites served HTML by appending a ?_ship=<id> cache-busting query to asset URLs, so HTML bytes differ and are not hash-verified. Its multipart parser also silently drops zero-byte file parts, so an artifact containing one is rejected as a capability failure before upload. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Measured 2026-09-13 with a 102-file artifact: 102 files verified, no silent drops.",
+        "note": "live-tested: JS/CSS/font resources are served byte-identical. ShipStatic rewrites served HTML by appending a ?_ship=<id> cache-busting query to asset URLs, so HTML bytes differ and are not hash-verified. Its multipart parser also silently drops zero-byte file parts, so an artifact containing one is rejected as a capability failure before upload. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Measured 2026-09-13 with a 102-file artifact: 102 files verified, no silent drops. Default rank derived from measurement 2026-09-13 (score 34, priority 28): 3-day lifetime, mainland: reachable, 50 MB total, file count headroom.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -159,8 +159,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 80,
-      "cnPriority": 80,
+      "priority": 75,
+      "cnPriority": 75,
       "enabled": true,
       "persistent": false,
       "availability": "live",
@@ -199,7 +199,7 @@
         "status": "live-tested",
         "resourcesByteExact": null,
         "verifiedAt": "2026-09-13",
-        "note": "live-tested: aft.page does not serve the uploaded HTML at all - it injects a wrapper/summary page (a 416-byte index.html was served as 9873 bytes, 9461 without the import-map banner). Excluded from the default plan because its served output can never satisfy the verification contract. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Measured 2026-09-13 with a 102-file artifact: 101 files verified, no silent drops (the page itself is presence-checked because this host rewrites HTML).",
+        "note": "live-tested: aft.page does not serve the uploaded HTML at all - it injects a wrapper/summary page (a 416-byte index.html was served as 9873 bytes, 9461 without the import-map banner). Excluded from the default plan because its served output can never satisfy the verification contract. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Measured 2026-09-13 with a 102-file artifact: 101 files verified, no silent drops (the page itself is presence-checked because this host rewrites HTML). Default rank derived from measurement 2026-09-13 (score 92, priority 75): 30-day lifetime, mainland: reachable, 100 MB total, file count headroom.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -227,8 +227,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 70,
-      "cnPriority": 70,
+      "priority": 1,
+      "cnPriority": 1,
       "enabled": true,
       "persistent": false,
       "availability": "live",
@@ -267,7 +267,7 @@
         "status": "live-tested",
         "resourcesByteExact": true,
         "verifiedAt": "2026-09-13",
-        "note": "live-tested: the create/finalize flow works (upload.versionId, upload.finalizeUrl, siteUrl) and JS/CSS/font resources are served byte-identical. An earlier 416-byte index.html was served as 798 bytes with injected Open Graph meta tags, so HTML bytes are not hash-verified; a 2026-09-11 re-probe served a minimal 86-byte page verbatim, so the rewriting is conditional — the presence-only policy stays conservative. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Measured 2026-09-13 with a 102-file artifact: the first attempt failed with \"HTTP 502 Application failed to respond\" at finalize, and two immediate retries both succeeded with all 102 files verified (97 s and 120 s). Treated as transient rather than a limit, but this host is the slowest of the set and its documented 1000-file ceiling was not pushed.",
+        "note": "live-tested: the create/finalize flow works (upload.versionId, upload.finalizeUrl, siteUrl) and JS/CSS/font resources are served byte-identical. An earlier 416-byte index.html was served as 798 bytes with injected Open Graph meta tags, so HTML bytes are not hash-verified; a 2026-09-11 re-probe served a minimal 86-byte page verbatim, so the rewriting is conditional — the presence-only policy stays conservative. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Measured 2026-09-13 with a 102-file artifact: the first attempt failed with \"HTTP 502 Application failed to respond\" at finalize, and two immediate retries both succeeded with all 102 files verified (97 s and 120 s). Treated as transient rather than a limit, but this host is the slowest of the set and its documented 1000-file ceiling was not pushed. Default rank derived from measurement 2026-09-13 (score 1, priority 1): 1-day lifetime, mainland: partial, file count headroom.",
         "reachability": {
           "mainland": "partial",
           "overseas": "partial",
@@ -294,8 +294,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 60,
-      "cnPriority": 60,
+      "priority": 48,
+      "cnPriority": 48,
       "enabled": true,
       "persistent": false,
       "availability": "live",
@@ -351,7 +351,7 @@
         "status": "live-tested",
         "resourcesByteExact": null,
         "verifiedAt": "2026-09-13",
-        "note": "The tar.gz archive upload was accepted live and returns a deployment URL on a *.127.dev subdomain (for example https://<id>-<name>.127.dev), which is why *.127.dev is in allowedHosts. Byte fidelity is decided by verification at runtime. Measured extension rules 2026-09-13: .glb and .wasm are rejected with HTTP 400, .woff2 is accepted — the fixed allowlist is real, not documentation. Measured 2026-09-13: its documented 100-file cap is enforced before upload (\"accepts at most 100 files, artifact has 102\"), so an oversized artifact is refused rather than truncated.",
+        "note": "The tar.gz archive upload was accepted live and returns a deployment URL on a *.127.dev subdomain (for example https://<id>-<name>.127.dev), which is why *.127.dev is in allowedHosts. Byte fidelity is decided by verification at runtime. Measured extension rules 2026-09-13: .glb and .wasm are rejected with HTTP 400, .woff2 is accepted — the fixed allowlist is real, not documentation. Measured 2026-09-13: its documented 100-file cap is enforced before upload (\"accepts at most 100 files, artifact has 102\"), so an oversized artifact is refused rather than truncated. Default rank derived from measurement 2026-09-13 (score 59, priority 48): HTML and assets byte-exact, 2-day lifetime, mainland: reachable.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -378,8 +378,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 50,
-      "cnPriority": 50,
+      "priority": 55,
+      "cnPriority": 55,
       "enabled": true,
       "persistent": false,
       "availability": "live",
@@ -426,7 +426,7 @@
         "status": "unverified",
         "resourcesByteExact": null,
         "verifiedAt": "2026-09-13",
-        "note": "UNVERIFIED, and the server allowlist is stricter than documented: live tests rejected .ttf, .woff, .woff2 and extensionless files, so a typical Vite artifact cannot be served. Verification decides at runtime. Measured extension rules 2026-09-13: .glb and .wasm are rejected by the server-side allowlist and .woff2 is accepted, alongside the previously recorded rejection of fonts and extensionless files. Measured 2026-09-13: the server-side allowlist rejects .txt too (\"File type not allowed: many/f001.txt\"), on top of the previously recorded rejection of .glb, .wasm, fonts and extensionless files. A typical build containing robots.txt therefore cannot be hosted here at all, and the planner now refuses such an artifact before uploading.",
+        "note": "UNVERIFIED, and the server allowlist is stricter than documented: live tests rejected .ttf, .woff, .woff2 and extensionless files, so a typical Vite artifact cannot be served. Verification decides at runtime. Measured extension rules 2026-09-13: .glb and .wasm are rejected by the server-side allowlist and .woff2 is accepted, alongside the previously recorded rejection of fonts and extensionless files. Measured 2026-09-13: the server-side allowlist rejects .txt too (\"File type not allowed: many/f001.txt\"), on top of the previously recorded rejection of .glb, .wasm, fonts and extensionless files. A typical build containing robots.txt therefore cannot be hosted here at all, and the planner now refuses such an artifact before uploading. Default rank derived from measurement 2026-09-13 (score 67, priority 55): HTML and assets byte-exact, 7-day lifetime, mainland: reachable, 50 MB total, file count headroom.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -782,8 +782,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 6,
-      "cnPriority": 5,
+      "priority": 39,
+      "cnPriority": 39,
       "persistent": false,
       "capabilities": {
         "anonymous": true,
@@ -815,7 +815,7 @@
         "status": "live-tested",
         "resourcesByteExact": true,
         "verifiedAt": "2026-09-13",
-        "note": "anonymous deploy measured live twice from two vantage points on 2026-09-13: upload 200 with no credential, site served, both assets byte-identical from a mainland (Beijing, 39.106.154.227) and an overseas (US) egress; the served HTML is injected with the provider render instrumentation, hence htmlExact: false; expires_at was 14 days out; the response also carries a manage_token that this adapter does not persist yet. Measured 2026-09-13: flypod accepts a file whose path contains non-ASCII characters and then answers HTTP 404 for it in every encoding tried (percent-encoded, raw UTF-8 and double-encoded), so an artifact containing such a path is refused before uploading. Binary assets are fine: .glb, .wasm and .woff2 were all accepted and served byte-identically. Measured 2026-09-13 with a 102-file artifact: 101 files verified, no silent drops (the page itself is presence-checked because this host rewrites HTML).",
+        "note": "anonymous deploy measured live twice from two vantage points on 2026-09-13: upload 200 with no credential, site served, both assets byte-identical from a mainland (Beijing, 39.106.154.227) and an overseas (US) egress; the served HTML is injected with the provider render instrumentation, hence htmlExact: false; expires_at was 14 days out; the response also carries a manage_token that this adapter does not persist yet. Measured 2026-09-13: flypod accepts a file whose path contains non-ASCII characters and then answers HTTP 404 for it in every encoding tried (percent-encoded, raw UTF-8 and double-encoded), so an artifact containing such a path is refused before uploading. Binary assets are fine: .glb, .wasm and .woff2 were all accepted and served byte-identically. Measured 2026-09-13 with a 102-file artifact: 101 files verified, no silent drops (the page itself is presence-checked because this host rewrites HTML). Default rank derived from measurement 2026-09-13 (score 48, priority 39): 14-day lifetime, mainland: reachable.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -850,8 +850,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 4,
-      "cnPriority": 4,
+      "priority": 41,
+      "cnPriority": 41,
       "persistent": false,
       "claim": {
         "kind": "ownerToken",
@@ -901,7 +901,7 @@
           "evidence": "research/reachability-p1-mainland-2026-09-13.json, research/reachability-p1-overseas-2026-09-13.json",
           "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
         },
-        "note": "anonymous deploy measured 2026-09-13 and read from both egresses: 201 with link, ownerLink, ownerToken, expiresAt, fileCount, visibilityNotice; assets byte-identical, the served HTML carries its injected top bar, which is why htmlExact is false. Measured extension rules 2026-09-13 (index.html plus one extra file per attempt): .glb and .wasm are REJECTED with HTTP 422 \"File type is not allowed\", while .woff2 is accepted. The registry previously said model files were supported; the service’s own error corrected it, and supportsModelFiles is now false so the planner refuses such an artifact before uploading. Measured 2026-09-13: its documented 100-file cap is enforced before upload (\"accepts at most 100 files, artifact has 102\")."
+        "note": "anonymous deploy measured 2026-09-13 and read from both egresses: 201 with link, ownerLink, ownerToken, expiresAt, fileCount, visibilityNotice; assets byte-identical, the served HTML carries its injected top bar, which is why htmlExact is false. Measured extension rules 2026-09-13 (index.html plus one extra file per attempt): .glb and .wasm are REJECTED with HTTP 422 \"File type is not allowed\", while .woff2 is accepted. The registry previously said model files were supported; the service’s own error corrected it, and supportsModelFiles is now false so the planner refuses such an artifact before uploading. Measured 2026-09-13: its documented 100-file cap is enforced before upload (\"accepts at most 100 files, artifact has 102\"). Default rank derived from measurement 2026-09-13 (score 50, priority 41): 15-day lifetime, mainland: reachable."
       }
     },
     {
@@ -921,8 +921,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 5,
-      "cnPriority": 3,
+      "priority": 37,
+      "cnPriority": 37,
       "persistent": false,
       "claim": {
         "kind": "update_key",
@@ -971,7 +971,7 @@
           "evidence": "research/reachability-p1-mainland-2026-09-13.json, research/reachability-p1-overseas-2026-09-13.json",
           "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
         },
-        "note": "anonymous deploy measured 2026-09-13 and read from both egresses: 200 with site_id, update_key and url; the single page was served byte-identically with no injection. No expiry is returned. Referenced assets are not uploaded, so the adapter reports which ones were left behind."
+        "note": "anonymous deploy measured 2026-09-13 and read from both egresses: 200 with site_id, update_key and url; the single page was served byte-identically with no injection. No expiry is returned. Referenced assets are not uploaded, so the adapter reports which ones were left behind. Default rank derived from measurement 2026-09-13 (score 45, priority 37): HTML and assets byte-exact, mainland: reachable."
       }
     },
     {
@@ -991,8 +991,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 5,
-      "cnPriority": 3,
+      "priority": 39,
+      "cnPriority": 39,
       "persistent": false,
       "claim": {
         "kind": "edit_token",
@@ -1041,7 +1041,7 @@
           "evidence": "research/reachability-p1b-mainland-2026-09-13.json, research/reachability-p1b-overseas-2026-09-13.json",
           "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
         },
-        "note": "anonymous publish measured 2026-09-13 and read from both egresses: 201 with url, slug, expires_at and edit_token; the document came back byte-identical with no injection. Anonymous publishing is rate limited to 200 requests/hour per IP and 5 MB per page."
+        "note": "anonymous publish measured 2026-09-13 and read from both egresses: 201 with url, slug, expires_at and edit_token; the document came back byte-identical with no injection. Anonymous publishing is rate limited to 200 requests/hour per IP and 5 MB per page. Default rank derived from measurement 2026-09-13 (score 47, priority 39): HTML and assets byte-exact, 1-day lifetime, mainland: reachable."
       }
     },
     {
@@ -1063,8 +1063,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 6,
-      "cnPriority": 2,
+      "priority": 1,
+      "cnPriority": 1,
       "persistent": false,
       "claim": {
         "kind": "claim_url",
@@ -1114,7 +1114,7 @@
           "evidence": "research/reachability-p1b-mainland-2026-09-13.json, research/reachability-p1b-overseas-2026-09-13.json",
           "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
         },
-        "note": "anonymous publish measured 2026-09-13 and read from both egresses: 201 with shortId, previewUrl, claimUrl and expiresAt. The preview is public but serves the provider own viewer page (43 KB for a 241-byte upload), so htmlExact is false and the page is presence-checked while nothing is byte-comparable. Anonymous artifacts are noindex."
+        "note": "anonymous publish measured 2026-09-13 and read from both egresses: 201 with shortId, previewUrl, claimUrl and expiresAt. The preview is public but serves the provider own viewer page (43 KB for a 241-byte upload), so htmlExact is false and the page is presence-checked while nothing is byte-comparable. Anonymous artifacts are noindex. Default rank derived from measurement 2026-09-13 (score 0, priority 1): mainland: reachable."
       }
     },
     {
@@ -1134,8 +1134,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 5,
-      "cnPriority": 3,
+      "priority": 30,
+      "cnPriority": 30,
       "persistent": false,
       "claim": {
         "kind": "claim_token",
@@ -1182,7 +1182,7 @@
           "evidence": "research/reachability-p1c-mainland-2026-09-13.json, research/reachability-p1c-overseas-2026-09-13.json",
           "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
         },
-        "note": "three-step anonymous publish measured 2026-09-13 and read from both egresses: create returned the manifest with upload URLs, finalize made the site live, and both assets came back byte-identical. The page is not byte-exact because shiply documents, and the measurement confirmed, that it injects a claim banner and OG tags until the site is claimed. Upload URLs last one hour. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Measured 2026-09-13 with a 102-file artifact: 101 files verified, no silent drops (the page itself is presence-checked because this host rewrites HTML)."
+        "note": "three-step anonymous publish measured 2026-09-13 and read from both egresses: create returned the manifest with upload URLs, finalize made the site live, and both assets came back byte-identical. The page is not byte-exact because shiply documents, and the measurement confirmed, that it injects a claim banner and OG tags until the site is claimed. Upload URLs last one hour. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network. Measured 2026-09-13 with a 102-file artifact: 101 files verified, no silent drops (the page itself is presence-checked because this host rewrites HTML). Default rank derived from measurement 2026-09-13 (score 36, priority 30): 1-day lifetime, mainland: reachable, 2048 MB total, file count headroom."
       }
     },
     {
@@ -1202,8 +1202,8 @@
       "modes": [
         "quick-share"
       ],
-      "priority": 6,
-      "cnPriority": 2,
+      "priority": 19,
+      "cnPriority": 19,
       "persistent": false,
       "claim": null,
       "capabilities": {
@@ -1248,7 +1248,7 @@
           "evidence": "research/reachability-p1d-mainland-2026-09-13.json, research/reachability-p1d-overseas-2026-09-13.json",
           "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
         },
-        "note": "anonymous publish measured 2026-09-13 and read from both egresses: 201 with url, slug, expires_at and password_protected, plus _registration because the service auto-registers the agent. The page is rendered by the provider at /p/<slug> inside its own viewer (750 bytes for a 241-byte upload, /index.html 404), so htmlExact is false. No claim credential is exposed at the top level: the _registration object is undocumented bookkeeping, so this adapter does not treat it as a claim. Free tier: 20 publishes per month, 14-day retention, 500 KB per page."
+        "note": "anonymous publish measured 2026-09-13 and read from both egresses: 201 with url, slug, expires_at and password_protected, plus _registration because the service auto-registers the agent. The page is rendered by the provider at /p/<slug> inside its own viewer (750 bytes for a 241-byte upload, /index.html 404), so htmlExact is false. No claim credential is exposed at the top level: the _registration object is undocumented bookkeeping, so this adapter does not treat it as a claim. Free tier: 20 publishes per month, 14-day retention, 500 KB per page. Default rank derived from measurement 2026-09-13 (score 23, priority 19): 14-day lifetime, mainland: reachable."
       }
     }
   ]

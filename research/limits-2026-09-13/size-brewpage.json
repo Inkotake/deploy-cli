@@ -1,0 +1,15 @@
+{
+  "provider": "brewpage",
+  "documentedLimit": "5 MB per file, 20 MB total",
+  "attemptedBytes": 6291456,
+  "attemptedMB": 6,
+  "rationale": "just over the documented per-file limit",
+  "ranAt": "2026-09-13T15:12:29.825Z",
+  "seconds": 0.2,
+  "cliExit": 1,
+  "success": false,
+  "url": null,
+  "filesVerified": null,
+  "reason": "incompatible: treats model/binary assets as unsupported (.bin); accepts at most 5242880 bytes per file, largest is big.bin at 6291456",
+  "verdict": "refused: incompatible: treats model/binary assets as unsupported (.bin); accepts at most 5242880 bytes per file, largest is big.bin at 6291456"
+}

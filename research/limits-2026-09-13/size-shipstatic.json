@@ -1,0 +1,15 @@
+{
+  "provider": "shipstatic",
+  "documentedLimit": "20 MB per file, 50 MB total",
+  "attemptedBytes": 22020096,
+  "attemptedMB": 21,
+  "rationale": "just over the documented per-file limit",
+  "ranAt": "2026-09-13T15:12:29.285Z",
+  "seconds": 0.2,
+  "cliExit": 1,
+  "success": false,
+  "url": null,
+  "filesVerified": null,
+  "reason": "incompatible: accepts at most 20971520 bytes per file, largest is big.bin at 22020096",
+  "verdict": "refused: incompatible: accepts at most 20971520 bytes per file, largest is big.bin at 22020096"
+}

@@ -1,0 +1,14 @@
+{
+  "provider": "shipstatic",
+  "documentedLimit": "20 MB per file",
+  "attemptedMB": 21,
+  "payloadFile": "big.glb",
+  "ranAt": "2026-09-13T15:13:23.731Z",
+  "seconds": 6,
+  "accepted": false,
+  "url": null,
+  "expiresAt": null,
+  "errorKind": "capability",
+  "error": "HTTP 400 during shipstatic upload: request rejected. {\"error\":\"validation_failed\",\"message\":\"File too large. Maximum 20 MB allowed. Upgrade to Pro for more.\",\"status\":400,\"details\":{\"path\":[0,\"size\"]}}",
+  "verdict": "refused by the service"
+}

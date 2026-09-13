@@ -1,0 +1,15 @@
+{
+  "provider": "aft-page",
+  "documentedLimit": "25 MB per file, 100 MB total",
+  "attemptedBytes": 27262976,
+  "attemptedMB": 26,
+  "rationale": "just over the documented per-file limit",
+  "ranAt": "2026-09-13T15:12:29.482Z",
+  "seconds": 0.2,
+  "cliExit": 1,
+  "success": false,
+  "url": null,
+  "filesVerified": null,
+  "reason": "incompatible: accepts at most 26214400 bytes per file, largest is big.bin at 27262976",
+  "verdict": "refused: incompatible: accepts at most 26214400 bytes per file, largest is big.bin at 27262976"
+}

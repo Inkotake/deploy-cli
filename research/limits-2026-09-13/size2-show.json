@@ -1,0 +1,14 @@
+{
+  "provider": "show",
+  "documentedLimit": "10 MB total",
+  "attemptedMB": 11,
+  "payloadFile": "big.woff2",
+  "ranAt": "2026-09-13T15:13:31.825Z",
+  "seconds": 0.3,
+  "accepted": false,
+  "url": null,
+  "expiresAt": null,
+  "errorKind": "capability",
+  "error": "show: the tar.gz archive is 11538100 bytes, above the documented 10485760 byte limit",
+  "verdict": "refused by the service"
+}

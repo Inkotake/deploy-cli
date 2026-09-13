@@ -1,0 +1,32 @@
+{
+  "ranAt": "2026-09-13T15:15:19.338Z",
+  "note": "The adapters pre-check the registry total client-side. This probe raises only that value, so the answer comes from the provider rather than from our own data.",
+  "results": [
+    {
+      "provider": "ship-page",
+      "documentedLimit": "25 MiB total (26214400)",
+      "attemptedMB": 26,
+      "payloadFile": "big.glb",
+      "clientPreCheckRaised": true,
+      "ranAt": "2026-09-13T15:15:16.218Z",
+      "seconds": 5.4,
+      "acceptedByService": false,
+      "url": null,
+      "errorKind": "capability",
+      "error": "HTTP 413 during ship-page upload: the service rejected the upload as unsupported. { \"error\": \"zip too big (25MB max on free plan)\", \"code\": \"zip_too_large\", \"hint\": \"You are an LLM agent hitting a ship.page free-plan limit: zip uploads are capped at 25MB on the free plan; paid plans allow 100MB. To "
+    },
+    {
+      "provider": "show",
+      "documentedLimit": "10 MiB total (10485760)",
+      "attemptedMB": 11,
+      "payloadFile": "big.woff2",
+      "clientPreCheckRaised": true,
+      "ranAt": "2026-09-13T15:15:19.334Z",
+      "seconds": 3.1,
+      "acceptedByService": false,
+      "url": null,
+      "errorKind": "capability",
+      "error": "HTTP 413 during show upload: the service rejected the upload as unsupported. {\"error\":\"UPLOAD_TOO_LARGE\",\"message\":\"Upload exceeds 10MB limit\",\"requestId\":\"req_5b1f1a159e0445ad\"}"
+    }
+  ]
+}

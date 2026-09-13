@@ -1,0 +1,76 @@
+{
+  "ranAt": "2026-09-13T15:13:35.511Z",
+  "note": "Adapters called directly, bypassing the planner, so the provider own ceiling is measured rather than our documented value. Payload extension chosen per channel so a type rule cannot confound a size result.",
+  "results": [
+    {
+      "provider": "ship-page",
+      "documentedLimit": "25 MB total",
+      "attemptedMB": 26,
+      "payloadFile": "big.glb",
+      "ranAt": "2026-09-13T15:13:17.698Z",
+      "seconds": 0.4,
+      "accepted": false,
+      "url": null,
+      "expiresAt": null,
+      "errorKind": "capability",
+      "error": "ship-page: the generated zip is 27263227 bytes, above the documented 25 MiB limit of 26214400",
+      "verdict": "refused by the service"
+    },
+    {
+      "provider": "shipstatic",
+      "documentedLimit": "20 MB per file",
+      "attemptedMB": 21,
+      "payloadFile": "big.glb",
+      "ranAt": "2026-09-13T15:13:23.731Z",
+      "seconds": 6,
+      "accepted": false,
+      "url": null,
+      "expiresAt": null,
+      "errorKind": "capability",
+      "error": "HTTP 400 during shipstatic upload: request rejected. {\"error\":\"validation_failed\",\"message\":\"File too large. Maximum 20 MB allowed. Upgrade to Pro for more.\",\"status\":400,\"details\":{\"path\":[0,\"size\"]}}",
+      "verdict": "refused by the service"
+    },
+    {
+      "provider": "aft-page",
+      "documentedLimit": "25 MB per file",
+      "attemptedMB": 26,
+      "payloadFile": "big.glb",
+      "ranAt": "2026-09-13T15:13:31.530Z",
+      "seconds": 7.7,
+      "accepted": false,
+      "url": null,
+      "expiresAt": null,
+      "errorKind": "capability",
+      "error": "HTTP 400 during aft-page upload: request rejected. { \"error\": \"file_too_large\", \"path\": \"big.glb\", \"max\": 26214400 }",
+      "verdict": "refused by the service"
+    },
+    {
+      "provider": "show",
+      "documentedLimit": "10 MB total",
+      "attemptedMB": 11,
+      "payloadFile": "big.woff2",
+      "ranAt": "2026-09-13T15:13:31.825Z",
+      "seconds": 0.3,
+      "accepted": false,
+      "url": null,
+      "expiresAt": null,
+      "errorKind": "capability",
+      "error": "show: the tar.gz archive is 11538100 bytes, above the documented 10485760 byte limit",
+      "verdict": "refused by the service"
+    },
+    {
+      "provider": "brewpage",
+      "documentedLimit": "5 MB per file",
+      "attemptedMB": 6,
+      "payloadFile": "big.woff2",
+      "ranAt": "2026-09-13T15:13:35.508Z",
+      "seconds": 3.7,
+      "accepted": false,
+      "url": null,
+      "expiresAt": null,
+      "errorKind": "capability",
+      "error": "HTTP 400 during brewpage upload: request rejected. {\"status\":400,\"error\":\"Bad Request\",\"message\":\"File 'big.woff2' exceeds maximum size of 5242880 bytes\",\"timestamp\":\"2026-09-13T15:13:36.411110212Z\",\"result\":{\"code\":\"failed\",\"action\":\"rejected\",\"reason\":\"File 'big.woff2' exceeds maximum size of 5242",
+      "verdict": "refused by the service"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "provider": "show",
+  "documentedLimit": "10 MiB total (10485760)",
+  "attemptedMB": 11,
+  "payloadFile": "big.woff2",
+  "clientPreCheckRaised": true,
+  "ranAt": "2026-09-13T15:15:19.334Z",
+  "seconds": 3.1,
+  "acceptedByService": false,
+  "url": null,
+  "errorKind": "capability",
+  "error": "HTTP 413 during show upload: the service rejected the upload as unsupported. {\"error\":\"UPLOAD_TOO_LARGE\",\"message\":\"Upload exceeds 10MB limit\",\"requestId\":\"req_5b1f1a159e0445ad\"}"
+}

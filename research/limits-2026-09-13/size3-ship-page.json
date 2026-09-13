@@ -1,0 +1,13 @@
+{
+  "provider": "ship-page",
+  "documentedLimit": "25 MiB total (26214400)",
+  "attemptedMB": 26,
+  "payloadFile": "big.glb",
+  "clientPreCheckRaised": true,
+  "ranAt": "2026-09-13T15:15:16.218Z",
+  "seconds": 5.4,
+  "acceptedByService": false,
+  "url": null,
+  "errorKind": "capability",
+  "error": "HTTP 413 during ship-page upload: the service rejected the upload as unsupported. { \"error\": \"zip too big (25MB max on free plan)\", \"code\": \"zip_too_large\", \"hint\": \"You are an LLM agent hitting a ship.page free-plan limit: zip uploads are capped at 25MB on the free plan; paid plans allow 100MB. To "
+}

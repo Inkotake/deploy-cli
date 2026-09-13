@@ -1,0 +1,14 @@
+{
+  "provider": "aft-page",
+  "documentedLimit": "25 MB per file",
+  "attemptedMB": 26,
+  "payloadFile": "big.glb",
+  "ranAt": "2026-09-13T15:13:31.530Z",
+  "seconds": 7.7,
+  "accepted": false,
+  "url": null,
+  "expiresAt": null,
+  "errorKind": "capability",
+  "error": "HTTP 400 during aft-page upload: request rejected. { \"error\": \"file_too_large\", \"path\": \"big.glb\", \"max\": 26214400 }",
+  "verdict": "refused by the service"
+}

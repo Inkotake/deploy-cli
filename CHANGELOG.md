@@ -131,6 +131,18 @@ required`). `docs/releasing.md` records both ways to finish that step.
   there; here-now answered `HTTP 502` at finalize once and then succeeded twice with 102/102 verified
   (97 s and 120 s), so the failure is transient rather than a limit — but it is the slowest channel of the
   set. `docs/providers.md` carries the table, and `ship-page` is pinned by a test as the measured default.
+- Measured the size ceilings instead of trusting the documented ones, by calling the adapters directly so
+  the answer comes from the provider: ship-page `413 zip too big (25MB max on free plan)`, shipstatic
+  `400 File too large. Maximum 20 MB allowed`, aft-page `400 file_too_large max: 26214400`, show
+  `413 Upload exceeds 10MB limit`, BrewPage `400 exceeds maximum size of 5242880 bytes`. Note that
+  ship-page and show also pre-check the registry value client-side, which is why the first attempt never
+  reached the service — a probe that reports our own limit as the provider's would have been wrong.
+- The default order is now **derived** from measurement rather than hand-set: byte-exact delivery, lifetime
+  capped at 30 days, mainland reachability, capacity, and explicit penalties for what was observed
+  (single-document only, no claim credential, here-now's transient 502 and slowness, dropley's `.txt`
+  rejection, viewer-wrapped pages). `ship-page` is pinned first and a test keeps it there;
+  `docs/providers.md` shows the formula, the resulting rank and how to read it, since priorities are only
+  compared among the providers eligible for the artifact in hand.
 - An offline test suite (`node:test`) covering the adapters, verification, planning, the registry
   schema, the policy split, claims, snapshots, the proxy path and the CLI contract.
 
