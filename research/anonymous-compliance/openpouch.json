@@ -1,0 +1,85 @@
+{
+  "id": "openpouch",
+  "publisherAuth": "none",
+  "viewerAccess": "public",
+  "artifactModel": "directory",
+  "shareability": "independent-public",
+  "reachability": {
+    "mainland": "reachable",
+    "overseas": "reachable",
+    "measuredAt": "2026-09-13",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "evidence": "research/reachability-p1e-mainland-2026-09-13.json, research/reachability-p1e-overseas-2026-09-13.json",
+    "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
+  },
+  "lifecycle": {
+    "contentExpiresAt": "2026-09-16T12:59:00.000Z",
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": true,
+    "sameEgressRead": true,
+    "crossEgressRead": true,
+    "independentReaderVerified": true,
+    "assetsVerified": true,
+    "htmlTransform": "none",
+    "testedAt": "2026-09-13T13:00:36.868Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://openpouch.dev/deploy-without-signup",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "Measured through the provider's own CLI (the service is CLI-first; there is no documented plain-HTTP publish endpoint): `npx -y openpouch deploy <dir> --json` in a throwaway HOME returned ok:true, authenticated:false, ownership:anonymous, a live URL on *.openpouch.sh and a FIXED 72-hour expiry (2026-09-16 12:59 UTC), plus a private one-click save link that extends it to 7 days. Root and both assets were read back byte-identical from this machine and from a mainland Beijing host: `index.html` 254 bytes, `assets/app.css` 37 bytes, `assets/app.js` 38 bytes. The save link is a credential and is masked here. The CLI also self-reports a health check (healthy) and warns that preview data is not retained."
+  },
+  "notes": "CLI-first: an adapter for this provider could only drive an already-installed CLI (the project never installs one for the user), which is why it is recorded rather than registered. The response is explicit that the URL is fresh per deploy and that the preview is temporary.",
+  "measured": {
+    "classification": "independent-public",
+    "command": "npx -y openpouch deploy <fixture> --json",
+    "url": "https://kc-uetocj.openpouch.sh/",
+    "authenticated": false,
+    "ownership": "anonymous",
+    "expiryPolicy": "fixed",
+    "urlStability": "fresh-per-deploy",
+    "healthStatus": "healthy",
+    "claimUrl": "https://openpouch.sh/claim/<app>?token=<masked>",
+    "claimUrlIsPrivate": true,
+    "nonce": "7f3a91c4",
+    "localFiles": {
+      "index.html": {
+        "bytes": 254
+      },
+      "assets/app.css": {
+        "bytes": 37
+      },
+      "assets/app.js": {
+        "bytes": 38
+      }
+    },
+    "reads": {
+      "root": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 254,
+        "markerFound": true,
+        "byteIdentical": true
+      },
+      "assets/app.css": {
+        "status": 200,
+        "contentType": "text/css",
+        "bytes": 37,
+        "byteIdentical": true
+      },
+      "assets/app.js": {
+        "status": 200,
+        "contentType": "text/javascript",
+        "bytes": 38,
+        "byteIdentical": true
+      }
+    },
+    "crossEgressAvailable": true
+  }
+}

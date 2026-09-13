@@ -1,0 +1,90 @@
+{
+  "vantage": "windows-desktop-us-egress",
+  "probedAt": "2026-09-13T13:00:01.895Z",
+  "hostname": "doudou",
+  "platform": "win32/x64",
+  "nonce": "",
+  "verdicts": {
+    "openpouch": "reachable"
+  },
+  "results": [
+    {
+      "provider": "openpouch",
+      "url": "https://kc-uetocj.openpouch.sh/",
+      "nonce": "7f3a91c4",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "expiresAt": "2026-09-16T12:59:00.000Z",
+      "localHashes": {
+        "index.html": {
+          "sha256": "d21bef7664c6a15ed50825af308f477a7b7e6fc072ad5d3641308993854b989e",
+          "bytes": 254
+        },
+        "assets/app.css": {
+          "sha256": "71a115b55145243f0e76bb6e9c85d58e7098adcfb0b415a4452b1cfaa838eb5b",
+          "bytes": 37
+        },
+        "assets/app.js": {
+          "sha256": "ffa6d8027151dbba48a8cdc255f3c1f2183d6784f623ce8cae2d620309131777",
+          "bytes": 38
+        }
+      },
+      "verdict": "reachable",
+      "htmlWrapped": false,
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 254,
+          "sha256": "d21bef7664c6a15ed50825af308f477a7b7e6fc072ad5d3641308993854b989e",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 254,
+          "sha256": "d21bef7664c6a15ed50825af308f477a7b7e6fc072ad5d3641308993854b989e",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 37,
+          "sha256": "71a115b55145243f0e76bb6e9c85d58e7098adcfb0b415a4452b1cfaa838eb5b",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "text/javascript",
+          "bytes": 38,
+          "sha256": "ffa6d8027151dbba48a8cdc255f3c1f2183d6784f623ce8cae2d620309131777",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "d21bef7664c6a15ed50825af308f477a7b7e6fc072ad5d3641308993854b989e",
+          "actual": "d21bef7664c6a15ed50825af308f477a7b7e6fc072ad5d3641308993854b989e",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "71a115b55145243f0e76bb6e9c85d58e7098adcfb0b415a4452b1cfaa838eb5b",
+          "actual": "71a115b55145243f0e76bb6e9c85d58e7098adcfb0b415a4452b1cfaa838eb5b",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.js",
+          "expected": "ffa6d8027151dbba48a8cdc255f3c1f2183d6784f623ce8cae2d620309131777",
+          "actual": "ffa6d8027151dbba48a8cdc255f3c1f2183d6784f623ce8cae2d620309131777",
+          "status": 200
+        }
+      ]
+    }
+  ]
+}

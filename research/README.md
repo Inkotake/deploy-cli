@@ -14,21 +14,22 @@ supports:
 | Display.dev | `independent-public` (wrapped) | A-live | readable from both egresses, but the artifact is served inside the provider's own 43 KB viewer page, so `htmlTransform: wrapped` |
 | shiply.now | `independent-public` | A-live | three-step publish (manifest → PUT → finalize) with no account, read from both egresses with assets byte-identical; injects a claim banner and OG tags until claimed, exactly as its documentation states; 24-hour anonymous lifetime |
 | shippage.ai | `independent-public` (wrapped) | A-live | `POST /v1/publish` with `{"html": …}` auto-registers the agent on the first call; the page is rendered at `/p/<slug>` inside the provider's own viewer, so `htmlTransform: wrapped`; 14-day retention, 500 KB per page |
+| openpouch | `independent-public` | A-live | CLI-first (`npx -y openpouch deploy <dir> --json`, no account): a fixed 72-hour preview with a private save link that extends it to 7 days; root and both assets byte-identical from both egresses |
+| Roxer | `not-applicable` | E-excluded | no callable contract: `/llms.txt`, `/docs`, `/api`, `/.well-known/agent.json`, `/openapi.json` and `docs.roxer.com` all 404; only the marketing homepage answers |
 | EdgeOne Makers (anonymous) | `not-applicable` | A-live | 60 controlled reads: 401 while the project lived, 404 after the claim window, never a 200 |
 | Cloudflare temporary accounts | `independent-public` (overseas only) | A-live | deploys with no account and serves byte-identical files, but unreachable from the mainland egress |
 | Netlify anonymous | `owner-preview` | A-live | uploads with no account, but the site is password-protected until claimed (401 everywhere) |
 | DropCat | `not-applicable` | A-live | returns a success envelope while serving nothing; the apex is a Coming Soon page |
 | Sitebin | `not-applicable` | A-live | the anonymous endpoint answers 401; publishing needs an account |
 
-**Not measured, and therefore not claimed:** the remaining P1 candidates from the received matrix —
-openpouch, Roxer and MindsPage. openpouch is a CLI-first service (`npx openpouch`, 72-hour anonymous
-preview with a private claim link), so measuring it means running a third-party CLI rather than speaking
-HTTP. Roxer's `llms.txt` does not exist (404) and its documentation was not located. **MindsPage is a
-documentation discrepancy worth recording:** the received matrix lists it as a static page/site host,
-but the agent index the service itself publishes (`https://mindspage.com/llms.txt`) documents
-`POST /api/code` — a code-session and review API taking `{code, language}` — and no static-publish
-endpoint, so the matrix's claim is not supported by the source it cites. Dropage's documented API guide
-is unreachable (`/docs` and `/api` both answer 410), so there is nothing to call.
+**Not measured, and therefore not claimed:** the received matrix's P0 and P1 lists are now exhausted
+except for **MindsPage**, which is a documentation discrepancy rather than an untested candidate: the
+matrix lists it as a static page/site host, but the agent index the service itself publishes
+(`https://mindspage.com/llms.txt`) documents `POST /api/code` — a code-session and review API taking
+`{code, language}` — and no static-publish endpoint, so the matrix's claim is not supported by the source
+it cites. Dropage's documented API guide is unreachable (`/docs` and `/api` both answer 410), so there is
+nothing to call; openpouch turned out to be CLI-first and was measured through its CLI; Roxer published
+no callable contract at all (see its record above).
 
 **Out of scope by instruction:** every account-required provider. The user deferred those explicitly, so
 their success paths remain documented as `expected` rather than verified.

@@ -1,0 +1,5 @@
+source: https://www.roxer.com/.well-known/agent.json
+fetched: 2026-09-13T12:58:50.515Z
+httpStatus: 404
+
+ App Not Found - Roxer 404 App not found There's no app called .well-known on Roxer. It may have been removed or the URL might be wrong. Just deployed? It may still be propagating. Check status: /api/apps/.well-known/status Go to roxer.com 
