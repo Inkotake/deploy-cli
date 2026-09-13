@@ -1,0 +1,121 @@
+{
+  "id": "brewpage",
+  "publisherAuth": "generated-secret",
+  "viewerAccess": "public",
+  "artifactModel": "archive",
+  "shareability": "independent-public",
+  "lifecycle": {
+    "contentExpiresAt": "2026-09-28T07:53:40.287646055Z",
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": true,
+    "sameEgressRead": true,
+    "crossEgressRead": true,
+    "independentReaderVerified": true,
+    "assetsVerified": true,
+    "htmlTransform": "injected",
+    "testedAt": "2026-09-13T07:55:58.392Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://brewpage.app/api",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "Measured with the compliance harness and confirmed from two egresses (a mainland Beijing host and an overseas workstation) on 2026-09-13. upload and every read succeeded from this network; a second network was not available, so independent readership stays unconfirmed"
+  },
+  "measured": {
+    "candidate": "BrewPage",
+    "endpoint": "https://brewpage.app/api/sites",
+    "bodyStyle": "multipart",
+    "platformAlive": {
+      "url": "https://brewpage.app/api/help",
+      "status": 404,
+      "bytes": 187,
+      "text": "{\"status\":404,\"error\":\"Not Found\",\"message\":\"Resource not found\",\"timestamp\":\"2026-09-13T07:53:39.691750821Z\",\"result\":{"
+    },
+    "nonce": "1dbf4fb63feb3f11",
+    "uploadStatus": 201,
+    "uploadResponse": {
+      "id": "YZYbDhTUSw",
+      "namespace": "public",
+      "entryFile": "index.html",
+      "link": "https://brewpage.app/public/YZYbDhTUSw",
+      "ownerLink": "https://brewpage.app/api/sites/public/YZYbDhTUSw",
+      "fileCount": 3,
+      "totalSizeBytes": 327,
+      "expiresAt": "2026-09-28T07:53:40.287646055Z",
+      "tags": [],
+      "ownerToken": "B7F…(32 chars)",
+      "result": {
+        "code": "success",
+        "action": "created"
+      },
+      "visibilityNotice": "Public: listed in the gallery and indexed by search engines — anyone can find and open it. Delete or re-publish privately if that wasn't intended."
+    },
+    "responseHeaders": {
+      "content-type": "application/json",
+      "date": "Sun, 13 Sep 2026 07:53:40 GMT",
+      "x-content-type-options": "nosniff"
+    },
+    "url": "https://brewpage.app/public/YZYbDhTUSw",
+    "localFiles": {
+      "assets/app.css": {
+        "sha256": "d2d0d3ebe6b4a3e0c91c0b2a2e6a28680a30bb350150ff49afe9ce10cb775125",
+        "bytes": 45
+      },
+      "assets/app.js": {
+        "sha256": "efb6f676e1d9a6e48518e098a25749116c0ec8486564dfc48f1fbe22908becde",
+        "bytes": 41
+      },
+      "index.html": {
+        "sha256": "afdbe038613c98dca51abf4a978d5301a3da6aa23cc09454eef57331ab67f6e4",
+        "bytes": 241
+      }
+    },
+    "reads": {
+      "root": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 875,
+        "sha256": "b89beff9e45c91bcb886bf40bd5e0442efc0f203e7b9b2b037d599685577a446",
+        "error": null
+      },
+      "html": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 559,
+        "sha256": "eb8d9172f027014eb2bc5d86c05e973cc8ecbaa6bcde9d591a5aa5559bcf5181",
+        "error": null
+      },
+      "assets/app.js": {
+        "status": 200,
+        "contentType": "application/javascript",
+        "bytes": 41,
+        "sha256": "efb6f676e1d9a6e48518e098a25749116c0ec8486564dfc48f1fbe22908becde",
+        "error": null
+      },
+      "assets/app.css": {
+        "status": 200,
+        "contentType": "text/css",
+        "bytes": 45,
+        "sha256": "d2d0d3ebe6b4a3e0c91c0b2a2e6a28680a30bb350150ff49afe9ce10cb775125",
+        "error": null
+      }
+    },
+    "classification": "independent-public",
+    "testedAt": "2026-09-13T07:53:41.500Z",
+    "crossEgressAvailable": false
+  },
+  "reachability": {
+    "mainland": "reachable",
+    "overseas": "reachable",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "measuredAt": "2026-09-13",
+    "evidence": "research/reachability-p1-mainland-2026-09-13.json, research/reachability-p1-overseas-2026-09-13.json",
+    "detail": "Both egresses read the root (with the fixture nonce present) and every uploaded file with matching SHA-256."
+  }
+}

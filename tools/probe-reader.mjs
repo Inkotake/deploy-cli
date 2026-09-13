@@ -45,7 +45,7 @@ async function get(url) {
       contentType: String(response.headers['content-type'] || '').split(';')[0].trim().toLowerCase(),
       bytes: response.body.length,
       sha256: sha256(response.body),
-      markerFound: response.body.toString('utf8').includes(inputNonce),
+      markerFound: response.body.toString('utf8').includes(activeNonce),
       error: null
     };
   } catch (cause) {
@@ -55,9 +55,15 @@ async function get(url) {
 
 const payload = JSON.parse(fs.readFileSync(input, 'utf8'));
 const inputNonce = payload.nonce || '';
+// Set per entry below; `get()` reads it so each deployment is checked against its own fixture nonce.
+let activeNonce = inputNonce;
 const results = [];
 
 for (const entry of payload.results || []) {
+  // Each deployment may carry its own nonce: a list can mix fixtures, and using one nonce for all of
+  // them silently reports "marker false" for every entry but the first.
+  const entryNonce = entry.nonce || payload.nonce || '';
+  activeNonce = entryNonce;
   if (!entry.url) {
     results.push({ ...entry, verdict: 'absent', note: 'the deployment produced no URL', readings: {} });
     process.stdout.write(`${String(entry.provider).padEnd(14)} absent (no url)\n`);

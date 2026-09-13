@@ -1,0 +1,96 @@
+{
+  "id": "ht-ml-app",
+  "publisherAuth": "generated-secret",
+  "viewerAccess": "public",
+  "artifactModel": "single-html",
+  "shareability": "independent-public",
+  "lifecycle": {
+    "contentExpiresAt": null,
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": true,
+    "sameEgressRead": true,
+    "crossEgressRead": true,
+    "independentReaderVerified": true,
+    "assetsVerified": true,
+    "htmlTransform": "none",
+    "testedAt": "2026-09-13T07:55:58.395Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://api.ht-ml.app/v1/help",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "Measured with the compliance harness and confirmed from two egresses (a mainland Beijing host and an overseas workstation) on 2026-09-13. upload and every read succeeded from this network; a second network was not available, so independent readership stays unconfirmed"
+  },
+  "measured": {
+    "candidate": "ht-ml.app",
+    "endpoint": "https://api.ht-ml.app/v1/sites",
+    "bodyStyle": "json-html",
+    "platformAlive": {
+      "url": "https://api.ht-ml.app/v1/help",
+      "status": 200,
+      "bytes": 1928,
+      "text": "{\"description\":\"Welcome to ht-ml API. This API is designed for agents.\",\"important\":\"All published content is PUBLIC: an"
+    },
+    "nonce": "31ee8405dd36f5e1",
+    "uploadStatus": 200,
+    "uploadResponse": {
+      "site_id": "f5532e0f",
+      "update_key": "KK7…(43 chars)",
+      "status": "active",
+      "url": "https://f5532e0f.ht-ml.app/",
+      "message": null
+    },
+    "responseHeaders": {
+      "content-type": "application/json",
+      "date": "Sun, 13 Sep 2026 07:53:52 GMT"
+    },
+    "url": "https://f5532e0f.ht-ml.app/",
+    "localFiles": {
+      "assets/app.css": {
+        "sha256": "23a2f2ebd510533ef26a61162c7e2207abc608c0f6f03560f7e7d03487386ccf",
+        "bytes": 45
+      },
+      "assets/app.js": {
+        "sha256": "83f9e8739e9b1942e9e3c2bafe83bdb0f7466252fdb20200237f11420e2bacc4",
+        "bytes": 41
+      },
+      "index.html": {
+        "sha256": "9c126519fa23e22ce6b0dcb568f37b15585e6e7aba683baef42bad0d0fa5dbf4",
+        "bytes": 241
+      }
+    },
+    "reads": {
+      "root": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 241,
+        "sha256": "9c126519fa23e22ce6b0dcb568f37b15585e6e7aba683baef42bad0d0fa5dbf4",
+        "error": null
+      },
+      "html": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 241,
+        "sha256": "9c126519fa23e22ce6b0dcb568f37b15585e6e7aba683baef42bad0d0fa5dbf4",
+        "error": null
+      }
+    },
+    "classification": "independent-public",
+    "testedAt": "2026-09-13T07:53:53.035Z",
+    "crossEgressAvailable": false
+  },
+  "reachability": {
+    "mainland": "reachable",
+    "overseas": "reachable",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "measuredAt": "2026-09-13",
+    "evidence": "research/reachability-p1-mainland-2026-09-13.json, research/reachability-p1-overseas-2026-09-13.json",
+    "detail": "Both egresses read the root (with the fixture nonce present) and every uploaded file with matching SHA-256."
+  }
+}

@@ -82,6 +82,16 @@ required`). `docs/releasing.md` records both ways to finish that step.
   of the same 60 minutes but serve **401 for every path from both egresses** because the anonymous site
   is password-protected until claimed. Records:
   `research/anonymous-compliance/{cloudflare-temporary,netlify-anonymous}.json`.
+- Two more login-free candidates measured and confirmed from **both** egresses (mainland Beijing and
+  overseas): **BrewPage** (`POST https://brewpage.app/api/sites`, no publish auth, returns `link` and an
+  `ownerToken`; multi-file with byte-identical assets, its own injected top bar, 15-day default TTL) and
+  **ht-ml.app** (`POST https://api.ht-ml.app/v1/sites` with `{"html_content": …}`, no auth, returns
+  `site_id`/`update_key`/`url`; single page served **byte-identically**, no expiry returned). Both are
+  `independent-public`; neither has an adapter yet, so neither is registered.
+- The compliance harness now speaks three request shapes (raw archive, JSON single page, multipart) and
+  normalises a base URL without a trailing slash; the reader probe takes a per-deployment nonce, because
+  a list can mix fixtures and one shared nonce silently reports "marker false" for every entry but the
+  first.
 - An offline test suite (`node:test`) covering the adapters, verification, planning, the registry
   schema, the policy split, claims, snapshots, the proxy path and the CLI contract.
 

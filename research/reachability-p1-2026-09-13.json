@@ -1,0 +1,42 @@
+{
+  "collectedAt": "2026-09-13T07:55:24.709Z",
+  "purpose": "Two P1 login-free candidates measured by the compliance harness, so the reader probe can read them from a mainland and an overseas egress. Each entry carries its own nonce and only the files that were actually uploaded.",
+  "results": [
+    {
+      "provider": "brewpage",
+      "url": "https://brewpage.app/public/YZYbDhTUSw",
+      "nonce": "1dbf4fb63feb3f11",
+      "persistence": "temporary",
+      "htmlExact": false,
+      "expiresAt": "2026-09-28T07:53:40.287646055Z",
+      "localHashes": {
+        "index.html": {
+          "sha256": "afdbe038613c98dca51abf4a978d5301a3da6aa23cc09454eef57331ab67f6e4",
+          "bytes": 241
+        },
+        "assets/app.js": {
+          "sha256": "efb6f676e1d9a6e48518e098a25749116c0ec8486564dfc48f1fbe22908becde",
+          "bytes": 41
+        },
+        "assets/app.css": {
+          "sha256": "d2d0d3ebe6b4a3e0c91c0b2a2e6a28680a30bb350150ff49afe9ce10cb775125",
+          "bytes": 45
+        }
+      }
+    },
+    {
+      "provider": "ht-ml-app",
+      "url": "https://f5532e0f.ht-ml.app/",
+      "nonce": "31ee8405dd36f5e1",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "expiresAt": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "9c126519fa23e22ce6b0dcb568f37b15585e6e7aba683baef42bad0d0fa5dbf4",
+          "bytes": 241
+        }
+      }
+    }
+  ]
+}

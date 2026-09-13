@@ -1,0 +1,125 @@
+{
+  "vantage": "mainland-vps-beijing",
+  "probedAt": "2026-09-13T07:55:37.798Z",
+  "hostname": "iZ2zea6pyblaksmijo5u85Z",
+  "platform": "linux/x64",
+  "nonce": "",
+  "verdicts": {
+    "brewpage": "reachable",
+    "ht-ml-app": "reachable"
+  },
+  "results": [
+    {
+      "provider": "brewpage",
+      "url": "https://brewpage.app/public/YZYbDhTUSw",
+      "nonce": "1dbf4fb63feb3f11",
+      "persistence": "temporary",
+      "htmlExact": false,
+      "expiresAt": "2026-09-28T07:53:40.287646055Z",
+      "localHashes": {
+        "index.html": {
+          "sha256": "afdbe038613c98dca51abf4a978d5301a3da6aa23cc09454eef57331ab67f6e4",
+          "bytes": 241
+        },
+        "assets/app.js": {
+          "sha256": "efb6f676e1d9a6e48518e098a25749116c0ec8486564dfc48f1fbe22908becde",
+          "bytes": 41
+        },
+        "assets/app.css": {
+          "sha256": "d2d0d3ebe6b4a3e0c91c0b2a2e6a28680a30bb350150ff49afe9ce10cb775125",
+          "bytes": 45
+        }
+      },
+      "verdict": "reachable",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 875,
+          "sha256": "30acdc91139455605da1df9d4cf431aef02dd50eb0a7c5e9302a1c989affbf01",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 560,
+          "sha256": "3f91d07a3f946d4666a587d0bcb72bf01f72a6777b827bc6fd057fa61ed86d47",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.js": {
+          "status": 200,
+          "contentType": "application/javascript",
+          "bytes": 41,
+          "sha256": "efb6f676e1d9a6e48518e098a25749116c0ec8486564dfc48f1fbe22908becde",
+          "markerFound": true,
+          "error": null
+        },
+        "assets/app.css": {
+          "status": 200,
+          "contentType": "text/css",
+          "bytes": 45,
+          "sha256": "d2d0d3ebe6b4a3e0c91c0b2a2e6a28680a30bb350150ff49afe9ce10cb775125",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "assets/app.js",
+          "expected": "efb6f676e1d9a6e48518e098a25749116c0ec8486564dfc48f1fbe22908becde",
+          "actual": "efb6f676e1d9a6e48518e098a25749116c0ec8486564dfc48f1fbe22908becde",
+          "status": 200
+        },
+        {
+          "rel": "assets/app.css",
+          "expected": "d2d0d3ebe6b4a3e0c91c0b2a2e6a28680a30bb350150ff49afe9ce10cb775125",
+          "actual": "d2d0d3ebe6b4a3e0c91c0b2a2e6a28680a30bb350150ff49afe9ce10cb775125",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "provider": "ht-ml-app",
+      "url": "https://f5532e0f.ht-ml.app/",
+      "nonce": "31ee8405dd36f5e1",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "expiresAt": null,
+      "localHashes": {
+        "index.html": {
+          "sha256": "9c126519fa23e22ce6b0dcb568f37b15585e6e7aba683baef42bad0d0fa5dbf4",
+          "bytes": 241
+        }
+      },
+      "verdict": "reachable",
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 241,
+          "sha256": "9c126519fa23e22ce6b0dcb568f37b15585e6e7aba683baef42bad0d0fa5dbf4",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 241,
+          "sha256": "9c126519fa23e22ce6b0dcb568f37b15585e6e7aba683baef42bad0d0fa5dbf4",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "9c126519fa23e22ce6b0dcb568f37b15585e6e7aba683baef42bad0d0fa5dbf4",
+          "actual": "9c126519fa23e22ce6b0dcb568f37b15585e6e7aba683baef42bad0d0fa5dbf4",
+          "status": 200
+        }
+      ]
+    }
+  ]
+}

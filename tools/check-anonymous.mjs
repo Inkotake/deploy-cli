@@ -76,6 +76,30 @@ export const CANDIDATES = {
     artifactModel: 'directory',
     publisherAuth: 'none',
     notes: 'the documented curl example sends a single index.html as the `files` field; the page also says that call is for signed-in users, so whether the anonymous tier accepts it is exactly what this probe answers; anonymous sites expire after 24 hours'
+  },
+  brewpage: {
+    label: 'BrewPage',
+    docs: 'https://brewpage.app/api',
+    endpoint: 'https://brewpage.app/api/sites',
+    liveness: 'https://brewpage.app/api/help',
+    field: 'archive',
+    filename: 'site.zip',
+    bodyStyle: 'multipart',
+    artifactModel: 'archive',
+    publisherAuth: 'generated-secret',
+    headers: { 'user-agent': 'vpublish-compliance/0.1 (+https://github.com/Inkotake/deploy-cli)' },
+    notes: 'multi-file site: POST /api/sites with the archive as the `archive` part; publish auth is none and every POST returns an ownerToken; User-Agent is required on every request; TTL is 15 days by default and 30 days maximum, overridable with a ttl parameter'
+  },
+  'ht-ml-app': {
+    label: 'ht-ml.app',
+    docs: 'https://api.ht-ml.app/v1/help',
+    endpoint: 'https://api.ht-ml.app/v1/sites',
+    liveness: 'https://api.ht-ml.app/v1/help',
+    bodyStyle: 'json-html',
+    artifactModel: 'single-html',
+    publisherAuth: 'generated-secret',
+    assetExpectations: 'none',
+    notes: 'POST /v1/sites with {"html_content": ...} and no auth returns site_id, update_key and url; the page warns that everything published is public and may be crawled; a single HTML document per site, with referenced assets uploaded separately under the update key'
   }
 };
 
@@ -163,18 +187,32 @@ async function checkCandidate(id) {
   const zip = createZip(manifest.files.map((file) => ({ name: file.path, data: manifest.byRelative.get(file.path).bytes, mime: file.mime })));
   const bodyStyle = candidate.bodyStyle || 'multipart';
   const boundary = '----anoncompliance' + crypto.randomBytes(12).toString('hex');
-  const multipart = buildMultipart([{
-    name: candidate.field,
-    filename: candidate.filename,
-    contentType: candidate.contentType || 'application/zip',
-    data: bodyStyle === 'raw' && candidate.field === 'files' ? manifest.byRelative.get('index.html').bytes : zip
-  }], boundary);
-  // Two body styles are common: multipart/form-data with a named file part, and the archive sent as the
-  // raw request body. Both are documented contracts; sending the wrong one looks like a service failure.
-  const uploadBody = bodyStyle === 'raw' ? zip : multipart;
-  const uploadHeaders = bodyStyle === 'raw'
-    ? { 'content-type': 'application/zip', 'content-length': String(uploadBody.length), accept: 'application/json' }
-    : { 'content-type': `multipart/form-data; boundary=${boundary}`, 'content-length': String(uploadBody.length), accept: 'application/json' };
+  // Three request shapes cover every candidate so far: the archive as a raw body, a JSON single-page
+  // publish, and multipart with a named part. A probe that speaks the wrong one reports a service
+  // failure that is really a test failure.
+  let uploadBody;
+  let uploadHeaders;
+  if (bodyStyle === 'raw') {
+    uploadBody = zip;
+    uploadHeaders = { 'content-type': 'application/zip' };
+  } else if (bodyStyle === 'json-html') {
+    uploadBody = Buffer.from(JSON.stringify({ html_content: manifest.byRelative.get('index.html').bytes.toString('utf8') }), 'utf8');
+    uploadHeaders = { 'content-type': 'application/json' };
+  } else {
+    uploadBody = buildMultipart([{
+      name: candidate.field,
+      filename: candidate.filename,
+      contentType: candidate.contentType || 'application/zip',
+      data: zip
+    }], boundary);
+    uploadHeaders = { 'content-type': `multipart/form-data; boundary=${boundary}` };
+  }
+  uploadHeaders = {
+    accept: 'application/json',
+    'content-length': String(uploadBody.length),
+    ...uploadHeaders,
+    ...(candidate.headers || {})
+  };
 
   const platform = await liveness(candidate);
 
@@ -196,11 +234,13 @@ async function checkCandidate(id) {
   const url = payload && (payload.url || payload.siteUrl || payload.link);
   const reads = { root: null, html: null, assets: {} };
   if (url) {
+    // Normalise the base the way verify.mjs does: without a trailing slash a relative join drops the
+    // last path segment (`/public/abc` + `assets/app.js` -> `/public/assets/app.js`).
+    const base = url.endsWith('/') ? url : `${url}/`;
     reads.root = await readRootWithRetry(url);
-    const htmlRead = await readResource(new URL('index.html', url).toString());
-    reads.html = htmlRead;
-    for (const rel of ['assets/app.js', 'assets/app.css']) {
-      reads.assets[rel] = await readResource(new URL(rel, url).toString());
+    reads.html = await readResource(new URL('index.html', base).toString());
+    for (const rel of candidate.assetExpectations === 'none' ? [] : ['assets/app.js', 'assets/app.css']) {
+      reads.assets[rel] = await readResource(new URL(rel, base).toString());
     }
   }
 
@@ -211,7 +251,9 @@ async function checkCandidate(id) {
   const htmlTransform = htmlMatches ? 'none'
     : markerInRoot ? 'injected'
       : reads.html && /^text\/html/.test(reads.html.contentType || '') ? 'wrapped' : 'unknown';
-  const assetsVerified = Object.entries(reads.assets).every(([rel, read]) => read.sha256 === local.get(rel).sha256);
+  const assetsVerified = candidate.assetExpectations === 'none'
+    ? (reads.html ? reads.html.status === 200 && reads.html.sha256 === local.get('index.html').sha256 : false)
+    : Object.entries(reads.assets).every(([rel, read]) => read.sha256 === local.get(rel).sha256);
   const rootOk = reads.root && reads.root.status === 200 && markerInRoot;
 
   const classification = uploadRejected ? 'auth-required'
