@@ -70,11 +70,9 @@
     "crossEgressAvailable": false
   },
   "reachability": {
-    "mainland": "not-measured",
-    "overseas": "not-measured",
+    "mainland": "not-applicable",
+    "overseas": "not-applicable",
     "measuredAt": "2026-09-13",
-    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
-    "overseasProbe": "this workstation (US egress)",
-    "evidence": "research/reachability-mainland-2026-09-13.json, research/reachability-overseas-2026-09-13.json"
+    "note": "the anonymous endpoint answered 401 and never returned a site URL, so no deployment existed to read."
   }
 }

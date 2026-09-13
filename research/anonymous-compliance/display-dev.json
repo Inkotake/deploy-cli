@@ -16,8 +16,9 @@
     "crossEgressRead": true,
     "independentReaderVerified": true,
     "assetsVerified": false,
-    "htmlTransform": "injected",
-    "testedAt": "2026-09-13T08:56:49.691Z"
+    "htmlTransform": "wrapped",
+    "testedAt": "2026-09-13T08:56:49.691Z",
+    "assetNote": "the artifact is served inside the provider viewer page (43 KB for a 241-byte upload); the fixture nonce is present, so the content is public, but no byte comparison is possible"
   },
   "evidence": {
     "level": "A-live",
