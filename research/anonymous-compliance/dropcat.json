@@ -1,0 +1,114 @@
+{
+  "id": "dropcat",
+  "publisherAuth": "generated-secret",
+  "viewerAccess": "public",
+  "artifactModel": "archive",
+  "shareability": "owner-preview",
+  "lifecycle": {
+    "contentExpiresAt": "2026-09-20T06:56:59.000Z",
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": true,
+    "sameEgressRead": false,
+    "crossEgressRead": null,
+    "independentReaderVerified": false,
+    "assetsVerified": false,
+    "htmlTransform": "unknown",
+    "testedAt": "2026-09-13T06:57:23.353Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://drop.cat/help/",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "upload status 201; reads: root 404, html 404"
+  },
+  "measured": {
+    "candidate": "DropCat",
+    "endpoint": "https://api.drop.cat/deploy",
+    "bodyStyle": "multipart",
+    "platformAlive": {
+      "url": "https://drop.cat/",
+      "status": 200,
+      "bytes": 5426,
+      "text": "DropCat — Coming Soon window.dataLayer=window.dataLayer||[];function a(){dataLayer.push(arguments)}a(\"js\",new Date);a(\"c"
+    },
+    "nonce": "ca02c06d653406a0",
+    "uploadStatus": 201,
+    "uploadResponse": {
+      "siteId": "clad-sorted-lavender",
+      "url": "https://clad-sorted-lavender.dropcat.site",
+      "customDomain": null,
+      "screenshot": "https://preview.drop.cat/bde55198f5ff061a4e81aac61b0445f9.jpg",
+      "expiresAt": "2026-09-20T06:56:59.000Z",
+      "files": 3,
+      "sizeBytes": 327,
+      "account": {
+        "tier": "anonymous",
+        "email": null,
+        "sites": 1,
+        "sitesLimit": "3",
+        "expiryDays": "7"
+      },
+      "hint": "Your site is live at https://clad-sorted-lavender.dropcat.site — no further action needed, it's already accessible. Save your key — it is shown only once. This site expires in 7 days. To extend to 30 days (renewable), ask the user for their email address. You may use an email you already know belongs to the user, but confirm with them first. Never fabricate, guess, or use placeholder email addresses. Then call POST /account/email with the key and their email.",
+      "key": "sk_…(35 chars)"
+    },
+    "responseHeaders": {
+      "date": "Sun, 13 Sep 2026 06:56:59 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "server": "cloudflare",
+      "x-content-type-options": "nosniff"
+    },
+    "url": "https://clad-sorted-lavender.dropcat.site",
+    "localFiles": {
+      "assets/app.css": {
+        "sha256": "ee712b25059845877e12b6bba4cc7508ae909453108288a119c2639e1a3dc488",
+        "bytes": 45
+      },
+      "assets/app.js": {
+        "sha256": "811b456fb3d1fb8819cb6608a392da0f9dcdfcb1534523e5fe667f7643c82650",
+        "bytes": 41
+      },
+      "index.html": {
+        "sha256": "d72382aff5a57f0f8bac1c4bbd225694f75201b7504d641acbc2d21be9d4fab0",
+        "bytes": 241
+      }
+    },
+    "reads": {
+      "root": {
+        "status": 404,
+        "contentType": "text/html",
+        "bytes": 1770,
+        "sha256": "73143cda1f71864662a8c9487cdebb0c7ccc5955859166494bffe9c5c26af229",
+        "error": null
+      },
+      "html": {
+        "status": 404,
+        "contentType": "text/html",
+        "bytes": 1770,
+        "sha256": "73143cda1f71864662a8c9487cdebb0c7ccc5955859166494bffe9c5c26af229",
+        "error": null
+      },
+      "assets/app.js": {
+        "status": 404,
+        "contentType": "text/html",
+        "bytes": 1770,
+        "sha256": "73143cda1f71864662a8c9487cdebb0c7ccc5955859166494bffe9c5c26af229",
+        "error": null
+      },
+      "assets/app.css": {
+        "status": 404,
+        "contentType": "text/html",
+        "bytes": 1770,
+        "sha256": "73143cda1f71864662a8c9487cdebb0c7ccc5955859166494bffe9c5c26af229",
+        "error": null
+      }
+    },
+    "classification": "login-free-upload-only",
+    "testedAt": "2026-09-13T06:57:23.353Z",
+    "crossEgressAvailable": false
+  }
+}

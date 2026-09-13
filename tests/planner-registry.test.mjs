@@ -121,7 +121,10 @@ test('the shipped registry loads with the documented schema and shape', () => {
   assert.equal(registry.ok, true, registry.error);
   assert.equal(registry.capabilitySchema, 1);
   assert.equal(registry.version, 1);
-  assert.equal(registry.providers.length, 12);
+  assert.ok(registry.providers.length >= 12, 'the shipped registry carries every implemented provider');
+  for (const id of ['ship-page', 'shipstatic', 'here-now', 'show', 'aft-page', 'dropley', 'netlify', 'cloudflare-pages', 'vercel', 'github-pages']) {
+    assert.ok(registry.providers.some((entry) => entry.id === id), `${id} must be present`);
+  }
   const disabled = registry.providers.filter((entry) => entry.enabled !== true);
   assert.ok(disabled.some((entry) => entry.id === 'wh-drop' && entry.disabledReason), 'a disabled provider must say why');
   assert.ok(disabled[0].disabledReason, 'a disabled provider must say why');

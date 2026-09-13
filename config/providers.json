@@ -708,6 +708,59 @@
         "verifiedAt": "2026-09-13",
         "note": "classified 2026-09-13 as login-free-upload-only by a controlled matrix (two sites, 60 reads at 0/2/5/15/30/60s, query variants, two client profiles): never a 200, 401 while the project lived and 404 after the claim window closed. A second independent network was not available, so the cross-egress dimension is unmeasured."
       }
+    },
+    {
+      "id": "flypod",
+      "label": "flypod (anonymous)",
+      "adapter": "flypod",
+      "transport": "http",
+      "cli": null,
+      "protocol": "zip-raw-post",
+      "protocolNotes": "POST the zip as the raw request body to https://flypod.dev/sites with no credential; the response carries url, site_id, version_id, expires_at (epoch ms), manage_token and claim_token",
+      "endpoint": "https://flypod.dev/sites",
+      "allowedHosts": [
+        "flypod.dev",
+        "*.flypod.dev"
+      ],
+      "enabled": false,
+      "disabledReason": "verified from this network only: anonymous upload 200, assets byte-identical, 14-day expiry, claim_token present; HTML is injected by the provider's own render instrumentation, so the served page is not byte-exact. Enabling requires one read from a second network to confirm independent readership (crossEgressRead is null). Evidence: research/anonymous-compliance/flypod.json",
+      "modes": [
+        "quick-share"
+      ],
+      "priority": 6,
+      "cnPriority": 5,
+      "persistent": false,
+      "capabilities": {
+        "anonymous": true,
+        "maxFiles": null,
+        "maxFileBytes": null,
+        "maxTotalBytes": null,
+        "maxTotalBytesSource": null,
+        "supportedExtensions": null,
+        "denyExtensions": [],
+        "extensionPolicy": "any",
+        "supportsModelFiles": true,
+        "claimable": true,
+        "htmlExact": false,
+        "singlePageOnly": false,
+        "ttl": {
+          "defaultSeconds": 1209600,
+          "optionsSeconds": null,
+          "source": "anonymous deploys expire after 14 days (expires_at in the response)"
+        },
+        "cost": {
+          "status": "free",
+          "note": "anonymous deploys need no account",
+          "source": "https://docs.flypod.dev/docs/api/http",
+          "checkedAt": "2026-09-13"
+        }
+      },
+      "verification": {
+        "status": "live-tested",
+        "resourcesByteExact": true,
+        "verifiedAt": "2026-09-13",
+        "note": "anonymous deploy measured live 2026-09-13: HTTP 200, site served, both assets byte-identical, HTML injected by the provider render step. Same-egress only; no second network was available."
+      }
     }
   ]
 }

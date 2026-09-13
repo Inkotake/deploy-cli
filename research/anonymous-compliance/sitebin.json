@@ -1,0 +1,72 @@
+{
+  "id": "sitebin",
+  "publisherAuth": "none",
+  "viewerAccess": "unknown",
+  "artifactModel": "directory",
+  "shareability": "owner-preview",
+  "lifecycle": {
+    "contentExpiresAt": null,
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": false,
+    "sameEgressRead": null,
+    "crossEgressRead": null,
+    "independentReaderVerified": false,
+    "assetsVerified": true,
+    "htmlTransform": "unknown",
+    "testedAt": "2026-09-13T06:56:55.918Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://sitebin.io/",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "upload status 401; reads: root n/a, html n/a"
+  },
+  "measured": {
+    "candidate": "Sitebin",
+    "endpoint": "https://app.sitebin.io/api/sites",
+    "bodyStyle": "multipart",
+    "platformAlive": {
+      "url": "https://sitebin.io/",
+      "status": 200,
+      "bytes": 13351,
+      "text": "Sitebin — drop files, get a website sitebin Pricing Enterprise Open source Docs GitHub Sign in Open the app Menu Pricing"
+    },
+    "nonce": "6604189bf5ee0cf7",
+    "uploadStatus": 401,
+    "uploadResponse": {
+      "error": "sign in to create sites from the API: https://app.sitebin.io/account"
+    },
+    "responseHeaders": {
+      "content-type": "application/json; charset=utf-8",
+      "date": "Sun, 13 Sep 2026 06:56:56 GMT",
+      "x-content-type-options": "nosniff"
+    },
+    "url": null,
+    "localFiles": {
+      "assets/app.css": {
+        "sha256": "2680bf7a264f833a7a4a452c77f13625807521c39b2eea9bcb783351d778eebf",
+        "bytes": 45
+      },
+      "assets/app.js": {
+        "sha256": "b5af0ad531952ffe4a839def5b3c896bfdfd1fbf2f1068fed944af0aaa02a65a",
+        "bytes": 41
+      },
+      "index.html": {
+        "sha256": "dbd7c2f6271a17aa942fd6a49cc8d6a35b9f29d30c6568c374711e3acfd5f596",
+        "bytes": 241
+      }
+    },
+    "reads": {
+      "root": null,
+      "html": null
+    },
+    "classification": "login-free-upload-only",
+    "testedAt": "2026-09-13T06:56:55.918Z",
+    "crossEgressAvailable": false
+  }
+}

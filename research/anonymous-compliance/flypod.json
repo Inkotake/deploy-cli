@@ -1,0 +1,132 @@
+{
+  "id": "flypod",
+  "publisherAuth": "generated-secret",
+  "viewerAccess": "public",
+  "artifactModel": "archive",
+  "shareability": "unverified",
+  "lifecycle": {
+    "contentExpiresAt": "1790492273606",
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": true,
+    "sameEgressRead": true,
+    "crossEgressRead": null,
+    "independentReaderVerified": false,
+    "assetsVerified": true,
+    "htmlTransform": "injected",
+    "testedAt": "2026-09-13T06:57:57.224Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://docs.flypod.dev/docs/api/http",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "upload and every read succeeded from this network; a second network was not available, so independent readership stays unconfirmed"
+  },
+  "measured": {
+    "candidate": "flypod",
+    "endpoint": "https://flypod.dev/sites",
+    "bodyStyle": "raw",
+    "platformAlive": {
+      "url": "https://flypod.dev/healthz",
+      "status": 200,
+      "bytes": 11,
+      "text": "{\"ok\":true}"
+    },
+    "nonce": "1fc85c69394f13ea",
+    "uploadStatus": 200,
+    "uploadResponse": {
+      "site_id": "eb1101e8a2424ff8",
+      "slug": "eb1101e8a2424ff8",
+      "url": "https://eb1101e8a2424ff8.flypod.dev",
+      "version_id": "6e9dc086abd238d6",
+      "expires_at": 1790492273606,
+      "manage_token": "fk_…(46 chars)",
+      "healed": [
+        "spa-fallback"
+      ],
+      "warnings": [],
+      "render": {
+        "status": "pending",
+        "console": [],
+        "failed_requests": [],
+        "blocked": [],
+        "dom_summary": {
+          "mounted": false,
+          "title": "",
+          "headings": []
+        },
+        "render_ms": 0
+      },
+      "next_actions": [
+        {
+          "name": "get_site",
+          "method": "GET",
+          "path": "/sites/eb1101e8a2424ff8"
+        },
+        {
+          "name": "redeploy",
+          "method": "POST",
+          "path": "/sites/eb1101e8a2424ff8/deploys"
+        }
+      ],
+      "claim_token": "fk_…(46 chars)"
+    },
+    "responseHeaders": {
+      "date": "Sun, 13 Sep 2026 06:57:55 GMT",
+      "content-type": "application/json",
+      "server": "cloudflare"
+    },
+    "url": "https://eb1101e8a2424ff8.flypod.dev",
+    "localFiles": {
+      "assets/app.css": {
+        "sha256": "da4e4210d0fdfd76f53c6d453bebdaae539ea7da15173573ccf70e5a7ea73dd1",
+        "bytes": 45
+      },
+      "assets/app.js": {
+        "sha256": "bb2c6364c42dedafbeceefb25579e023af3857514e874b137c84fc8d611d76ab",
+        "bytes": 41
+      },
+      "index.html": {
+        "sha256": "7cd6fb2d2d095d51682586ce8b802391dbca5260c98e043c2d85515bc6fddd01",
+        "bytes": 241
+      }
+    },
+    "reads": {
+      "root": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 1453,
+        "sha256": "d0eb8616044efad99383733fbdaebe0f5911d63b8fdab7ff05565a7e27da26d0",
+        "error": null
+      },
+      "html": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 1453,
+        "sha256": "d0eb8616044efad99383733fbdaebe0f5911d63b8fdab7ff05565a7e27da26d0",
+        "error": null
+      },
+      "assets/app.js": {
+        "status": 200,
+        "contentType": "text/javascript",
+        "bytes": 41,
+        "sha256": "bb2c6364c42dedafbeceefb25579e023af3857514e874b137c84fc8d611d76ab",
+        "error": null
+      },
+      "assets/app.css": {
+        "status": 200,
+        "contentType": "text/css",
+        "bytes": 45,
+        "sha256": "da4e4210d0fdfd76f53c6d453bebdaae539ea7da15173573ccf70e5a7ea73dd1",
+        "error": null
+      }
+    },
+    "classification": "independent-public",
+    "testedAt": "2026-09-13T06:57:57.225Z",
+    "crossEgressAvailable": false
+  }
+}
