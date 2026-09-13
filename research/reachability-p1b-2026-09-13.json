@@ -1,0 +1,34 @@
+{
+  "collectedAt": "2026-09-13T08:55:27.021Z",
+  "purpose": "Two single-document login-free candidates, so the reader probe can read them from a mainland and an overseas egress.",
+  "results": [
+    {
+      "provider": "meethtml",
+      "url": "https://lucky-iris.meethtml.com",
+      "nonce": "914177e9180933b5",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "expiresAt": "2026-09-14T08:55:05.000Z",
+      "localHashes": {
+        "index.html": {
+          "sha256": "3873fb8f365b03b2181bcc0f91c0a7d0ce7f46f4de382a2bd9f0c0d2bbeef60d",
+          "bytes": 241
+        }
+      }
+    },
+    {
+      "provider": "display-dev",
+      "url": "https://public.dsp.so/0SNEx1Jp",
+      "nonce": "0e33bc3da37ffc3f",
+      "persistence": "temporary",
+      "htmlExact": false,
+      "expiresAt": "2026-10-13T08:55:10.711Z",
+      "localHashes": {
+        "index.html": {
+          "sha256": "c18f145cc307fd830f63b73d58347411d944e377c7e3e581304627abf95ec0b5",
+          "bytes": 241
+        }
+      }
+    }
+  ]
+}

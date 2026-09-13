@@ -100,6 +100,33 @@ export const CANDIDATES = {
     publisherAuth: 'generated-secret',
     assetExpectations: 'none',
     notes: 'POST /v1/sites with {"html_content": ...} and no auth returns site_id, update_key and url; the page warns that everything published is public and may be crawled; a single HTML document per site, with referenced assets uploaded separately under the update key'
+  },
+  meethtml: {
+    label: 'meethtml',
+    docs: 'https://meethtml.com/docs',
+    endpoint: 'https://api.meethtml.com/api/v1/publish',
+    liveness: 'https://meethtml.com/docs',
+    field: 'html',
+    bodyStyle: 'json-doc',
+    artifactModel: 'single-html',
+    publisherAuth: 'generated-secret',
+    assetExpectations: 'none',
+    notes: 'POST /api/v1/publish with the full HTML document in a `html` field and no account: returns url, slug, expires_at and edit_token. Anonymous pages expire after 24 hours, the page limit is 5 MB, and anonymous publishing is rate limited to 200 requests/hour per IP'
+  },
+  'display-dev': {
+    label: 'Display.dev',
+    docs: 'https://display.dev/docs/claimable',
+    endpoint: 'https://api.display.dev/v1/public/artifacts',
+    liveness: 'https://display.dev/docs/claimable',
+    field: 'file',
+    filename: 'index.html',
+    contentType: 'text/html; charset=utf-8',
+    partSource: 'index.html',
+    bodyStyle: 'multipart',
+    artifactModel: 'single-html',
+    publisherAuth: 'generated-secret',
+    assetExpectations: 'none',
+    notes: 'POST /v1/public/artifacts with the document as the `file` part and an optional `name`: returns shortId, previewUrl, claimUrl and expiresAt. Unclaimed artifacts serve the preview URL for 0-30 days; anonymous artifacts are noindex; 50 MB limit'
   }
 };
 
@@ -195,15 +222,25 @@ async function checkCandidate(id) {
   if (bodyStyle === 'raw') {
     uploadBody = zip;
     uploadHeaders = { 'content-type': 'application/zip' };
+  } else if (bodyStyle === 'json-doc') {
+    // Same idea as json-html, but the document goes under a provider-specific field name.
+    uploadBody = Buffer.from(JSON.stringify({ [candidate.field || 'html']: manifest.byRelative.get('index.html').bytes.toString('utf8') }), 'utf8');
+    uploadHeaders = { 'content-type': 'application/json' };
   } else if (bodyStyle === 'json-html') {
     uploadBody = Buffer.from(JSON.stringify({ html_content: manifest.byRelative.get('index.html').bytes.toString('utf8') }), 'utf8');
     uploadHeaders = { 'content-type': 'application/json' };
   } else {
+    // `partSource` decides what the part carries: a zip archive (multi-file hosts) or the raw document
+    // (single-document hosts). Sending a zip to a host that decodes the part as text is a probe error
+    // that looks like a service error - display.dev answered "must be valid UTF-8" for exactly that.
+    const partData = candidate.partSource === 'index.html'
+      ? manifest.byRelative.get('index.html').bytes
+      : zip;
     uploadBody = buildMultipart([{
       name: candidate.field,
       filename: candidate.filename,
       contentType: candidate.contentType || 'application/zip',
-      data: zip
+      data: partData
     }], boundary);
     uploadHeaders = { 'content-type': `multipart/form-data; boundary=${boundary}` };
   }
@@ -231,7 +268,7 @@ async function checkCandidate(id) {
     payload = null;
   }
 
-  const url = payload && (payload.url || payload.siteUrl || payload.link);
+  const url = payload && (payload.url || payload.siteUrl || payload.link || payload.previewUrl);
   const reads = { root: null, html: null, assets: {} };
   if (url) {
     // Normalise the base the way verify.mjs does: without a trailing slash a relative join drops the
@@ -256,11 +293,15 @@ async function checkCandidate(id) {
     : Object.entries(reads.assets).every(([rel, read]) => read.sha256 === local.get(rel).sha256);
   const rootOk = reads.root && reads.root.status === 200 && markerInRoot;
 
+  // A single-document host that serves the document inside its own viewer page is neither byte-exact nor
+  // broken: the content is public, wrapped. That is a distinct outcome from a missing asset.
+  const wrapped = candidate.assetExpectations === 'none' && rootOk && !assetsVerified;
   const classification = uploadRejected ? 'auth-required'
     : !url ? 'login-free-upload-only'
       : rootOk && assetsVerified ? 'independent-public'
-        : rootOk ? 'partial-preview'
-          : 'login-free-upload-only';
+        : wrapped ? 'wrapped-preview'
+          : rootOk ? 'partial-preview'
+            : 'login-free-upload-only';
 
   const evidence = {
     id,
@@ -269,8 +310,7 @@ async function checkCandidate(id) {
     artifactModel: candidate.artifactModel,
     // `independent-public` additionally requires a read from a second network, which was not available.
     shareability: classification === 'independent-public' ? 'unverified'
-      : classification === 'auth-required' ? 'not-applicable' : 'owner-preview',
-    lifecycle: {
+      : classification === 'auth-required' ? 'not-applicable' : 'owner-preview',    lifecycle: {
       contentExpiresAt: payload && (payload.expiresAt || payload.expires_at || payload.expiry) ? String(payload.expiresAt || payload.expires_at || payload.expiry) : null,
       claimDeadline: null,
       previewAccessExpiresAt: null,

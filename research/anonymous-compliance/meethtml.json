@@ -1,0 +1,95 @@
+{
+  "id": "meethtml",
+  "publisherAuth": "generated-secret",
+  "viewerAccess": "public",
+  "artifactModel": "single-html",
+  "shareability": "independent-public",
+  "lifecycle": {
+    "contentExpiresAt": "2026-09-14T08:55:05.000Z",
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": true,
+    "sameEgressRead": true,
+    "crossEgressRead": true,
+    "independentReaderVerified": true,
+    "assetsVerified": true,
+    "htmlTransform": "none",
+    "testedAt": "2026-09-13T08:56:49.688Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://meethtml.com/docs",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "Read from both egresses: the root carried the fixture nonce and the single document was served byte-identically. upload and every read succeeded from this network; a second network was not available, so independent readership stays unconfirmed"
+  },
+  "measured": {
+    "candidate": "meethtml",
+    "endpoint": "https://api.meethtml.com/api/v1/publish",
+    "bodyStyle": "json-doc",
+    "platformAlive": {
+      "url": "https://meethtml.com/docs",
+      "status": 200,
+      "bytes": 19616,
+      "text": "API Docs – Instant HTML & Markdown Hosting | meethtml.com window.dataLayer = window.dataLayer || []; function gtag(){dat"
+    },
+    "nonce": "914177e9180933b5",
+    "uploadStatus": 201,
+    "uploadResponse": {
+      "url": "https://lucky-iris.meethtml.com",
+      "slug": "lucky-iris",
+      "expires_at": "2026-09-14T08:55:05.000Z",
+      "edit_token": "Jcm…(43 chars)"
+    },
+    "responseHeaders": {
+      "date": "Sun, 13 Sep 2026 08:55:06 GMT",
+      "content-type": "application/json",
+      "server": "cloudflare"
+    },
+    "url": "https://lucky-iris.meethtml.com",
+    "localFiles": {
+      "assets/app.css": {
+        "sha256": "17d065d8a60ebfbd14d3929764302a4dcaf9d54f262eea6af2140b7c2a151cfd",
+        "bytes": 45
+      },
+      "assets/app.js": {
+        "sha256": "89832a83ea45098e22bd1f462d3af035d6a1e8cea8f4e2f8b90015d7086fe5a8",
+        "bytes": 41
+      },
+      "index.html": {
+        "sha256": "3873fb8f365b03b2181bcc0f91c0a7d0ce7f46f4de382a2bd9f0c0d2bbeef60d",
+        "bytes": 241
+      }
+    },
+    "reads": {
+      "root": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 241,
+        "sha256": "3873fb8f365b03b2181bcc0f91c0a7d0ce7f46f4de382a2bd9f0c0d2bbeef60d",
+        "error": null
+      },
+      "html": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 241,
+        "sha256": "3873fb8f365b03b2181bcc0f91c0a7d0ce7f46f4de382a2bd9f0c0d2bbeef60d",
+        "error": null
+      }
+    },
+    "classification": "independent-public",
+    "testedAt": "2026-09-13T08:55:07.932Z",
+    "crossEgressAvailable": false
+  },
+  "reachability": {
+    "mainland": "reachable",
+    "overseas": "reachable",
+    "measuredAt": "2026-09-13",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "evidence": "research/reachability-p1b-mainland-2026-09-13.json, research/reachability-p1b-overseas-2026-09-13.json"
+  }
+}

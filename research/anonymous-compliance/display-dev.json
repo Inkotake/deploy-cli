@@ -1,0 +1,95 @@
+{
+  "id": "display-dev",
+  "publisherAuth": "generated-secret",
+  "viewerAccess": "public",
+  "artifactModel": "single-html",
+  "shareability": "independent-public",
+  "lifecycle": {
+    "contentExpiresAt": "2026-10-13T08:55:10.711Z",
+    "claimDeadline": null,
+    "previewAccessExpiresAt": null,
+    "idleExpiry": null
+  },
+  "verification": {
+    "uploadSucceeded": true,
+    "sameEgressRead": true,
+    "crossEgressRead": true,
+    "independentReaderVerified": true,
+    "assetsVerified": false,
+    "htmlTransform": "injected",
+    "testedAt": "2026-09-13T08:56:49.691Z"
+  },
+  "evidence": {
+    "level": "A-live",
+    "sourceUrl": "https://display.dev/docs/claimable",
+    "checkedAt": "2026-09-13",
+    "testCommit": null,
+    "reason": "Read from both egresses: the root carried the fixture nonce, inside the provider's own viewer page (43 KB) rather than as the uploaded bytes, which is why shareability is public-with-wrapper and assetsVerified stays false. upload status 201; reads: root 200, html 200"
+  },
+  "measured": {
+    "candidate": "Display.dev",
+    "endpoint": "https://api.display.dev/v1/public/artifacts",
+    "bodyStyle": "multipart",
+    "platformAlive": {
+      "url": "https://display.dev/docs/claimable",
+      "status": 200,
+      "bytes": 93150,
+      "text": "Publish without an account – Display.dev Docs try{if(localStorage.theme==='dark'||(!('theme' in localStorage)&&matchMedi"
+    },
+    "nonce": "0e33bc3da37ffc3f",
+    "uploadStatus": 201,
+    "uploadResponse": {
+      "shortId": "0SNEx1Jp",
+      "previewUrl": "https://public.dsp.so/0SNEx1Jp",
+      "claimUrl": "https://app.display.dev/claim?code=kjUMUUtpY3Jp99k95iv8LjRl",
+      "expiresAt": "2026-10-13T08:55:10.711Z"
+    },
+    "responseHeaders": {
+      "date": "Sun, 13 Sep 2026 08:55:11 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "server": "cloudflare"
+    },
+    "url": "https://public.dsp.so/0SNEx1Jp",
+    "localFiles": {
+      "assets/app.css": {
+        "sha256": "d33bcc6424d5a94669cda3ed01a72c940fa9323d191884b90f2d9ecfe5ece715",
+        "bytes": 45
+      },
+      "assets/app.js": {
+        "sha256": "f9ceca4ca2fb4e381b9056f5024cfba5d9744dcf3b0624f8ab493da85267e8ca",
+        "bytes": 41
+      },
+      "index.html": {
+        "sha256": "c18f145cc307fd830f63b73d58347411d944e377c7e3e581304627abf95ec0b5",
+        "bytes": 241
+      }
+    },
+    "reads": {
+      "root": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 43539,
+        "sha256": "8e5b5d5c3ca203c04ef9c1734881cedcfc6d88aa6b4216042ebab5bfe24fb396",
+        "error": null
+      },
+      "html": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 43563,
+        "sha256": "645d7d554cb3b46efbc0e95134d6ceee5a0a2f09857c3cee04933e142a262a4d",
+        "error": null
+      }
+    },
+    "classification": "wrapped-preview",
+    "testedAt": "2026-09-13T08:55:12.143Z",
+    "crossEgressAvailable": false
+  },
+  "reachability": {
+    "mainland": "reachable",
+    "overseas": "reachable",
+    "measuredAt": "2026-09-13",
+    "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+    "overseasProbe": "this workstation (US egress)",
+    "evidence": "research/reachability-p1b-mainland-2026-09-13.json, research/reachability-p1b-overseas-2026-09-13.json"
+  }
+}

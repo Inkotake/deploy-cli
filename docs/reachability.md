@@ -38,13 +38,15 @@ Verdicts: `reachable` (root and every asset matched) · `partial` (root loaded, 
 | **flypod** | reachable | reachable | injects its render instrumentation; enabled |
 | **BrewPage** | reachable | reachable | multi-file site with an owner token; injects its own top bar (`htmlExact: false`), assets byte-identical; 15-day default TTL, 30 days maximum |
 | **ht-ml.app** | reachable | reachable | single HTML document, **byte-identical with no injection**; returns `update_key`; no expiry is returned |
+| **meethtml** | reachable | reachable | single document served byte-identically; 24-hour anonymous lifetime; `edit_token` claim |
+| **Display.dev** | reachable | reachable | content is public but served inside the provider's own 43 KB viewer page, so it is never byte-comparable |
 | **Cloudflare temporary account** | **unreachable** | reachable | every path timed out against four different addresses: DNS interference. Cloudflare sells a separate China Network product, so this is consistent |
 | **Netlify anonymous deploy** | 401 (password) | 401 (password) | an unclaimed anonymous site is password-protected from every network — a viewer-side limit, not a network one |
 | EdgeOne Makers (anonymous) | nothing served | nothing served | classification `login-free-upload-only`: the upload works, no reader can open the result |
 
 The full split requested for this project is therefore:
 
-- **reachable from mainland China**: ship-page, shipstatic, here-now, show, aft-page, dropley, flypod, BrewPage, ht-ml.app
+- **reachable from mainland China**: ship-page, shipstatic, here-now, show, aft-page, dropley, flypod, BrewPage, ht-ml.app, meethtml, Display.dev
 - **not reachable from mainland China**: Cloudflare `*.workers.dev` temporary deployments
 - **not readable by anyone without a credential**: Netlify anonymous deploys (password), EdgeOne anonymous previews (console session)
 

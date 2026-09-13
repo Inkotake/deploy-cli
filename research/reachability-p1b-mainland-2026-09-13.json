@@ -1,0 +1,90 @@
+{
+  "vantage": "mainland-vps-beijing",
+  "probedAt": "2026-09-13T08:56:10.365Z",
+  "hostname": "iZ2zea6pyblaksmijo5u85Z",
+  "platform": "linux/x64",
+  "nonce": "",
+  "verdicts": {
+    "meethtml": "reachable",
+    "display-dev": "reachable"
+  },
+  "results": [
+    {
+      "provider": "meethtml",
+      "url": "https://lucky-iris.meethtml.com",
+      "nonce": "914177e9180933b5",
+      "persistence": "temporary",
+      "htmlExact": true,
+      "expiresAt": "2026-09-14T08:55:05.000Z",
+      "localHashes": {
+        "index.html": {
+          "sha256": "3873fb8f365b03b2181bcc0f91c0a7d0ce7f46f4de382a2bd9f0c0d2bbeef60d",
+          "bytes": 241
+        }
+      },
+      "verdict": "reachable",
+      "htmlWrapped": false,
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 241,
+          "sha256": "3873fb8f365b03b2181bcc0f91c0a7d0ce7f46f4de382a2bd9f0c0d2bbeef60d",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 241,
+          "sha256": "3873fb8f365b03b2181bcc0f91c0a7d0ce7f46f4de382a2bd9f0c0d2bbeef60d",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": [
+        {
+          "rel": "index.html",
+          "expected": "3873fb8f365b03b2181bcc0f91c0a7d0ce7f46f4de382a2bd9f0c0d2bbeef60d",
+          "actual": "3873fb8f365b03b2181bcc0f91c0a7d0ce7f46f4de382a2bd9f0c0d2bbeef60d",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "provider": "display-dev",
+      "url": "https://public.dsp.so/0SNEx1Jp",
+      "nonce": "0e33bc3da37ffc3f",
+      "persistence": "temporary",
+      "htmlExact": false,
+      "expiresAt": "2026-10-13T08:55:10.711Z",
+      "localHashes": {
+        "index.html": {
+          "sha256": "c18f145cc307fd830f63b73d58347411d944e377c7e3e581304627abf95ec0b5",
+          "bytes": 241
+        }
+      },
+      "verdict": "reachable",
+      "htmlWrapped": true,
+      "readings": {
+        "root": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 43539,
+          "sha256": "8e5b5d5c3ca203c04ef9c1734881cedcfc6d88aa6b4216042ebab5bfe24fb396",
+          "markerFound": true,
+          "error": null
+        },
+        "index.html": {
+          "status": 200,
+          "contentType": "text/html",
+          "bytes": 43563,
+          "sha256": "645d7d554cb3b46efbc0e95134d6ceee5a0a2f09857c3cee04933e142a262a4d",
+          "markerFound": true,
+          "error": null
+        }
+      },
+      "assetChecks": []
+    }
+  ]
+}

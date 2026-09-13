@@ -89,9 +89,13 @@ for (const entry of payload.results || []) {
     .filter(([rel, value]) => value && value.sha256 && (htmlExact || rel !== 'index.html'))
     .map(([rel, value]) => ({ rel, expected: value.sha256, actual: readings[rel] ? readings[rel].sha256 : null, status: readings[rel] ? readings[rel].status : 0 }));
   const allAssetsOk = assetChecks.length > 0 && assetChecks.every((check) => check.actual === check.expected);
-  const verdict = !rootOk ? 'unreachable' : allAssetsOk ? 'reachable' : 'partial';
+  // A wrapped host (htmlExact: false) has nothing to hash-compare, so zero checks is not a failure: the
+  // verdict then rests on the root being readable and carrying the fixture marker.
+  const verdict = !rootOk ? 'unreachable'
+    : assetChecks.length === 0 ? (readings.root.markerFound ? 'reachable' : 'partial')
+      : allAssetsOk ? 'reachable' : 'partial';
 
-  results.push({ ...entry, verdict, readings, assetChecks });
+  results.push({ ...entry, verdict, htmlWrapped: entry.htmlExact === false && assetChecks.length === 0, readings, assetChecks });
   process.stdout.write(`${String(entry.provider).padEnd(14)} ${verdict.padEnd(12)} root=${readings.root.status} marker=${readings.root.markerFound} assets=${assetChecks.filter((check) => check.actual === check.expected).length}/${assetChecks.length}\n`);
 }
 
