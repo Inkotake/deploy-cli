@@ -670,7 +670,7 @@
         "*.edgeone.cool"
       ],
       "enabled": false,
-      "disabledReason": "the login-free deploy works, but its delivery does not: the printed Access URL returned 401 for both sites (global *.edgeone.dev, china *.edgeone.cool), with and without the token and with browser-like headers. The platform page says the visitor must obtain a valid access link from the owner and the owner must mint a new link from the console, so the preview is console-session-bound and not shareable. See research/edgeone-anonymous-2026-09-13.md",
+      "disabledReason": "classification: login-free-upload-only. Anonymous deploy works with no account, but no reader can open the result: immediately after deploy the printed URL (and every variant, with or without the token, plain or browser-like headers) returned 401 \"Access Restricted or Authentication Expired\", whose page tells the visitor to obtain a link from the owner and the owner to mint one in the console; after the 60-minute claim window the same URLs return 404 because the unclaimed project is removed. Nothing was ever served. Evidence: research/edgeone-anonymous-measurement-2026-09-13.json",
       "modes": [
         "quick-share"
       ],
@@ -706,7 +706,7 @@
         "status": "unverified",
         "resourcesByteExact": null,
         "verifiedAt": "2026-09-13",
-        "note": "measured 2026-09-13: anonymous deploy succeeded twice (global ap-singapore, china ap-shanghai) with no account, and both printed URLs answered 401 to every client tried. No delivery could be verified, so this provider cannot serve the no-account use case."
+        "note": "classified 2026-09-13 as login-free-upload-only by a controlled matrix (two sites, 60 reads at 0/2/5/15/30/60s, query variants, two client profiles): never a 200, 401 while the project lived and 404 after the claim window closed. A second independent network was not available, so the cross-egress dimension is unmeasured."
       }
     }
   ]

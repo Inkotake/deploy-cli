@@ -113,3 +113,24 @@ reader may not be able to open. So it is registered **disabled, with the reason*
    and surface the claim deadline as `lifecycle.claimDeadline`.
 4. The claimed/persistent path needs an account and belongs with the other persistent adapters, whose
    success paths are still unverified.
+
+## Classification result
+
+The received research package proposes a four-way taxonomy for exactly this case
+(`independent-public` / `network-bound-preview` / `login-free-upload-only` / `partial-preview`) and a
+controlled matrix: reads at 0/2/5/15/30/60 seconds, with and without the query token, plain and
+browser-like headers, both sites. That matrix was run against the two live projects (60 reads):
+
+| Observation | Result |
+|---|---|
+| Immediately after deploy | 401, platform page, never the artifact |
+| While the project lived | 401 for every variant — query, no query, sub-resource, both client profiles |
+| After the 60-minute claim window | 404 for every variant (the unclaimed project is removed, as documented) |
+| Any 200 with our content | none, in any of the 60 reads |
+| Cross-egress dimension | **not measured** (no second independent network was available) |
+
+**Classification: `login-free-upload-only`.** Because the cross-egress dimension is unmeasured, the
+conservative verdict is the right one; the registry records the label, the reason and the evidence
+file, and the provider stays `enabled: false`.
+
+Raw records: `edgeone-anonymous-measurement-2026-09-13.json`.

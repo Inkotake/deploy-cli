@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Anonymous deployment provider evidence record",
+  "type": "object",
+  "required": [
+    "id",
+    "publisherAuth",
+    "viewerAccess",
+    "artifactModel",
+    "shareability",
+    "evidence"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "publisherAuth": {
+      "enum": [
+        "none",
+        "generated-secret",
+        "email-gated",
+        "account-token",
+        "unknown"
+      ]
+    },
+    "viewerAccess": {
+      "enum": [
+        "public",
+        "query-token",
+        "password",
+        "same-ip",
+        "cookie",
+        "unknown"
+      ]
+    },
+    "artifactModel": {
+      "enum": [
+        "directory",
+        "archive",
+        "single-html",
+        "wrapper",
+        "ipfs",
+        "tunnel",
+        "dynamic-app",
+        "unknown"
+      ]
+    },
+    "shareability": {
+      "enum": [
+        "independent-public",
+        "network-bound",
+        "owner-preview",
+        "unverified",
+        "not-applicable"
+      ]
+    },
+    "lifecycle": {
+      "type": "object",
+      "properties": {
+        "contentExpiresAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "claimDeadline": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "previewAccessExpiresAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "idleExpiry": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "uploadSucceeded": {
+          "type": "boolean"
+        },
+        "sameEgressRead": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "crossEgressRead": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "independentReaderVerified": {
+          "type": "boolean"
+        },
+        "assetsVerified": {
+          "type": "boolean"
+        },
+        "htmlTransform": {
+          "enum": [
+            "none",
+            "injected",
+            "wrapped",
+            "unknown"
+          ]
+        },
+        "testedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "level",
+        "sourceUrl",
+        "checkedAt"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "A-live",
+            "B-official-contract",
+            "C-official-claim",
+            "D-conflicting",
+            "E-excluded"
+          ]
+        },
+        "sourceUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "checkedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "testCommit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

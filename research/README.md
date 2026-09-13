@@ -69,3 +69,19 @@ Rules for this evidence:
   `stages.targetNetwork: 'not-measured'` until a probe exists;
 - a private preview URL carrying an access token must never be handed to a public measurement service
   by default.
+
+## Received artifacts (archived for offline citation)
+
+A research package received on 2026-09-13 is archived verbatim rather than summarised, so its claims
+can be re-read after the original links rot:
+
+| File | Content |
+|---|---|
+| `received-anonymous-deployment-research.md` | The full report: strict anonymity admission criteria, P0/P1 candidates, exclusions. |
+| `received-anonymous-provider-matrix.json` / `.csv` | 57 services, paths and exclusions with their interfaces and lifetimes. |
+| `received-anonymous-provider-evidence.schema.json` | The proposed evidence record: `publisherAuth`, `viewerAccess`, `artifactModel`, `shareability`, `evidence`. |
+| `received-edgeone-final-classification-plan.md` | The controlled classification matrix used above. |
+| `edgeone-anonymous-measurement-2026-09-13.json` | The 60 reads produced by running that matrix. |
+
+Nothing in `received-*` is runtime configuration: the matrix is a candidate list, and a provider still
+has to pass the executable-adapter bar before it can appear in `config/providers.json`.
