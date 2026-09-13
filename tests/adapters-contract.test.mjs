@@ -27,7 +27,7 @@ import { ADAPTERS, getAdapter } from '../src/providers/index.mjs';
 import { ProviderError } from '../src/providers/errors.mjs';
 
 /** The adapters that speak HTTP to an anonymous host; `persistent` is covered by its own suite. */
-const ANONYMOUS = ['ship-page', 'shipstatic', 'here-now', 'show', 'aft-page', 'dropley', 'flypod'];
+const ANONYMOUS = ['ship-page', 'shipstatic', 'here-now', 'show', 'aft-page', 'dropley', 'flypod', 'brewpage', 'ht-ml-app'];
 const tempDirs = [];
 
 after(() => {

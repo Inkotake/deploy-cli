@@ -829,6 +829,144 @@
         "pattern": null,
         "warning": "The claim token attaches this anonymous deployment to an account. Never forward it."
       }
+    },
+    {
+      "id": "brewpage",
+      "label": "BrewPage",
+      "adapter": "brewpage",
+      "transport": "http",
+      "cli": null,
+      "protocol": "multipart-archive",
+      "protocolNotes": "POST /api/sites with the zip as the `archive` part and no credential; a User-Agent is required on every request; returns link, ownerLink, ownerToken and expiresAt",
+      "endpoint": "https://brewpage.app/api/sites",
+      "allowedHosts": [
+        "brewpage.app",
+        "*.brewpage.app"
+      ],
+      "enabled": true,
+      "modes": [
+        "quick-share"
+      ],
+      "priority": 4,
+      "cnPriority": 4,
+      "persistent": false,
+      "claim": {
+        "kind": "ownerToken",
+        "field": "ownerToken",
+        "urlField": "ownerLink",
+        "pattern": null,
+        "warning": "The owner token edits or deletes this site. Never forward it."
+      },
+      "capabilities": {
+        "anonymous": true,
+        "maxFiles": 100,
+        "maxFileBytes": 5242880,
+        "maxTotalBytes": 20971520,
+        "maxTotalBytesSource": "20 MB per site",
+        "supportedExtensions": null,
+        "denyExtensions": [],
+        "extensionPolicy": "any",
+        "supportsModelFiles": true,
+        "claimable": true,
+        "htmlExact": false,
+        "singlePageOnly": false,
+        "ttl": {
+          "defaultSeconds": 1296000,
+          "optionsSeconds": null,
+          "source": "default 15 days, 30 days maximum, overridable with a ttl parameter"
+        },
+        "cost": {
+          "status": "free",
+          "note": "publishing needs no account",
+          "source": "https://brewpage.app/api",
+          "checkedAt": "2026-09-13"
+        }
+      },
+      "verification": {
+        "status": "live-tested",
+        "resourcesByteExact": true,
+        "verifiedAt": "2026-09-13",
+        "reachability": {
+          "mainland": "reachable",
+          "overseas": "reachable",
+          "measuredAt": "2026-09-13",
+          "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+          "overseasProbe": "this workstation (US egress)",
+          "evidence": "research/reachability-p1-mainland-2026-09-13.json, research/reachability-p1-overseas-2026-09-13.json",
+          "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
+        },
+        "note": "anonymous deploy measured 2026-09-13 and read from both egresses: 201 with link, ownerLink, ownerToken, expiresAt, fileCount, visibilityNotice; assets byte-identical, the served HTML carries its injected top bar, which is why htmlExact is false."
+      }
+    },
+    {
+      "id": "ht-ml-app",
+      "label": "ht-ml.app",
+      "adapter": "ht-ml-app",
+      "transport": "http",
+      "cli": null,
+      "protocol": "json-single-page",
+      "protocolNotes": "POST /v1/sites with {\"html_content\": ...} and no credential; returns site_id, update_key and url; one HTML document per site",
+      "endpoint": "https://api.ht-ml.app/v1/sites",
+      "allowedHosts": [
+        "ht-ml.app",
+        "*.ht-ml.app"
+      ],
+      "enabled": true,
+      "modes": [
+        "quick-share"
+      ],
+      "priority": 5,
+      "cnPriority": 3,
+      "persistent": false,
+      "claim": {
+        "kind": "update_key",
+        "field": "update_key",
+        "pattern": null,
+        "warning": "The update key replaces or deletes this page. Never forward it."
+      },
+      "capabilities": {
+        "anonymous": true,
+        "maxFiles": 1,
+        "maxFileBytes": null,
+        "maxTotalBytes": null,
+        "maxTotalBytesSource": null,
+        "supportedExtensions": [
+          ".html",
+          ".htm"
+        ],
+        "denyExtensions": [],
+        "extensionPolicy": "any",
+        "supportsModelFiles": false,
+        "claimable": true,
+        "htmlExact": true,
+        "singlePageOnly": true,
+        "ttl": {
+          "defaultSeconds": null,
+          "optionsSeconds": null,
+          "source": "the response returns no expiry, so contentExpiresAt stays null"
+        },
+        "cost": {
+          "status": "free",
+          "note": "publishing needs no account",
+          "source": "https://api.ht-ml.app/v1/help",
+          "checkedAt": "2026-09-13"
+        }
+      },
+      "verification": {
+        "status": "live-tested",
+        "resourcesByteExact": true,
+        "verifiedAt": "2026-09-13",
+        "reachability": {
+          "mainland": "reachable",
+          "overseas": "reachable",
+          "measuredAt": "2026-09-13",
+          "mainlandProbe": "Ubuntu 24.04 host in Beijing (39.106.154.227), no proxy",
+          "overseasProbe": "this workstation (US egress)",
+          "evidence": "research/reachability-p1-mainland-2026-09-13.json, research/reachability-p1-overseas-2026-09-13.json",
+          "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
+        },
+        "note": "anonymous deploy measured 2026-09-13 and read from both egresses: 200 with site_id, update_key and url; the single page was served byte-identically with no injection. No expiry is returned. Referenced assets are not uploaded, so the adapter reports which ones were left behind."
+      }
     }
   ]
 }

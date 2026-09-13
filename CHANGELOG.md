@@ -92,6 +92,15 @@ required`). `docs/releasing.md` records both ways to finish that step.
   normalises a base URL without a trailing slash; the reader probe takes a per-deployment nonce, because
   a list can mix fixtures and one shared nonce silently reports "marker false" for every entry but the
   first.
+- Two new quick-share providers, both enabled after passing the measured bar from two egresses:
+  **BrewPage** (multipart `archive` to `/api/sites`, no publish auth, `ownerToken` claim, injected top
+  bar so `htmlExact: false`, 20 MB / 100 files) and **ht-ml.app** (JSON `html_content` to `/v1/sites`,
+  single document served byte-identically, `update_key` claim, no expiry returned). Both were then
+  deployed through the real CLI, not only through stubs: BrewPage verified in 4.5 s with a full receipt,
+  ht-ml.app returned a URL with `expiresAt: null` labelled `not-returned`.
+- The registry's extension list is written with a leading dot (`.html`), and the planner compares it that
+  way; an entry written as `html` silently rejects every file. Caught by running the planner against the
+  new provider rather than trusting the adapter tests, which bypass it.
 - An offline test suite (`node:test`) covering the adapters, verification, planning, the registry
   schema, the policy split, claims, snapshots, the proxy path and the CLI contract.
 

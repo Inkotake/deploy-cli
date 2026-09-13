@@ -87,6 +87,8 @@ $ vpublish ./dist --json | jq .verification
 | aft.page | quick-share | 已实测 | 否（返回自己的包装页） | 30 天闲置 |
 | Dropley | quick-share | 未验证 | 严格 | 1/3/7 天 |
 | **flypod** | quick-share | 已实测（大陆 + 海外两个出口） | 否（会注入自己的渲染插桩） | 14 天 |
+| **BrewPage** | quick-share | 已实测（大陆 + 海外两个出口） | 否（会注入自己的顶栏） | 15 天（最长 30 天） |
+| **ht-ml.app** | quick-share（单页） | 已实测（大陆 + 海外两个出口） | 是 | 不返回 |
 | Netlify · Cloudflare Pages · Vercel · GitHub Pages | persistent | 预期（未实测） | 是 | 持久 |
 
 `已实测`指协议在真实服务上量过；`预期`指 adapter 按官方 CLI 契约实现、但只跑过失败路径。注册表是唯一真相——

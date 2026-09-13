@@ -13,6 +13,8 @@ import * as hereNow from './here-now.mjs';
 import * as show from './show.mjs';
 import * as dropley from './dropley.mjs';
 import * as flypod from './flypod.mjs';
+import * as brewpage from './brewpage.mjs';
+import * as htMlApp from './ht-ml-app.mjs';
 import * as persistent from './persistent.mjs';
 
 export const ADAPTERS = new Map([
@@ -23,6 +25,8 @@ export const ADAPTERS = new Map([
   [show.id, show],
   [dropley.id, dropley],
   [flypod.id, flypod],
+  [brewpage.id, brewpage],
+  [htMlApp.id, htMlApp],
   [persistent.id, persistent]
 ]);
 
