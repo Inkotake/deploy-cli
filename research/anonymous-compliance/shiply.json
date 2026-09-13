@@ -137,8 +137,8 @@
         "finalizeUrl": "https://shiply.now/api/v1/publish/rapid-fjord-qnbg/finalize",
         "expiresInSeconds": 3600
       },
-      "claimToken": "008…(64 chars)",
-      "claimUrl": "https://shiply.now/claim?slug=rapid-fjord-qnbg&token=00839364a7381f378494660bab9b1e26f8c8f03ad44eddf54c5f6b5605d55ac3",
+      "claimToken": "008…(14 chars)",
+      "claimUrl": "https://shiply.now/claim?slug=rapid-fjord-qnbg&token=<masked>",
       "warning": "Save the claimToken — it both (a) keeps the site forever via claimUrl and (b) is the key to UPDATE this same site later. Returned only once.",
       "deviceAuth": {
         "user_code": "JGVF-3CXW",

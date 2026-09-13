@@ -174,7 +174,12 @@ function redact(value, key = '') {
     if (/key|token|secret|password|credential/i.test(key) && value.length > 6) {
       return `${value.slice(0, 3)}…(${value.length} chars)`;
     }
-    return value;
+    // A credential can also hide inside an ordinary-looking string: a claim URL carries its token in the
+    // query string (`?token=…`), which the field-name rule above does not catch. This leaked once.
+    return value
+      .replace(/([?&#](?:token|claim_?token|eo_token|drop_token|api_?key|key|access_token)=)[A-Za-z0-9._~-]{6,}/gi, '$1<masked>')
+      .replace(/\beyJ[A-Za-z0-9._-]{20,}/g, '<masked-jwt>')
+      .replace(/\b(?:shp|sk|shpat|cl|mk|spc|op)_[A-Za-z0-9]{10,}/g, '<masked-key>');
   }
   if (Array.isArray(value)) return value.map((entry) => redact(entry, key));
   if (value && typeof value === 'object') {
