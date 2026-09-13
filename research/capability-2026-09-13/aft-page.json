@@ -1,0 +1,98 @@
+{
+  "provider": "aft-page",
+  "ranAt": "2026-09-13T14:31:08.544Z",
+  "fixtureFiles": 21,
+  "fixture": [
+    "assets/app.css",
+    "assets/app.js",
+    "deep/nested/tree/file.txt",
+    "fonts/font.woff2",
+    "index.html",
+    "long/dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd/file.txt",
+    "many/f01.txt",
+    "many/f02.txt",
+    "many/f03.txt",
+    "many/f04.txt",
+    "many/f05.txt",
+    "many/f06.txt",
+    "many/f07.txt",
+    "many/f08.txt",
+    "many/f09.txt",
+    "many/f10.txt",
+    "many/f11.txt",
+    "many/f12.txt",
+    "model.glb",
+    "wasm/app.wasm",
+    "中文/说明.txt"
+  ],
+  "cliExit": 0,
+  "seconds": 22.1,
+  "success": true,
+  "url": "https://capability-ec26d150a21b6f37.aft.page/",
+  "expiresAt": null,
+  "expiresAtSource": "30 days idle; unclaimed sites are deleted after 30 days idle, so expiry is not a fixed deadline",
+  "verification": {
+    "passed": true,
+    "method": "http-sha256",
+    "filesExpected": 21,
+    "filesRequired": 21,
+    "filesVerified": 20,
+    "filesPresenceChecked": 1,
+    "bytesVerified": 2285,
+    "browserVerified": false,
+    "strategy": "all-files",
+    "htmlPolicy": "presence-only",
+    "htmlExact": false,
+    "htmlNotCompared": [
+      {
+        "path": "index.html",
+        "localBytes": 330,
+        "remoteBytes": 9857,
+        "detail": "served HTML differs from the uploaded bytes (the provider rewrites HTML on the wire) and was not hash-verified under the presence-only policy"
+      }
+    ],
+    "hashComplete": false,
+    "rootStatus": 200,
+    "browserRepresentation": {
+      "checked": true,
+      "identical": false,
+      "status": 200,
+      "bytes": 10224,
+      "expectedBytes": 330,
+      "contentEncoding": "br",
+      "decoded": true,
+      "addedBytes": 9894,
+      "note": "a browser-like request receives 10224 bytes where 330 were uploaded (+9894); the host or an edge network in front of it rewrites HTML for browsers"
+    },
+    "note": "20 of 21 required resources were hash-compared; 1 HTML resource(s) were presence-checked only (htmlPolicy=presence-only); a browser-like request receives 10224 bytes where 330 were uploaded (+9894); the host or an edge network in front of it rewrites HTML for browsers; no browser rendering was performed."
+  },
+  "reason": null,
+  "specialFiles": {
+    "fonts/font.woff2": {
+      "status": 200,
+      "bytes": 516,
+      "byteIdentical": true
+    },
+    "model.glb": {
+      "status": 200,
+      "bytes": 1028,
+      "byteIdentical": true
+    },
+    "wasm/app.wasm": {
+      "status": 200,
+      "bytes": 260,
+      "byteIdentical": true
+    },
+    "中文/说明.txt": {
+      "status": 200,
+      "bytes": 36,
+      "byteIdentical": true
+    },
+    "deep/nested/tree/file.txt": {
+      "status": 200,
+      "bytes": 27,
+      "byteIdentical": true
+    }
+  },
+  "deepRouteStatus": 200
+}

@@ -1,0 +1,91 @@
+{
+  "provider": "ship-page",
+  "ranAt": "2026-09-13T14:30:23.868Z",
+  "fixtureFiles": 21,
+  "fixture": [
+    "assets/app.css",
+    "assets/app.js",
+    "deep/nested/tree/file.txt",
+    "fonts/font.woff2",
+    "index.html",
+    "long/dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd/file.txt",
+    "many/f01.txt",
+    "many/f02.txt",
+    "many/f03.txt",
+    "many/f04.txt",
+    "many/f05.txt",
+    "many/f06.txt",
+    "many/f07.txt",
+    "many/f08.txt",
+    "many/f09.txt",
+    "many/f10.txt",
+    "many/f11.txt",
+    "many/f12.txt",
+    "model.glb",
+    "wasm/app.wasm",
+    "中文/说明.txt"
+  ],
+  "cliExit": 0,
+  "seconds": 14.9,
+  "success": true,
+  "url": "https://local-nova-1pd0x.shipped.page/",
+  "expiresAt": "2026-10-13T14:30:10.731Z",
+  "expiresAtSource": "30 days anonymous lifetime",
+  "verification": {
+    "passed": true,
+    "method": "http-sha256",
+    "filesExpected": 21,
+    "filesRequired": 21,
+    "filesVerified": 21,
+    "filesPresenceChecked": 0,
+    "bytesVerified": 2615,
+    "browserVerified": false,
+    "strategy": "all-files",
+    "htmlPolicy": "strict",
+    "htmlExact": true,
+    "htmlNotCompared": [],
+    "hashComplete": true,
+    "rootStatus": 200,
+    "browserRepresentation": {
+      "checked": true,
+      "identical": false,
+      "status": 200,
+      "bytes": 697,
+      "expectedBytes": 330,
+      "contentEncoding": "br",
+      "decoded": true,
+      "addedBytes": 367,
+      "note": "a browser-like request receives 697 bytes where 330 were uploaded (+367); the host or an edge network in front of it rewrites HTML for browsers"
+    },
+    "note": "21 of 21 required resources were hash-compared; a browser-like request receives 697 bytes where 330 were uploaded (+367); the host or an edge network in front of it rewrites HTML for browsers; no browser rendering was performed."
+  },
+  "reason": null,
+  "specialFiles": {
+    "fonts/font.woff2": {
+      "status": 200,
+      "bytes": 516,
+      "byteIdentical": true
+    },
+    "model.glb": {
+      "status": 200,
+      "bytes": 1028,
+      "byteIdentical": true
+    },
+    "wasm/app.wasm": {
+      "status": 200,
+      "bytes": 260,
+      "byteIdentical": true
+    },
+    "中文/说明.txt": {
+      "status": 200,
+      "bytes": 36,
+      "byteIdentical": true
+    },
+    "deep/nested/tree/file.txt": {
+      "status": 200,
+      "bytes": 27,
+      "byteIdentical": true
+    }
+  },
+  "deepRouteStatus": 404
+}

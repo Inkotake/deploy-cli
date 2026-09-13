@@ -65,7 +65,7 @@
         "status": "live-tested",
         "resourcesByteExact": true,
         "verifiedAt": "2026-09-13",
-        "note": "live-tested: a 63-file artifact was served byte-identical for every file, HTML included. Re-measured 2026-09-11: a plain GET still receives byte-identical HTML, but a browser-like Accept header receives the upload plus a Cloudflare Insights beacon (+367 bytes on a 277-byte page), which verification now reports as browserRepresentation instead of hiding.",
+        "note": "live-tested: a 63-file artifact was served byte-identical for every file, HTML included. Re-measured 2026-09-11: a plain GET still receives byte-identical HTML, but a browser-like Accept header receives the upload plus a Cloudflare Insights beacon (+367 bytes on a 277-byte page), which verification now reports as browserRepresentation instead of hiding. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -132,7 +132,7 @@
         "status": "live-tested",
         "resourcesByteExact": true,
         "verifiedAt": "2026-09-13",
-        "note": "live-tested: JS/CSS/font resources are served byte-identical. ShipStatic rewrites served HTML by appending a ?_ship=<id> cache-busting query to asset URLs, so HTML bytes differ and are not hash-verified. Its multipart parser also silently drops zero-byte file parts, so an artifact containing one is rejected as a capability failure before upload.",
+        "note": "live-tested: JS/CSS/font resources are served byte-identical. ShipStatic rewrites served HTML by appending a ?_ship=<id> cache-busting query to asset URLs, so HTML bytes differ and are not hash-verified. Its multipart parser also silently drops zero-byte file parts, so an artifact containing one is rejected as a capability failure before upload. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -199,7 +199,7 @@
         "status": "live-tested",
         "resourcesByteExact": null,
         "verifiedAt": "2026-09-13",
-        "note": "live-tested: aft.page does not serve the uploaded HTML at all - it injects a wrapper/summary page (a 416-byte index.html was served as 9873 bytes, 9461 without the import-map banner). Excluded from the default plan because its served output can never satisfy the verification contract.",
+        "note": "live-tested: aft.page does not serve the uploaded HTML at all - it injects a wrapper/summary page (a 416-byte index.html was served as 9873 bytes, 9461 without the import-map banner). Excluded from the default plan because its served output can never satisfy the verification contract. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -267,7 +267,7 @@
         "status": "live-tested",
         "resourcesByteExact": true,
         "verifiedAt": "2026-09-13",
-        "note": "live-tested: the create/finalize flow works (upload.versionId, upload.finalizeUrl, siteUrl) and JS/CSS/font resources are served byte-identical. An earlier 416-byte index.html was served as 798 bytes with injected Open Graph meta tags, so HTML bytes are not hash-verified; a 2026-09-11 re-probe served a minimal 86-byte page verbatim, so the rewriting is conditional — the presence-only policy stays conservative.",
+        "note": "live-tested: the create/finalize flow works (upload.versionId, upload.finalizeUrl, siteUrl) and JS/CSS/font resources are served byte-identical. An earlier 416-byte index.html was served as 798 bytes with injected Open Graph meta tags, so HTML bytes are not hash-verified; a 2026-09-11 re-probe served a minimal 86-byte page verbatim, so the rewriting is conditional — the presence-only policy stays conservative. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network.",
         "reachability": {
           "mainland": "partial",
           "overseas": "partial",
@@ -351,7 +351,7 @@
         "status": "live-tested",
         "resourcesByteExact": null,
         "verifiedAt": "2026-09-13",
-        "note": "The tar.gz archive upload was accepted live and returns a deployment URL on a *.127.dev subdomain (for example https://<id>-<name>.127.dev), which is why *.127.dev is in allowedHosts. Byte fidelity is decided by verification at runtime.",
+        "note": "The tar.gz archive upload was accepted live and returns a deployment URL on a *.127.dev subdomain (for example https://<id>-<name>.127.dev), which is why *.127.dev is in allowedHosts. Byte fidelity is decided by verification at runtime. Measured extension rules 2026-09-13: .glb and .wasm are rejected with HTTP 400, .woff2 is accepted — the fixed allowlist is real, not documentation.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -424,7 +424,7 @@
         "status": "unverified",
         "resourcesByteExact": null,
         "verifiedAt": "2026-09-13",
-        "note": "UNVERIFIED, and the server allowlist is stricter than documented: live tests rejected .ttf, .woff, .woff2 and extensionless files, so a typical Vite artifact cannot be served. Verification decides at runtime.",
+        "note": "UNVERIFIED, and the server allowlist is stricter than documented: live tests rejected .ttf, .woff, .woff2 and extensionless files, so a typical Vite artifact cannot be served. Verification decides at runtime. Measured extension rules 2026-09-13: .glb and .wasm are rejected by the server-side allowlist and .woff2 is accepted, alongside the previously recorded rejection of fonts and extensionless files.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -806,13 +806,14 @@
           "note": "anonymous deploys need no account",
           "source": "https://docs.flypod.dev/docs/api/http",
           "checkedAt": "2026-09-13"
-        }
+        },
+        "nonAsciiPaths": false
       },
       "verification": {
         "status": "live-tested",
         "resourcesByteExact": true,
         "verifiedAt": "2026-09-13",
-        "note": "anonymous deploy measured live twice from two vantage points on 2026-09-13: upload 200 with no credential, site served, both assets byte-identical from a mainland (Beijing, 39.106.154.227) and an overseas (US) egress; the served HTML is injected with the provider render instrumentation, hence htmlExact: false; expires_at was 14 days out; the response also carries a manage_token that this adapter does not persist yet.",
+        "note": "anonymous deploy measured live twice from two vantage points on 2026-09-13: upload 200 with no credential, site served, both assets byte-identical from a mainland (Beijing, 39.106.154.227) and an overseas (US) egress; the served HTML is injected with the provider render instrumentation, hence htmlExact: false; expires_at was 14 days out; the response also carries a manage_token that this adapter does not persist yet. Measured 2026-09-13: flypod accepts a file whose path contains non-ASCII characters and then answers HTTP 404 for it in every encoding tried (percent-encoded, raw UTF-8 and double-encoded), so an artifact containing such a path is refused before uploading. Binary assets are fine: .glb, .wasm and .woff2 were all accepted and served byte-identically.",
         "reachability": {
           "mainland": "reachable",
           "overseas": "reachable",
@@ -864,9 +865,12 @@
         "maxTotalBytes": 20971520,
         "maxTotalBytesSource": "20 MB per site",
         "supportedExtensions": null,
-        "denyExtensions": [],
+        "denyExtensions": [
+          ".glb",
+          ".wasm"
+        ],
         "extensionPolicy": "any",
-        "supportsModelFiles": true,
+        "supportsModelFiles": false,
         "claimable": true,
         "htmlExact": false,
         "singlePageOnly": false,
@@ -895,7 +899,7 @@
           "evidence": "research/reachability-p1-mainland-2026-09-13.json, research/reachability-p1-overseas-2026-09-13.json",
           "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
         },
-        "note": "anonymous deploy measured 2026-09-13 and read from both egresses: 201 with link, ownerLink, ownerToken, expiresAt, fileCount, visibilityNotice; assets byte-identical, the served HTML carries its injected top bar, which is why htmlExact is false."
+        "note": "anonymous deploy measured 2026-09-13 and read from both egresses: 201 with link, ownerLink, ownerToken, expiresAt, fileCount, visibilityNotice; assets byte-identical, the served HTML carries its injected top bar, which is why htmlExact is false. Measured extension rules 2026-09-13 (index.html plus one extra file per attempt): .glb and .wasm are REJECTED with HTTP 422 \"File type is not allowed\", while .woff2 is accepted. The registry previously said model files were supported; the service’s own error corrected it, and supportsModelFiles is now false so the planner refuses such an artifact before uploading."
       }
     },
     {
@@ -1176,7 +1180,7 @@
           "evidence": "research/reachability-p1c-mainland-2026-09-13.json, research/reachability-p1c-overseas-2026-09-13.json",
           "note": "one mainland datacenter egress and one overseas egress; not a three-carrier or campus-network measurement"
         },
-        "note": "three-step anonymous publish measured 2026-09-13 and read from both egresses: create returned the manifest with upload URLs, finalize made the site live, and both assets came back byte-identical. The page is not byte-exact because shiply documents, and the measurement confirmed, that it injects a claim banner and OG tags until the site is claimed. Upload URLs last one hour."
+        "note": "three-step anonymous publish measured 2026-09-13 and read from both egresses: create returned the manifest with upload URLs, finalize made the site live, and both assets came back byte-identical. The page is not byte-exact because shiply documents, and the measurement confirmed, that it injects a claim banner and OG tags until the site is claimed. Upload URLs last one hour. Capability fixture 2026-09-13 (21 files: a woff2 font, a GLB model, a WASM module, a CJK directory and file name, a 60-character directory name, and 12 files in one directory): every one of them came back byte-identical from this network."
       }
     },
     {

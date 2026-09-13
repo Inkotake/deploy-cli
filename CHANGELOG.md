@@ -113,6 +113,16 @@ required`). `docs/releasing.md` records both ways to finish that step.
   such a host answers with 404. Found by deploying to shippage.ai live — the tool had reported an
   integrity failure that was really a tool assumption, and the receipt still says the page was
   presence-checked rather than hash-verified.
+- A measured capability pass over the nine directory-capable channels, using one representative fixture
+  (a `.woff2` font, a `.glb` model, a `.wasm` module, a CJK directory and file name, a 60-character
+  directory name, twelve files in one directory). Five channels — ship-page, shipstatic, aft-page,
+  here-now and shiply.now — served every file byte-identically, CJK paths and binaries included. The
+  other four refused the fixture, each with its own error, which corrected the registry: BrewPage had
+  been recorded as supporting model files and actually answers `422 File type '.glb' is not allowed`;
+  show rejects `.glb`/`.wasm` with `400`; dropley rejects them server-side; and flypod accepts a
+  non-ASCII path and then serves `404` for it in every encoding tried. The registry now carries those
+  facts, the planner refuses such artifacts before uploading (`nonAsciiPaths: false` is the new rule),
+  and `docs/providers.md` publishes the whole matrix.
 - An offline test suite (`node:test`) covering the adapters, verification, planning, the registry
   schema, the policy split, claims, snapshots, the proxy path and the CLI contract.
 

@@ -153,6 +153,19 @@ export function checkCompatibility(provider, manifest) {
       });
     }
   }
+  // Measured on 2026-09-13: flypod accepts the upload and then answers 404 for a non-ASCII path in every
+  // encoding tried (percent-encoded, raw UTF-8, double-encoded). Refusing the artifact up front is the
+  // difference between "this host cannot serve your files" and a failed deploy nobody can explain.
+  if (caps.nonAsciiPaths === false && Array.isArray(manifest.files)) {
+    const nonAscii = manifest.files.map((file) => file.path).filter((filePath) => /[^\x20-\x7E]/.test(filePath));
+    if (nonAscii.length) {
+      hardFailures.push({
+        kind: 'non-ascii-paths',
+        reason: `cannot serve non-ASCII paths and this artifact has ${nonAscii.length} (${nonAscii.slice(0, 3).join(', ')})`,
+        paths: nonAscii
+      });
+    }
+  }
 
   if (typeof caps.maxFiles === 'number' && manifest.fileCount > caps.maxFiles) {
     hardFailures.push({
