@@ -4,6 +4,33 @@ The package has no dependencies and no build step, so a release is a version bum
 one registry call. The only part that has ever blocked is authentication — recorded here so it does
 not have to be rediscovered.
 
+## Pushing when git authentication blocks (encountered twice)
+
+Two independent things have stopped a push on a workstation, and both are worth checking before
+concluding that the remote is broken:
+
+1. **A dead proxy in the repository config.** With `http.proxy` pointing at a local proxy that is no
+   longer listening, git fails immediately with
+   `Failed to connect to github.com port 443 via 127.0.0.1 … Could not connect to server`. Reads can
+   still work if something else resolves them, so the symptom looks like "only pushes fail". Push with
+   the proxy cleared:
+   ```console
+   $ git -c http.proxy= -c https.proxy= push
+   ```
+2. **A credential manager that cannot answer without a username.** In a non-interactive session,
+   `git credential fill` with only `protocol` and `host` returns nothing and git reports
+   `Cannot prompt because user interactivity has been disabled` / `unable to get password from user` —
+   even when `git credential-manager github list` shows the account. Supplying the username makes the
+   stored credential come back:
+   ```console
+   $ printf 'protocol=https\nhost=github.com\nusername=<account>\n\n' | git credential fill
+   ```
+   The credential is then usable for a single push without any dialog, for example through a one-shot
+   `-c http.extraheader="Authorization: Basic …"`. Never write such a value to a file, a log or a commit.
+
+If neither works, the stored credential genuinely needs re-authorisation; the fixes are an interactive
+`git push`, `gh auth login` followed by `gh auth setup-git`, or adding an SSH key to the account.
+
 ## Before you publish
 
 ```console
